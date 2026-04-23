@@ -1,0 +1,46 @@
+schema: spec-driven
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+# Add your tech stack, conventions, style guides, domain knowledge, etc.
+# Example:
+#   context: |
+#     Tech stack: TypeScript, React, Node.js
+#     We use conventional commits
+#     Domain: e-commerce platform
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always include a "Non-goals" section
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
+project:
+  name: "病历质控标注系统"
+  description: "为质控科医生提供查看、管理、对比、标注不同AI病历质控智能体质控结果的平台，为模型优化及规则迭代提供人类专家依据"
+
+context: |
+  ## 技术栈
+  - 前端：Vite + React + TypeScript + Tailwind CSS + Ant Design 5.x
+  - 后端：FastAPI (Python 3.11) + Pydantic v2 + Sqlite
+  - 部署：Docker + docker-compose
+  - 设计工具：Pencil（.pen 文件位于 design/ 目录）
+
+  ## 设计规范
+  - 设计系统库：design/design-system.lib.pen
+  - CSS Token：frontend/src/styles/globals.css
+  - 所有颜色/间距引用 CSS Variables，禁止硬编码
+
+  ## 代码约定
+  - 组件文件：frontend/src/components/layout/
+  - API 封装：frontend/src/lib/api.ts
+  - 类型定义：frontend/src/types/{module}.ts
+  - 后端 Router 按模块分文件：backend/app/routers/{module}.py
+
+  ## Spec 约定
+  - 用 RFC 2119 关键字：MUST/SHALL/SHOULD/MAY
+  - 场景格式：Given/When/Then
+  - Design artifacts 必须包含 Pencil 设计文件路径引用

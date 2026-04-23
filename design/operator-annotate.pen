@@ -1,0 +1,29 @@
+{
+  "version": "2.11",
+  "children": [
+    {
+      "type": "frame",
+      "id": "operatorAnnotateFrame",
+      "name": "操作员-标注详情页",
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 960,
+      "fill": "#F8FAFC",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "text",
+          "id": "title",
+          "content": "标注工作台（三栏对比 + 提交表单）",
+          "fontFamily": "PingFang SC",
+          "fontSize": 28,
+          "fontWeight": "700",
+          "fill": "#0F172A",
+          "x": 48,
+          "y": 48
+        }
+      ]
+    }
+  ]
+}

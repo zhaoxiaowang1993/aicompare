@@ -1,0 +1,2018 @@
+{
+  "version": "2.11",
+  "children": [
+    {
+      "type": "frame",
+      "id": "bnihq",
+      "x": -1403,
+      "y": 81,
+      "name": "操作员-标注计划列表页",
+      "width": 1440,
+      "height": 960,
+      "fill": "#F8FAFC",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "kvY3S",
+          "name": "顶部工具栏",
+          "width": "fill_container",
+          "height": 72,
+          "fill": "#FFFFFF",
+          "stroke": {
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "#E2E8F0"
+          },
+          "padding": [
+            16,
+            24
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "agGu1",
+              "name": "headerLeft",
+              "layout": "vertical",
+              "gap": 2,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "6WbzR",
+                  "name": "pageTitle",
+                  "fill": "#0F172A",
+                  "content": "标注计划",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": 22,
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "UKG5G",
+          "name": "内容区",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 12,
+          "padding": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "dTiaP",
+              "name": "summaryRow",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "gV8q2",
+                  "name": "summaryTxt",
+                  "fill": "#334155",
+                  "content": "共 8 个标注计划",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "V7TmQ",
+              "name": "计划列表",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "7O54Z",
+                  "name": "card1",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#E2E8F0"
+                  },
+                  "padding": 16,
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "jHRRw",
+                      "name": "card1Info",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "y5ECz",
+                          "name": "card1Title",
+                          "fill": "#0F172A",
+                          "content": "计划A：糖尿病并发症病历标注",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "WB00U",
+                          "name": "card1Desc",
+                          "fill": "#475569",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "任务说明：依据诊疗记录标注并发症类型、相关证据段落与时间信息。",
+                          "lineHeight": 1.5,
+                          "fontFamily": "PingFang SC",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "vwysZ",
+                          "name": "card1Stat",
+                          "fill": "#0EA5E9",
+                          "content": "已完成 36/50",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": 13,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "kWcW9",
+                      "name": "btnCard1",
+                      "context": "Standard primary button with blue background, white text and icon, for important action triggers.",
+                      "fill": "$S:--primary",
+                      "cornerRadius": "$S:--radius-none",
+                      "gap": 6,
+                      "padding": [
+                        10,
+                        14
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "7BzOj",
+                          "x": 16,
+                          "y": 10,
+                          "name": "Leading Icon",
+                          "enabled": false,
+                          "width": 20,
+                          "height": 20,
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": 1
+                          },
+                          "layout": "none",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "xvOxD",
+                              "x": 2,
+                              "y": 2,
+                              "width": 16,
+                              "height": 16,
+                              "iconFontName": "plus",
+                              "iconFontFamily": "lucide",
+                              "fill": "$S:--primary-foreground"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "UWqJp",
+                          "name": "Button",
+                          "fill": "$S:--primary-foreground",
+                          "content": "开始标注",
+                          "lineHeight": 1.4286,
+                          "textAlign": "center",
+                          "textAlignVertical": "middle",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": 14,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "D9L3I",
+                  "name": "card2",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#E2E8F0"
+                  },
+                  "padding": 16,
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "bWHBW",
+                      "name": "card2Info",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "N1zWo",
+                          "name": "card2Title",
+                          "fill": "#0F172A",
+                          "content": "计划B：住院用药不良反应标注",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "Kvvdh",
+                          "name": "card2Desc",
+                          "fill": "#475569",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "任务说明：阅读病程与医嘱记录，标注药物名称、疑似反应表现及因果等级。",
+                          "lineHeight": 1.5,
+                          "fontFamily": "PingFang SC",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "g03HY",
+                          "name": "card2Stat",
+                          "fill": "#F59E0B",
+                          "content": "已完成 12/40",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": 13,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "k4lnm",
+                      "name": "btnCard2",
+                      "context": "Standard primary button with blue background, white text and icon, for important action triggers.",
+                      "fill": "$S:--primary",
+                      "cornerRadius": "$S:--radius-none",
+                      "gap": 6,
+                      "padding": [
+                        10,
+                        14
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "F1wQS",
+                          "x": 16,
+                          "y": 10,
+                          "name": "Leading Icon",
+                          "enabled": false,
+                          "width": 20,
+                          "height": 20,
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": 1
+                          },
+                          "layout": "none",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "NGjiv",
+                              "x": 2,
+                              "y": 2,
+                              "width": 16,
+                              "height": 16,
+                              "iconFontName": "plus",
+                              "iconFontFamily": "lucide",
+                              "fill": "$S:--primary-foreground"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "MK7OK",
+                          "name": "Button",
+                          "fill": "$S:--primary-foreground",
+                          "content": "开始标注",
+                          "lineHeight": 1.4286,
+                          "textAlign": "center",
+                          "textAlignVertical": "middle",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": 14,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "qqxdB",
+      "x": 147,
+      "y": 81,
+      "name": "操作员-标注详情页（病历原文件）",
+      "clip": true,
+      "width": 1440,
+      "height": 960,
+      "fill": "#F5F7FA",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "oe3ID",
+          "name": "顶部工具栏",
+          "width": "fill_container",
+          "height": 76,
+          "fill": "#FFFFFF",
+          "stroke": {
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "#D9D9D9"
+          },
+          "padding": [
+            14,
+            24
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "MInOm",
+              "name": "brand",
+              "gap": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "0aZqD",
+                  "name": "backLink",
+                  "gap": 6,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "8RG0x",
+                      "name": "backText",
+                      "context": "click -> navigate: bngAv",
+                      "fill": "#1677FF",
+                      "content": "← 返回列表",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "44PjF",
+                  "name": "planTitle",
+                  "fill": "#1F1F1F",
+                  "content": "胸痛病历质控专项",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": 20,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "KyHEs",
+                  "name": "progressTag",
+                  "fill": "#E6F4FF",
+                  "cornerRadius": 999,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#91CAFF"
+                  },
+                  "padding": [
+                    2,
+                    10
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "MNQh5",
+                      "name": "progressText",
+                      "fill": "#0958D9",
+                      "content": "进行中 2/6",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": 12,
+                      "fontWeight": "600"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "qY6lw",
+              "name": "btnDetailA",
+              "context": "Standard primary button with blue background, white text and icon, for important action triggers.",
+              "fill": "$S:--primary",
+              "cornerRadius": "$S:--radius-none",
+              "gap": 6,
+              "padding": [
+                10,
+                18
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "xOVeX",
+                  "x": 16,
+                  "y": 10,
+                  "name": "Leading Icon",
+                  "enabled": false,
+                  "width": 20,
+                  "height": 20,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1
+                  },
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "2vgZ7",
+                      "x": 2,
+                      "y": 2,
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "plus",
+                      "iconFontFamily": "lucide",
+                      "fill": "$S:--primary-foreground"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "WZlet",
+                  "name": "Button",
+                  "fill": "$S:--primary-foreground",
+                  "content": "标注",
+                  "lineHeight": 1.4286,
+                  "textAlign": "center",
+                  "textAlignVertical": "middle",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "TEdcK",
+          "name": "工作区",
+          "width": "fill_container",
+          "height": "fill_container",
+          "gap": 16,
+          "padding": [
+            16,
+            20,
+            20,
+            20
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "RJeG7",
+              "name": "病历原文件区域",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 8,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#D9D9D9"
+              },
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "udioO",
+                  "name": "leftSwitch",
+                  "width": "fill_container",
+                  "fill": "#F5F5F5",
+                  "cornerRadius": 8,
+                  "gap": 4,
+                  "padding": 4,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "I2gNq",
+                      "name": "tabA1",
+                      "width": "fill_container",
+                      "fill": "$S:--white",
+                      "cornerRadius": "$S:--radius-none",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1
+                      },
+                      "gap": 8,
+                      "padding": [
+                        6,
+                        12
+                      ],
+                      "justifyContent": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "hkMSs",
+                          "name": "Label Selected",
+                          "fill": "$S:--accent-foreground",
+                          "content": "病历原文件",
+                          "lineHeight": 1.4285714285714286,
+                          "fontFamily": "PingFang SC",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "q3DDF",
+                      "name": "tabA2",
+                      "width": "fill_container",
+                      "fill": "$S:--secondary",
+                      "cornerRadius": "$S:--radius-none",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1
+                      },
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#0000000f",
+                        "offset": {
+                          "x": 0,
+                          "y": 1
+                        },
+                        "blur": 3.5,
+                        "spread": -1
+                      },
+                      "gap": 8,
+                      "padding": [
+                        6,
+                        12
+                      ],
+                      "justifyContent": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "mofji",
+                          "name": "Label Selected",
+                          "fill": "$S:--secondary-foreground",
+                          "content": "质控规则列表",
+                          "lineHeight": 1.4285714285714286,
+                          "fontFamily": "PingFang SC",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "bK9DC",
+                  "name": "leftBody",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "#FAFAFA",
+                  "cornerRadius": 6,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#E5E7EB"
+                  },
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": 14,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "GNwbD",
+                      "name": "topActions",
+                      "gap": 20,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "bNMjV",
+                          "name": "caseMeta",
+                          "fill": "#595959",
+                          "content": "病历ID：MR-2026-0412",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": 13,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "DAeEq",
+                      "name": "leftText",
+                      "fill": "#262626",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "主诉：反复胸闷胸痛2周。\n现病史：2周前无明显诱因出现胸闷，活动后加重，休息后缓解。\n既往史：高血压10年，规律服药。",
+                      "lineHeight": 1.55,
+                      "fontFamily": "PingFang SC",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "KxCjE",
+              "name": "智能体A结果",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 8,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#D9D9D9"
+              },
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "TBquI",
+                  "name": "midTitle",
+                  "fill": "#1F1F1F",
+                  "content": "智能体A",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "R8bsW",
+                  "name": "midBody",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "#FAFAFA",
+                  "cornerRadius": 6,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#E5E7EB"
+                  },
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": 14,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "92zDt",
+                      "name": "midText",
+                      "fill": "#262626",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "结论：疑似不稳定型心绞痛。\n证据：症状与活动相关，休息后缓解；存在高血压病史。\n建议：补充心电图动态变化与肌钙蛋白结果。",
+                      "lineHeight": 1.55,
+                      "fontFamily": "PingFang SC",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "4Cej8",
+              "name": "智能体B结果",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 8,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#D9D9D9"
+              },
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "MlLXD",
+                  "name": "rightTitle",
+                  "fill": "#1F1F1F",
+                  "content": "智能体B",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "qKxTp",
+                  "name": "rightBody",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "#FAFAFA",
+                  "cornerRadius": 6,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#E5E7EB"
+                  },
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": 14,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Mtgw8",
+                      "name": "rightText",
+                      "fill": "#262626",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "结论：胸痛待查，倾向稳定型心绞痛。\n证据：病程2周，暂无持续性静息痛描述。\n建议：完善冠脉CTA并结合危险分层。",
+                      "lineHeight": 1.55,
+                      "fontFamily": "PingFang SC",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "k0ZMe",
+      "x": 1728,
+      "y": 81,
+      "name": "操作员-标注详情页（质控规则列表）",
+      "clip": true,
+      "width": 1440,
+      "height": 960,
+      "fill": "#F5F7FA",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "CZhuO",
+          "name": "header",
+          "width": "fill_container",
+          "height": 76,
+          "fill": "#FFFFFF",
+          "stroke": {
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "#D9D9D9"
+          },
+          "padding": [
+            14,
+            24
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "0QwMs",
+              "name": "brand",
+              "gap": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "zsDyU",
+                  "name": "backLink",
+                  "gap": 6,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Lu0R6",
+                      "name": "backText",
+                      "context": "click -> navigate: bngAv",
+                      "fill": "#1677FF",
+                      "content": "← 返回列表",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "0fQcv",
+                  "name": "planTitle",
+                  "fill": "#1F1F1F",
+                  "content": "胸痛病历质控专项",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": 20,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "FCv10",
+                  "name": "progressTag",
+                  "fill": "#E6F4FF",
+                  "cornerRadius": 999,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#91CAFF"
+                  },
+                  "padding": [
+                    2,
+                    10
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nbYfA",
+                      "name": "progressText",
+                      "fill": "#0958D9",
+                      "content": "进行中 2/6",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": 12,
+                      "fontWeight": "600"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "QWQlq",
+              "name": "headerActions",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "VIvit",
+                  "name": "btnDetailB",
+                  "context": "Standard primary button with blue background, white text and icon, for important action triggers.",
+                  "fill": "$S:--primary",
+                  "cornerRadius": "$S:--radius-none",
+                  "gap": 6,
+                  "padding": [
+                    10,
+                    18
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "aE4QB",
+                      "x": 16,
+                      "y": 10,
+                      "name": "Leading Icon",
+                      "enabled": false,
+                      "width": 20,
+                      "height": 20,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1
+                      },
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "icon_font",
+                          "id": "LZkmh",
+                          "x": 2,
+                          "y": 2,
+                          "width": 16,
+                          "height": 16,
+                          "iconFontName": "plus",
+                          "iconFontFamily": "lucide",
+                          "fill": "$S:--primary-foreground"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "6TiYG",
+                      "name": "Button",
+                      "fill": "$S:--primary-foreground",
+                      "content": "标注",
+                      "lineHeight": 1.4286,
+                      "textAlign": "center",
+                      "textAlignVertical": "middle",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "vOiRi",
+          "name": "工作区",
+          "width": "fill_container",
+          "height": "fill_container",
+          "gap": 16,
+          "padding": [
+            16,
+            20,
+            20,
+            20
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "JvXRO",
+              "name": "质控规则列表区域",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 8,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#D9D9D9"
+              },
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "mvDVV",
+                  "name": "leftSwitch",
+                  "width": "fill_container",
+                  "fill": "#F5F5F5",
+                  "cornerRadius": 8,
+                  "gap": 4,
+                  "padding": 4,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "nzp13",
+                      "name": "tabB1",
+                      "width": "fill_container",
+                      "fill": "$S:--white",
+                      "cornerRadius": "$S:--radius-none",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1
+                      },
+                      "gap": 8,
+                      "padding": [
+                        6,
+                        12
+                      ],
+                      "justifyContent": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "w0lJC",
+                          "name": "Label Selected",
+                          "fill": "$S:--accent-foreground",
+                          "content": "病历原文件",
+                          "lineHeight": 1.4285714285714286,
+                          "fontFamily": "PingFang SC",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Pw1ab",
+                      "name": "tabB2",
+                      "width": "fill_container",
+                      "fill": "$S:--secondary",
+                      "cornerRadius": "$S:--radius-none",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1
+                      },
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#0000000f",
+                        "offset": {
+                          "x": 0,
+                          "y": 1
+                        },
+                        "blur": 3.5,
+                        "spread": -1
+                      },
+                      "gap": 8,
+                      "padding": [
+                        6,
+                        12
+                      ],
+                      "justifyContent": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "psPcI",
+                          "name": "Label Selected",
+                          "fill": "$S:--secondary-foreground",
+                          "content": "质控规则列表",
+                          "lineHeight": 1.4285714285714286,
+                          "fontFamily": "PingFang SC",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "NkFq4",
+                  "name": "leftTitle",
+                  "fill": "#1F2937",
+                  "content": "质控规则列表",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": 15,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "wJMmP",
+                  "name": "leftSub",
+                  "fill": "#6B7280",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "按规则逐项核验",
+                  "lineHeight": 1.5,
+                  "fontFamily": "PingFang SC",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "uuvLA",
+                  "name": "ruleList",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "jxgnz",
+                      "name": "rule1",
+                      "width": "fill_container",
+                      "fill": "#F8FBFF",
+                      "cornerRadius": 10,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#91CAFF"
+                      },
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": 14,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Li7Zb",
+                          "name": "r1t",
+                          "fill": "#1F2937",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "规则 01：关键诊断必须在结论中出现",
+                          "lineHeight": 1.4,
+                          "fontFamily": "PingFang SC",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "If73j",
+                      "name": "rule2",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 10,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#E5E7EB"
+                      },
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": 14,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "1rFsH",
+                          "name": "r2t",
+                          "fill": "#1F2937",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "规则 02：时间线信息需与病程一致",
+                          "lineHeight": 1.4,
+                          "fontFamily": "PingFang SC",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "dpPTz",
+                      "name": "rule3",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 10,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#E5E7EB"
+                      },
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": 14,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "GMrS7",
+                          "name": "r3t",
+                          "fill": "#1F2937",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "规则 03：药物剂量必须包含单位",
+                          "lineHeight": 1.4,
+                          "fontFamily": "PingFang SC",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Dhgqr",
+              "name": "智能体A结果",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 8,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#D9D9D9"
+              },
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "CJeMM",
+                  "name": "midTitle",
+                  "fill": "#1F1F1F",
+                  "content": "智能体A",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "3DnSK",
+                  "name": "midBody",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "#FAFAFA",
+                  "cornerRadius": 6,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#E5E7EB"
+                  },
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": 14,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "aiJXU",
+                      "name": "midText",
+                      "fill": "#262626",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "结论：疑似不稳定型心绞痛。\n证据：症状与活动相关，休息后缓解；存在高血压病史。\n建议：补充心电图动态变化与肌钙蛋白结果。",
+                      "lineHeight": 1.55,
+                      "fontFamily": "PingFang SC",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "qchjF",
+              "name": "智能体B结果",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 8,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#D9D9D9"
+              },
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "fI7AW",
+                  "name": "rightTitle",
+                  "fill": "#1F1F1F",
+                  "content": "智能体B",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "1cagw",
+                  "name": "rightBody",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "#FAFAFA",
+                  "cornerRadius": 6,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#E5E7EB"
+                  },
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": 14,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "1tlXq",
+                      "name": "rightText",
+                      "fill": "#262626",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "结论：胸痛待查，倾向稳定型心绞痛。\n证据：病程2周，暂无持续性静息痛描述。\n建议：完善冠脉CTA并结合危险分层。",
+                      "lineHeight": 1.55,
+                      "fontFamily": "PingFang SC",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "4xHuC",
+      "x": 3345,
+      "y": 81,
+      "name": "操作员-标注弹窗（确认结论与原因）",
+      "width": 960,
+      "height": 760,
+      "fill": "#F5F7FA",
+      "cornerRadius": 6,
+      "stroke": {
+        "thickness": 1,
+        "fill": "#D9D9D9"
+      },
+      "layout": "vertical",
+      "gap": 12,
+      "padding": 20,
+      "children": [
+        {
+          "type": "frame",
+          "id": "52xtb",
+          "name": "header",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 6,
+          "children": [
+            {
+              "type": "text",
+              "id": "Zv5nY",
+              "fill": "#262626",
+              "content": "标注",
+              "fontFamily": "PingFang SC",
+              "fontSize": 18,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "CXFxs",
+              "fill": "#595959",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "请确认结论并选择原因后提交。",
+              "fontFamily": "PingFang SC",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "6iq7c",
+          "name": "summary",
+          "width": "fill_container",
+          "fill": "#FAFAFA",
+          "cornerRadius": 6,
+          "stroke": {
+            "thickness": 1,
+            "fill": "#D9D9D9"
+          },
+          "padding": [
+            8,
+            12
+          ],
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "text",
+              "id": "agC10",
+              "fill": "#262626",
+              "content": "已在详情页完成 A/B 对比",
+              "fontFamily": "PingFang SC",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "9hSVd",
+              "fill": "#E6F4FF",
+              "cornerRadius": 12,
+              "padding": [
+                2,
+                8
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "cGRbG",
+                  "fill": "#1677FF",
+                  "content": "待确认",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Amcyw",
+          "name": "radioNew",
+          "width": "fill_container",
+          "fill": "#FFFFFF",
+          "cornerRadius": 6,
+          "stroke": {
+            "thickness": 1,
+            "fill": "#D9D9D9"
+          },
+          "layout": "vertical",
+          "gap": 10,
+          "padding": 14,
+          "children": [
+            {
+              "type": "text",
+              "id": "StlN5",
+              "fill": "#262626",
+              "content": "标注结论",
+              "fontFamily": "PingFang SC",
+              "fontSize": 14,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "VQ4iI",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "RgbVZ",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "AgPsK",
+                      "width": 14,
+                      "height": 14,
+                      "cornerRadius": 999,
+                      "stroke": {
+                        "thickness": 2,
+                        "fill": "#1677FF"
+                      },
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "B1Qdy",
+                          "width": 6,
+                          "height": 6,
+                          "fill": "#1677FF",
+                          "cornerRadius": 999
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "y4Jyy",
+                      "fill": "#262626",
+                      "content": "A 效果好",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "igZdA",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "p6DVR",
+                      "width": 14,
+                      "height": 14,
+                      "cornerRadius": 999,
+                      "stroke": {
+                        "thickness": 2,
+                        "fill": "#BFBFBF"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "chKjx",
+                      "fill": "#262626",
+                      "content": "B 效果好",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "8lZxg",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "cSRND",
+                      "width": 14,
+                      "height": 14,
+                      "cornerRadius": 999,
+                      "stroke": {
+                        "thickness": 2,
+                        "fill": "#BFBFBF"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "GHoPf",
+                      "fill": "#262626",
+                      "content": "一样好",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "mjZKW",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "5MOrV",
+                      "width": 14,
+                      "height": 14,
+                      "cornerRadius": 999,
+                      "stroke": {
+                        "thickness": 2,
+                        "fill": "#BFBFBF"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "tiaAP",
+                      "fill": "#262626",
+                      "content": "都不好",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "OxNzD",
+          "name": "reasonNew",
+          "width": "fill_container",
+          "fill": "#FFFFFF",
+          "cornerRadius": 6,
+          "stroke": {
+            "thickness": 1,
+            "fill": "#D9D9D9"
+          },
+          "layout": "vertical",
+          "gap": 10,
+          "padding": 14,
+          "children": [
+            {
+              "type": "text",
+              "id": "ah8Vc",
+              "fill": "#262626",
+              "content": "标注原因",
+              "fontFamily": "PingFang SC",
+              "fontSize": 14,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "mpDx1",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "30Yzl",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "j5tvL",
+                      "width": 14,
+                      "height": 14,
+                      "fill": "#1677FF",
+                      "cornerRadius": 2,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "9fFTg",
+                          "fill": "#FFFFFF",
+                          "content": "✓",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "eux6I",
+                      "fill": "#262626",
+                      "content": "无命中错误规则",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Z9a0e",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "pwTuu",
+                      "width": 14,
+                      "height": 14,
+                      "cornerRadius": 2,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#BFBFBF"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "p7w2S",
+                      "fill": "#262626",
+                      "content": "无遗漏规则",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "6ZDOB",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "we6aF",
+                      "width": 14,
+                      "height": 14,
+                      "cornerRadius": 2,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#BFBFBF"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "LJoux",
+                      "fill": "#262626",
+                      "content": "无过度质控",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "XxaLk",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "duet4",
+                      "width": 14,
+                      "height": 14,
+                      "cornerRadius": 2,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#BFBFBF"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "z9MXy",
+                      "fill": "#262626",
+                      "content": "其他",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "MsKC6",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "eLOhu",
+                  "fill": "#8C8C8C",
+                  "content": "其他原因（可选）",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "PacE1",
+                  "width": "fill_container",
+                  "height": 72,
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 6,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D9D9D9"
+                  },
+                  "padding": 10,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "kj2OE",
+                      "fill": "#BFBFBF",
+                      "content": "请输入补充说明...",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "fTpsx",
+          "name": "footer",
+          "width": "fill_container",
+          "gap": 10,
+          "justifyContent": "end",
+          "children": [
+            {
+              "type": "frame",
+              "id": "fpYRQ",
+              "name": "modalCancel",
+              "context": "Standard outline button with border, transparent background and dark text with icon, for tertiary actions.",
+              "height": 36,
+              "cornerRadius": "$S:--radius-none",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$S:--input"
+              },
+              "gap": 6,
+              "padding": [
+                0,
+                16
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "W7WBp",
+                  "x": 16,
+                  "y": 10,
+                  "name": "Leading Icon",
+                  "enabled": false,
+                  "width": 20,
+                  "height": 20,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1
+                  },
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "d8xE5",
+                      "x": 2,
+                      "y": 2,
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "plus",
+                      "iconFontFamily": "lucide",
+                      "fill": "$S:--foreground"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "flbKV",
+                  "name": "Button",
+                  "fill": "$S:--foreground",
+                  "content": "取消",
+                  "lineHeight": 1.4286,
+                  "textAlign": "center",
+                  "textAlignVertical": "middle",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "wVt61",
+              "name": "modalSubmit",
+              "context": "Standard primary button with blue background, white text and icon, for important action triggers.",
+              "height": 36,
+              "fill": "$S:--primary",
+              "cornerRadius": "$S:--radius-none",
+              "gap": 6,
+              "padding": [
+                0,
+                16
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "wgP2e",
+                  "x": 16,
+                  "y": 10,
+                  "name": "Leading Icon",
+                  "enabled": false,
+                  "width": 20,
+                  "height": 20,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1
+                  },
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "8lJSW",
+                      "x": 2,
+                      "y": 2,
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "plus",
+                      "iconFontFamily": "lucide",
+                      "fill": "$S:--primary-foreground"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "fOC9N",
+                  "name": "Button",
+                  "fill": "$S:--primary-foreground",
+                  "content": "提交标注",
+                  "lineHeight": 1.4286,
+                  "textAlign": "center",
+                  "textAlignVertical": "middle",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "themes": {
+    "S:Mode": [
+      "Light",
+      "Dark"
+    ]
+  },
+  "variables": {
+    "S:--primary": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#0F5FFE"
+        },
+        {
+          "value": "#0F5FFE",
+          "theme": {
+            "S:Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "S:--radius-none": {
+      "type": "number",
+      "value": 0
+    },
+    "S:--primary-foreground": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#FFFFFF"
+        },
+        {
+          "value": "#F5F5F5",
+          "theme": {
+            "S:Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "S:--white": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "S:--accent-foreground": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#111111"
+        },
+        {
+          "value": "#F2F3F0",
+          "theme": {
+            "S:Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "S:--secondary": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#333333"
+        },
+        {
+          "value": "#414347",
+          "theme": {
+            "S:Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "S:--secondary-foreground": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#FFFFFF"
+        },
+        {
+          "value": "#FFFFFF",
+          "theme": {
+            "S:Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "S:--input": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#9DA4B3"
+        },
+        {
+          "value": "#414347",
+          "theme": {
+            "S:Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "S:--foreground": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#333333"
+        },
+        {
+          "value": "#F5F5F5",
+          "theme": {
+            "S:Mode": "Dark"
+          }
+        }
+      ]
+    }
+  }
+}

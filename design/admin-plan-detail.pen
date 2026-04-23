@@ -1,0 +1,29 @@
+{
+  "version": "2.11",
+  "children": [
+    {
+      "type": "frame",
+      "id": "adminPlanDetailFrame",
+      "name": "管理员-计划详情页",
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 960,
+      "fill": "#F5F7FA",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "text",
+          "id": "title",
+          "content": "计划详情（导入结果 + 统计 + 标注明细）",
+          "fontFamily": "PingFang SC",
+          "fontSize": 28,
+          "fontWeight": "700",
+          "fill": "#0F172A",
+          "x": 48,
+          "y": 48
+        }
+      ]
+    }
+  ]
+}

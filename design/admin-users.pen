@@ -1,0 +1,28 @@
+{
+  "version": "2.11",
+  "children": [
+    {
+      "type": "frame",
+      "id": "adminUsersFrame",
+      "name": "管理员-成员管理页",
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 960,
+      "fill": "#F8FAFC",
+      "children": [
+        {
+          "type": "text",
+          "id": "title",
+          "content": "成员管理（新增/禁用/重置密码）",
+          "fontFamily": "PingFang SC",
+          "fontSize": 28,
+          "fontWeight": "700",
+          "fill": "#0F172A",
+          "x": 48,
+          "y": 48
+        }
+      ]
+    }
+  ]
+}
