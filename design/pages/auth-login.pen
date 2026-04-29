@@ -1421,6 +1421,40 @@
       ]
     }
   ],
+  "variables": {
+    "font-weight-bold": {
+      "type": "number",
+      "value": 700
+    },
+    "font-weight-medium": {
+      "type": "number",
+      "value": 500
+    },
+    "font-weight-regular": {
+      "type": "number",
+      "value": 400
+    },
+    "font-weight-semibold": {
+      "type": "number",
+      "value": 600
+    },
+    "line-height": {
+      "type": "number",
+      "value": 1.5715
+    },
+    "line-height-heading": {
+      "type": "number",
+      "value": 1.2
+    },
+    "line-height-lg": {
+      "type": "number",
+      "value": 1.5715
+    },
+    "line-height-sm": {
+      "type": "number",
+      "value": 1.5
+    }
+  },
   "imports": {
     "8": "../components/layout-new.lib.pen",
     "r": "../tokens.lib.pen",
