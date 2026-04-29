@@ -1,5 +1,5 @@
 import { Card, Col, Progress, Row, Statistic } from 'antd'
-import PageShell from '../components/layout/page-shell'
+import PageShell from '../components/layout/layout'
 
 export default function AdminPlanDetailPage() {
   return (

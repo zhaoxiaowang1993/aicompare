@@ -1,5 +1,5 @@
 import { Card, Table, Tag } from 'antd'
-import PageShell from '../components/layout/page-shell'
+import PageShell from '../components/layout/layout'
 
 const dataSource = [
   { key: 1, name: '2026Q2 质控对比评审', owner: 'czy', status: 'active' }

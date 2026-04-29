@@ -1,5 +1,5 @@
 import { Button, Card, Space, Table, Tag } from 'antd'
-import PageShell from '../components/layout/page-shell'
+import PageShell from '../components/layout/layout'
 
 const users = [
   { key: 1, username: 'admin', role: 'admin', isActive: true },
