@@ -11,8 +11,15 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       theme={{
         algorithm: theme.defaultAlgorithm,
         token: {
-          colorPrimary: 'var(--ant-color-primary)',
-          borderRadius: 8
+          colorPrimary: 'var(--color-primary)',
+          borderRadius: 8,
+          fontFamily: 'var(--font-family-base)',
+          fontSize: 14,
+          fontSizeSM: 12,
+          fontSizeLG: 16,
+          fontSizeXL: 20,
+          lineHeight: 1.5715,
+          fontWeightStrong: 600
         }
       }}
     >

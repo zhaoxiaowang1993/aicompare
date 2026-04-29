@@ -1,6 +1,6 @@
-- [ ] 1. 设计与契约对齐（Pencil + API）
-- [ ] 1.1 初始化 `desing/design-system.lib.pen`，创建基础 Token Variables
-- [ ] 1.2 同步 Token 到 globals.css
+- [X] 1. 设计与契约对齐（Pencil + API）
+- [X] 1.1 初始化 `design/token.lib.pen`，创建基础 Token Variables；初始化 `design/components`，创建基础组件库
+- [X] 1.2 同步 Token 到 globals.css；同步组件库设计到 `frontend/src/components`
 - [ ] 1.3 在 `design/auth-login.pen` 完成登录页线框与高保真稿（错误态、加载态、禁用态）。
 - [ ] 1.4 在 `design/admin-plan-list.pen` 完成计划列表页与“新建计划”弹窗，覆盖筛选与分页态。
 - [ ] 1.5 在 `design/admin-plan-detail.pen` 完成计划详情基础信息区与 CSV 导入反馈区（成功/失败/跳过）。

@@ -1,0 +1,1433 @@
+{
+  "version": "2.11",
+  "children": [
+    {
+      "type": "frame",
+      "id": "ux44Q",
+      "x": 0,
+      "y": 0,
+      "name": "登录页 / 默认态",
+      "width": 1440,
+      "height": 960,
+      "fill": "$8:color-bg-layout",
+      "children": [
+        {
+          "type": "frame",
+          "id": "pAFjZ",
+          "name": "系统插图区",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$8:color-primary-bg",
+          "layout": "vertical",
+          "gap": "$8:space-24",
+          "padding": "$8:space-48",
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "S9D22",
+              "name": "病历质控插画",
+              "width": "fill_container",
+              "height": 360,
+              "fill": {
+                "type": "image",
+                "enabled": true,
+                "url": "images/generated-1775805662726.png",
+                "mode": "fill"
+              },
+              "cornerRadius": "$8:radius-xxl",
+              "layout": "vertical"
+            },
+            {
+              "type": "frame",
+              "id": "CYeZy",
+              "name": "品牌标题",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$8:space-8",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Xodlm",
+                  "name": "platform",
+                  "fill": "$8:color-text",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "南阳第一人民医院",
+                  "fontFamily": "系统字体",
+                  "fontSize": "$8:font-size-heading-2",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "w0JR8",
+                  "name": "sub",
+                  "fill": "$8:color-text",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "病历质控标注系统",
+                  "fontFamily": "系统字体",
+                  "fontSize": "$8:font-size-heading-3",
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "gAov7",
+              "name": "en",
+              "fill": "$8:color-text-secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Medical Record Quality Control Annotation Platform",
+              "fontFamily": "系统字体",
+              "fontSize": "$8:font-size",
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "P66W7",
+              "name": "desc",
+              "fill": "$8:color-text-secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "用于病历质控规则核验与智能体结果对比标注",
+              "fontFamily": "系统字体",
+              "fontSize": "$8:font-size",
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "RsBt0",
+          "name": "登录区域",
+          "width": 560,
+          "height": "fill_container",
+          "fill": "$8:color-bg-container",
+          "layout": "vertical",
+          "padding": "$8:space-48",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "88HQf",
+              "name": "登录 Card",
+              "width": "fill_container",
+              "fill": "$8:color-bg-container",
+              "cornerRadius": "$8:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$8:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$8:space-16",
+              "padding": "$8:space-24",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ThvSp",
+                  "name": "Card Header",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$8:space-8",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "GoaX6",
+                      "name": "h",
+                      "fill": "$8:color-text",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "账号登录",
+                      "fontFamily": "系统字体",
+                      "fontSize": "$8:font-size-heading-4",
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "xATy0",
+                  "name": "登录表单",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$8:space-12",
+                  "children": [
+                    {
+                      "id": "pGxyM",
+                      "type": "ref",
+                      "ref": "B:RPorp",
+                      "name": "用户名 FormItem",
+                      "width": "fill_container",
+                      "descendants": {
+                        "B:zXqWM": {
+                          "enabled": true
+                        },
+                        "B:PmyTJ": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:Ghcve": {
+                          "content": "用户名",
+                          "fontFamily": "系统字体"
+                        },
+                        "B:127Ck": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:CxEuz": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:Zd8zs": {
+                          "content": "请输入账号",
+                          "fontFamily": "系统字体"
+                        },
+                        "B:Nw20U": {
+                          "fontFamily": "系统字体"
+                        }
+                      }
+                    },
+                    {
+                      "id": "aHT6U",
+                      "type": "ref",
+                      "ref": "B:B1iAr",
+                      "name": "密码 FormItem",
+                      "width": "fill_container",
+                      "descendants": {
+                        "B:3YHmG": {
+                          "enabled": true
+                        },
+                        "B:JeAnc": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:c1d6x": {
+                          "content": "密码",
+                          "fontFamily": "系统字体"
+                        },
+                        "B:HBJwX": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:M3UfR": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:miAUm": {
+                          "content": "请输入密码",
+                          "fontFamily": "系统字体"
+                        }
+                      }
+                    },
+                    {
+                      "id": "e1kvA",
+                      "type": "ref",
+                      "ref": "B:7wJYi",
+                      "name": "记住登录状态",
+                      "width": "fill_container",
+                      "descendants": {
+                        "B:1yhVl": {
+                          "enabled": false
+                        },
+                        "B:U0paF": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:DgDiP": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:nexcT": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:kgLQw": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:ikX4E": {
+                          "content": "记住登录状态",
+                          "fontFamily": "系统字体"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "tTVEE",
+                  "name": "操作区",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$8:space-12",
+                  "children": [
+                    {
+                      "id": "qn26P",
+                      "type": "ref",
+                      "ref": "v:ChiAR",
+                      "name": "登录按钮",
+                      "width": "fill_container",
+                      "height": 40,
+                      "descendants": {
+                        "v:F3Bzb": {
+                          "content": "登录",
+                          "fontFamily": "系统字体"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "6GCCj",
+      "x": 1520,
+      "y": 0,
+      "name": "登录页 / 空态与必填校验",
+      "width": 1440,
+      "height": 960,
+      "fill": "$8:color-bg-layout",
+      "children": [
+        {
+          "type": "frame",
+          "id": "p26Iv",
+          "name": "系统插图区",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$8:color-primary-bg",
+          "layout": "vertical",
+          "gap": "$8:space-24",
+          "padding": "$8:space-48",
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "7kHiV",
+              "name": "病历质控插画",
+              "width": "fill_container",
+              "height": 360,
+              "fill": {
+                "type": "image",
+                "enabled": true,
+                "url": "images/generated-1775805662726.png",
+                "mode": "fill"
+              },
+              "cornerRadius": "$8:radius-xxl",
+              "layout": "vertical"
+            },
+            {
+              "type": "frame",
+              "id": "ZSzBJ",
+              "name": "品牌标题",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$8:space-8",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "dMlt3",
+                  "name": "platform",
+                  "fill": "$8:color-text",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "南阳第一人民医院",
+                  "fontFamily": "系统字体",
+                  "fontSize": "$8:font-size-heading-2",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "QO7Li",
+                  "name": "sub",
+                  "fill": "$8:color-text",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "病历质控标注系统",
+                  "fontFamily": "系统字体",
+                  "fontSize": "$8:font-size-heading-3",
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "Y7QZh",
+              "name": "en",
+              "fill": "$8:color-text-secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Medical Record Quality Control Annotation Platform",
+              "fontFamily": "系统字体",
+              "fontSize": "$8:font-size",
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "XFtqL",
+              "name": "desc",
+              "fill": "$8:color-text-secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "用于病历质控规则核验与智能体结果对比标注",
+              "fontFamily": "系统字体",
+              "fontSize": "$8:font-size",
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "8i7Qf",
+          "name": "登录区域 / 空态",
+          "width": 560,
+          "height": "fill_container",
+          "fill": "$8:color-bg-container",
+          "layout": "vertical",
+          "padding": "$8:space-48",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "KdTbu",
+              "name": "空态 Card",
+              "width": "fill_container",
+              "fill": "$8:color-bg-container",
+              "cornerRadius": "$8:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$8:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$8:space-16",
+              "padding": "$8:space-24",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "OK8Sf",
+                  "name": "Card Header",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$8:space-8",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "L3y5Q",
+                      "name": "eTitle",
+                      "fill": "$8:color-text",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "账号登录",
+                      "fontFamily": "系统字体",
+                      "fontSize": "$8:font-size-heading-4",
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "WXRkK",
+                  "name": "空态表单",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$8:space-12",
+                  "children": [
+                    {
+                      "id": "aNt8b",
+                      "type": "ref",
+                      "ref": "B:RPorp",
+                      "name": "用户名为空",
+                      "width": "fill_container",
+                      "descendants": {
+                        "B:zXqWM": {
+                          "enabled": true
+                        },
+                        "B:PmyTJ": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:Ghcve": {
+                          "content": "用户名",
+                          "fontFamily": "系统字体"
+                        },
+                        "B:127Ck": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:CxEuz": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:hNPbx": {
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": 1,
+                            "fill": "$8:color-error"
+                          }
+                        },
+                        "B:Zd8zs": {
+                          "content": "请输入账号",
+                          "fontFamily": "系统字体"
+                        },
+                        "B:Nw20U": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:8CRV1": {
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "ldIoE",
+                              "fill": "$8:color-error",
+                              "content": "请输入用户名",
+                              "fontFamily": "系统字体",
+                              "fontSize": "$8:font-size-sm",
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "id": "hA3jq",
+                      "type": "ref",
+                      "ref": "B:B1iAr",
+                      "name": "密码为空",
+                      "width": "fill_container",
+                      "descendants": {
+                        "B:3YHmG": {
+                          "enabled": true
+                        },
+                        "B:JeAnc": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:c1d6x": {
+                          "content": "密码",
+                          "fontFamily": "系统字体"
+                        },
+                        "B:HBJwX": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:M3UfR": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:YLEkJ": {
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": 1,
+                            "fill": "$8:color-error"
+                          }
+                        },
+                        "B:miAUm": {
+                          "content": "请输入密码",
+                          "fontFamily": "系统字体"
+                        },
+                        "B:rFUnL": {
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "E4yo9",
+                              "fill": "$8:color-error",
+                              "content": "请输入密码",
+                              "fontFamily": "系统字体",
+                              "fontSize": "$8:font-size-sm",
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "id": "d6ZOs",
+                      "type": "ref",
+                      "ref": "B:7wJYi",
+                      "name": "记住登录状态",
+                      "width": "fill_container",
+                      "descendants": {
+                        "B:1yhVl": {
+                          "enabled": false
+                        },
+                        "B:U0paF": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:DgDiP": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:nexcT": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:kgLQw": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:ikX4E": {
+                          "content": "记住登录状态",
+                          "fontFamily": "系统字体"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "rXHOj",
+                  "type": "ref",
+                  "ref": "v:ChiAR",
+                  "name": "登录按钮",
+                  "width": "fill_container",
+                  "height": 40,
+                  "descendants": {
+                    "v:F3Bzb": {
+                      "content": "登录",
+                      "fontFamily": "系统字体"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "crxBF",
+      "x": 3040,
+      "y": 0,
+      "name": "登录页 / 提交加载态",
+      "width": 1440,
+      "height": 960,
+      "fill": "$8:color-bg-layout",
+      "children": [
+        {
+          "type": "frame",
+          "id": "cnjgc",
+          "name": "系统插图区",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$8:color-primary-bg",
+          "layout": "vertical",
+          "gap": "$8:space-24",
+          "padding": "$8:space-48",
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "Ymj5U",
+              "name": "病历质控插画",
+              "width": "fill_container",
+              "height": 360,
+              "fill": {
+                "type": "image",
+                "enabled": true,
+                "url": "images/generated-1775805662726.png",
+                "mode": "fill"
+              },
+              "cornerRadius": "$8:radius-xxl",
+              "layout": "vertical"
+            },
+            {
+              "type": "frame",
+              "id": "ltJqs",
+              "name": "品牌标题",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$8:space-8",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "8JOs5",
+                  "name": "platform",
+                  "fill": "$8:color-text",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "南阳第一人民医院",
+                  "fontFamily": "系统字体",
+                  "fontSize": "$8:font-size-heading-2",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "QxCF8",
+                  "name": "sub",
+                  "fill": "$8:color-text",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "病历质控标注系统",
+                  "fontFamily": "系统字体",
+                  "fontSize": "$8:font-size-heading-3",
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "bxr2X",
+              "name": "en",
+              "fill": "$8:color-text-secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Medical Record Quality Control Annotation Platform",
+              "fontFamily": "系统字体",
+              "fontSize": "$8:font-size",
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "qhsxE",
+              "name": "desc",
+              "fill": "$8:color-text-secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "用于病历质控规则核验与智能体结果对比标注",
+              "fontFamily": "系统字体",
+              "fontSize": "$8:font-size",
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "YF5Y7",
+          "name": "登录区域 / 加载态",
+          "width": 560,
+          "height": "fill_container",
+          "fill": "$8:color-bg-container",
+          "layout": "vertical",
+          "padding": "$8:space-48",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "cBk4n",
+              "name": "加载态 Card",
+              "width": "fill_container",
+              "fill": "$8:color-bg-container",
+              "cornerRadius": "$8:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$8:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$8:space-16",
+              "padding": "$8:space-24",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ZpRl3",
+                  "name": "Card Header",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$8:space-8",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "C4RTi",
+                      "name": "lTitle",
+                      "fill": "$8:color-text",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "账号登录",
+                      "fontFamily": "系统字体",
+                      "fontSize": "$8:font-size-heading-4",
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "SEpRN",
+                  "name": "加载态表单",
+                  "opacity": 0.65,
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$8:space-12",
+                  "children": [
+                    {
+                      "id": "wF6YE",
+                      "type": "ref",
+                      "ref": "B:RPorp",
+                      "name": "用户名已填写",
+                      "width": "fill_container",
+                      "descendants": {
+                        "B:zXqWM": {
+                          "enabled": true
+                        },
+                        "B:PmyTJ": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:Ghcve": {
+                          "content": "用户名",
+                          "fontFamily": "系统字体"
+                        },
+                        "B:127Ck": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:CxEuz": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:Zd8zs": {
+                          "content": "admin",
+                          "fill": "$8:color-text",
+                          "fontFamily": "系统字体"
+                        },
+                        "B:Nw20U": {
+                          "fontFamily": "系统字体"
+                        }
+                      }
+                    },
+                    {
+                      "id": "73RrV",
+                      "type": "ref",
+                      "ref": "B:B1iAr",
+                      "name": "密码已填写",
+                      "width": "fill_container",
+                      "descendants": {
+                        "B:3YHmG": {
+                          "enabled": true
+                        },
+                        "B:JeAnc": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:c1d6x": {
+                          "content": "密码",
+                          "fontFamily": "系统字体"
+                        },
+                        "B:HBJwX": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:M3UfR": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:miAUm": {
+                          "content": "••••••••",
+                          "fill": "$8:color-text",
+                          "fontFamily": "系统字体"
+                        }
+                      }
+                    },
+                    {
+                      "id": "zjq8V",
+                      "type": "ref",
+                      "ref": "B:7wJYi",
+                      "name": "记住登录状态",
+                      "width": "fill_container",
+                      "descendants": {
+                        "B:1yhVl": {
+                          "enabled": false
+                        },
+                        "B:U0paF": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:DgDiP": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:nexcT": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:kgLQw": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:ikX4E": {
+                          "content": "记住登录状态",
+                          "fontFamily": "系统字体"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "f811U",
+                  "name": "登录按钮 Loading",
+                  "width": "fill_container",
+                  "height": 40,
+                  "fill": "$8:color-primary",
+                  "cornerRadius": "$8:radius-lg",
+                  "gap": "$8:space-8",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "irs1P",
+                      "name": "spin",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "loader-circle",
+                      "iconFontFamily": "lucide",
+                      "fill": "$8:color-bg-container"
+                    },
+                    {
+                      "type": "text",
+                      "id": "hOK2T",
+                      "name": "lbtntxt",
+                      "fill": "$8:color-bg-container",
+                      "content": "登录中",
+                      "fontFamily": "系统字体",
+                      "fontSize": "$8:font-size",
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "vTlbM",
+      "x": 4560,
+      "y": 0,
+      "name": "登录页 / 认证失败态",
+      "width": 1440,
+      "height": 960,
+      "fill": "$8:color-bg-layout",
+      "children": [
+        {
+          "type": "frame",
+          "id": "cOwP7",
+          "name": "系统插图区",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$8:color-primary-bg",
+          "layout": "vertical",
+          "gap": "$8:space-24",
+          "padding": "$8:space-48",
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "o1zm7",
+              "name": "病历质控插画",
+              "width": "fill_container",
+              "height": 360,
+              "fill": {
+                "type": "image",
+                "enabled": true,
+                "url": "images/generated-1775805662726.png",
+                "mode": "fill"
+              },
+              "cornerRadius": "$8:radius-xxl",
+              "layout": "vertical"
+            },
+            {
+              "type": "frame",
+              "id": "7LOfa",
+              "name": "品牌标题",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$8:space-8",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "3BPti",
+                  "name": "platform",
+                  "fill": "$8:color-text",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "南阳第一人民医院",
+                  "fontFamily": "系统字体",
+                  "fontSize": "$8:font-size-heading-2",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "tw2bn",
+                  "name": "sub",
+                  "fill": "$8:color-text",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "病历质控标注系统",
+                  "fontFamily": "系统字体",
+                  "fontSize": "$8:font-size-heading-3",
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "vQvdc",
+              "name": "en",
+              "fill": "$8:color-text-secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Medical Record Quality Control Annotation Platform",
+              "fontFamily": "系统字体",
+              "fontSize": "$8:font-size",
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "hgilG",
+              "name": "desc",
+              "fill": "$8:color-text-secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "用于病历质控规则核验与智能体结果对比标注",
+              "fontFamily": "系统字体",
+              "fontSize": "$8:font-size",
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "SRkIr",
+          "name": "登录区域 / 错误态",
+          "width": 560,
+          "height": "fill_container",
+          "fill": "$8:color-bg-container",
+          "layout": "vertical",
+          "padding": "$8:space-48",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "KhydQ",
+              "name": "错误态 Card",
+              "width": "fill_container",
+              "fill": "$8:color-bg-container",
+              "cornerRadius": "$8:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$8:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$8:space-16",
+              "padding": "$8:space-24",
+              "children": [
+                {
+                  "id": "J8QRW",
+                  "type": "ref",
+                  "ref": "p:ukzrA",
+                  "name": "统一认证失败提示",
+                  "width": "fill_container",
+                  "descendants": {
+                    "p:VPvGe": {
+                      "content": "账号或密码错误，请重新输入",
+                      "fontFamily": "系统字体"
+                    },
+                    "p:1uLeE": {
+                      "fontFamily": "系统字体"
+                    }
+                  }
+                },
+                {
+                  "type": "frame",
+                  "id": "rGS3L",
+                  "name": "Card Header",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$8:space-8",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "7t7Fy",
+                      "name": "errTitle",
+                      "fill": "$8:color-text",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "账号登录",
+                      "fontFamily": "系统字体",
+                      "fontSize": "$8:font-size-heading-4",
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "XKpYH",
+                  "name": "错误态表单",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$8:space-12",
+                  "children": [
+                    {
+                      "id": "DoiV2",
+                      "type": "ref",
+                      "ref": "B:RPorp",
+                      "name": "用户名已填写",
+                      "width": "fill_container",
+                      "descendants": {
+                        "B:zXqWM": {
+                          "enabled": true
+                        },
+                        "B:PmyTJ": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:Ghcve": {
+                          "content": "用户名",
+                          "fontFamily": "系统字体"
+                        },
+                        "B:127Ck": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:CxEuz": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:Zd8zs": {
+                          "content": "admin",
+                          "fill": "$8:color-text",
+                          "fontFamily": "系统字体"
+                        },
+                        "B:Nw20U": {
+                          "fontFamily": "系统字体"
+                        }
+                      }
+                    },
+                    {
+                      "id": "ZHoJU",
+                      "type": "ref",
+                      "ref": "B:B1iAr",
+                      "name": "密码已填写",
+                      "width": "fill_container",
+                      "descendants": {
+                        "B:3YHmG": {
+                          "enabled": true
+                        },
+                        "B:JeAnc": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:c1d6x": {
+                          "content": "密码",
+                          "fontFamily": "系统字体"
+                        },
+                        "B:HBJwX": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:M3UfR": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:miAUm": {
+                          "content": "••••••••",
+                          "fill": "$8:color-text",
+                          "fontFamily": "系统字体"
+                        }
+                      }
+                    },
+                    {
+                      "id": "AIioG",
+                      "type": "ref",
+                      "ref": "B:7wJYi",
+                      "name": "记住登录状态",
+                      "width": "fill_container",
+                      "descendants": {
+                        "B:1yhVl": {
+                          "enabled": false
+                        },
+                        "B:U0paF": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:DgDiP": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:nexcT": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:kgLQw": {
+                          "fontFamily": "系统字体"
+                        },
+                        "B:ikX4E": {
+                          "content": "记住登录状态",
+                          "fontFamily": "系统字体"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "I2edq",
+                  "type": "ref",
+                  "ref": "v:ChiAR",
+                  "name": "登录按钮",
+                  "width": "fill_container",
+                  "height": 40,
+                  "descendants": {
+                    "v:F3Bzb": {
+                      "content": "登录",
+                      "fontFamily": "系统字体"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "PKqwG",
+      "x": 6080,
+      "y": 0,
+      "name": "登录后鉴权反馈画板",
+      "width": 720,
+      "height": 960,
+      "fill": "$8:color-bg-layout",
+      "layout": "vertical",
+      "gap": "$8:space-24",
+      "padding": "$8:space-48",
+      "children": [
+        {
+          "type": "text",
+          "id": "0gLUh",
+          "name": "authTitle",
+          "fill": "$8:color-text",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "登录后鉴权反馈",
+          "fontFamily": "系统字体",
+          "fontSize": "$8:font-size-heading-3",
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "xNUoP",
+          "name": "authDesc",
+          "fill": "$8:color-text-secondary",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "以下内容不出现在登录主页面，用于审阅 token 刷新、未授权和角色不匹配的系统反馈。",
+          "fontFamily": "系统字体",
+          "fontSize": "$8:font-size",
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "nVhzK",
+          "name": "登录成功反馈",
+          "width": "fill_container",
+          "fill": "$8:color-bg-container",
+          "cornerRadius": "$8:radius-lg",
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "$8:color-border-secondary"
+          },
+          "layout": "vertical",
+          "gap": "$8:space-12",
+          "padding": "$8:space-24",
+          "children": [
+            {
+              "type": "icon_font",
+              "id": "WKxGo",
+              "name": "sIcon",
+              "width": 32,
+              "height": 32,
+              "iconFontName": "circle-check",
+              "iconFontFamily": "lucide",
+              "fill": "$8:color-success"
+            },
+            {
+              "type": "text",
+              "id": "NKmyi",
+              "name": "sTitle",
+              "fill": "$8:color-text",
+              "content": "登录成功",
+              "fontFamily": "系统字体",
+              "fontSize": "$8:font-size-lg",
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "TgCwO",
+              "name": "sDesc",
+              "fill": "$8:color-text-secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "返回 access token、refresh token 和 user.role 后，admin 进入 /admin/plans，operator 进入 /operator/plans。",
+              "fontFamily": "系统字体",
+              "fontSize": "$8:font-size",
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "AGwfj",
+          "name": "Token 自动刷新",
+          "width": "fill_container",
+          "fill": "$8:color-bg-container",
+          "cornerRadius": "$8:radius-lg",
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "$8:color-border-secondary"
+          },
+          "layout": "vertical",
+          "gap": "$8:space-12",
+          "padding": "$8:space-24",
+          "children": [
+            {
+              "type": "icon_font",
+              "id": "xIRiF",
+              "name": "rIcon",
+              "width": 32,
+              "height": 32,
+              "iconFontName": "refresh-cw",
+              "iconFontFamily": "lucide",
+              "fill": "$8:color-primary"
+            },
+            {
+              "type": "text",
+              "id": "BZRX9",
+              "name": "rTitle",
+              "fill": "$8:color-text",
+              "content": "Access token 过期",
+              "fontFamily": "系统字体",
+              "fontSize": "$8:font-size-lg",
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "AjRk6",
+              "name": "rDesc",
+              "fill": "$8:color-text-secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "客户端使用 refresh token 静默换新；无效或过期 refresh token 返回 401 并回到登录页。",
+              "fontFamily": "系统字体",
+              "fontSize": "$8:font-size",
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "ndkCk",
+          "name": "权限不匹配反馈",
+          "width": "fill_container",
+          "fill": "$8:color-bg-container",
+          "cornerRadius": "$8:radius-lg",
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "$8:color-border-secondary"
+          },
+          "layout": "vertical",
+          "gap": "$8:space-12",
+          "padding": "$8:space-24",
+          "children": [
+            {
+              "type": "icon_font",
+              "id": "fMytv",
+              "name": "fIcon",
+              "width": 32,
+              "height": 32,
+              "iconFontName": "shield-alert",
+              "iconFontFamily": "lucide",
+              "fill": "$8:color-error"
+            },
+            {
+              "type": "text",
+              "id": "2c0o3",
+              "name": "fTitle",
+              "fill": "$8:color-text",
+              "content": "403 FORBIDDEN",
+              "fontFamily": "系统字体",
+              "fontSize": "$8:font-size-lg",
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "3CJnq",
+              "name": "fDesc",
+              "fill": "$8:color-text-secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "已登录但角色不匹配时显示无权限反馈，不在登录页暴露管理入口。",
+              "fontFamily": "系统字体",
+              "fontSize": "$8:font-size",
+              "fontWeight": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "Jqk8X",
+      "x": 6880,
+      "y": 0,
+      "name": "交互说明 Prompt 卡片",
+      "width": 420,
+      "height": 1500,
+      "fill": "$8:color-bg-layout",
+      "layout": "vertical",
+      "gap": "$8:space-16",
+      "padding": "$8:space-24",
+      "children": [
+        {
+          "type": "text",
+          "id": "oMAQq",
+          "name": "noteTitle",
+          "fill": "$8:color-text",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "Prompt 交互说明",
+          "fontFamily": "系统字体",
+          "fontSize": "$8:font-size-heading-4",
+          "fontWeight": "600"
+        },
+        {
+          "type": "prompt",
+          "id": "4A4wT",
+          "name": "n1",
+          "width": "fill_container",
+          "height": 150,
+          "content": "登录按钮：点击后调用 POST /auth/login；成功返回 access_token、refresh_token、expires_in、refresh_expires_in 与 user.role。"
+        },
+        {
+          "type": "prompt",
+          "id": "4juxb",
+          "name": "n2",
+          "width": "fill_container",
+          "height": 130,
+          "content": "角色跳转：admin 登录后进入 /admin/plans；operator 登录后进入 /operator/plans。"
+        },
+        {
+          "type": "prompt",
+          "id": "c7pmT",
+          "name": "n3",
+          "width": "fill_container",
+          "height": 150,
+          "content": "错误处理：401 AUTH_INVALID_CREDENTIALS 统一显示“账号或密码错误”，不标记具体哪个字段错误。"
+        },
+        {
+          "type": "prompt",
+          "id": "uwtEz",
+          "name": "n4",
+          "width": "fill_container",
+          "height": 150,
+          "content": "记住登录状态：勾选后保留 refresh token，用于 access token 过期后的自动刷新。"
+        },
+        {
+          "type": "prompt",
+          "id": "01lko",
+          "name": "n5",
+          "width": "fill_container",
+          "height": 150,
+          "content": "密码眼睛图标：切换密码显示/隐藏；只改变本地输入展示，不改变提交内容。"
+        },
+        {
+          "type": "prompt",
+          "id": "Tupyc",
+          "name": "n6",
+          "width": "fill_container",
+          "height": 150,
+          "content": "受保护接口：未携带 token 返回 401；角色不匹配返回 403，对应反馈放在独立鉴权画板。"
+        }
+      ]
+    }
+  ],
+  "imports": {
+    "8": "../components/layout-new.lib.pen",
+    "r": "../tokens.lib.pen",
+    "t": "../components/data-display-new.lib.pen",
+    "B": "../components/data-entry-new.lib.pen",
+    "p": "../components/feedback-new.lib.pen",
+    "v": "../components/general-new.lib.pen",
+    "i": "../components/navigation-new.lib.pen"
+  }
+}

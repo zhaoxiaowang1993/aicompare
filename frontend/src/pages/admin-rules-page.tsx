@@ -1,5 +1,5 @@
 import { Button, Card, Input, Space, Table } from 'antd'
-import PageShell from '../components/layout/page-shell'
+import PageShell from '../components/layout/layout'
 
 const rules = [
   { key: 1, code: 'RULE_CHIEF_COMPLAINT_MAX_20', name: '主诉不得超过20字', score: 5 }

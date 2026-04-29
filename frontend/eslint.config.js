@@ -6,6 +6,18 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
+    ignores: ['dist/**', 'node_modules/**']
+  },
+  {
+    files: ['*.config.cjs'],
+    languageOptions: {
+      globals: {
+        module: 'readonly',
+        require: 'readonly'
+      }
+    }
+  },
+  {
     files: ['src/**/*.{ts,tsx}'],
     plugins: { 'react-hooks': reactHooks },
     rules: {

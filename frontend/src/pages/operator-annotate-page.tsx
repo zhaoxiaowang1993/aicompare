@@ -1,5 +1,5 @@
 import { Button, Card, Col, Form, Input, Radio, Row, Select, Space, Typography } from 'antd'
-import PageShell from '../components/layout/page-shell'
+import PageShell from '../components/layout/layout'
 
 export default function OperatorAnnotatePage() {
   return (
