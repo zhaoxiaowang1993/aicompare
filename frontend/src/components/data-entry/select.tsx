@@ -56,7 +56,8 @@ export default function Select<ValueType = unknown, OptionType extends object = 
       className={cx(
         'min-w-40',
         state === 'hover' && '[&_.ant-select-selector]:border-[var(--color-primary-hover)]',
-        state === 'active' && '[&_.ant-select-selector]:border-[var(--color-primary)] [&_.ant-select-selector]:shadow-[0_0_0_2px_var(--color-primary-shadow)]',
+        state === 'active' &&
+          '[&_.ant-select-selector]:border-[var(--select-active-border-color)] [&_.ant-select-selector]:shadow-[0_0_0_var(--control-outline-width)_var(--select-active-outline-color)]',
         className
       )}
       popupClassName={cx('rounded-md', popupClassName)}

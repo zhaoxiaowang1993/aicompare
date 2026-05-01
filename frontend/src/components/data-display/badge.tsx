@@ -60,7 +60,7 @@ function cx(...classes: Array<string | false | null | undefined>) {
 function renderIconBadge(icon: ReactNode, color: BadgeColor, className?: string, style?: CSSProperties) {
   return (
     <span
-      className={cx('inline-flex h-3.5 w-3.5 items-center justify-center leading-none', colorClassByName[color], className)}
+      className={cx('inline-flex h-[var(--badge-indicator-height-sm)] w-[var(--badge-indicator-height-sm)] items-center justify-center leading-none', colorClassByName[color], className)}
       style={style}
     >
       {icon}
@@ -93,7 +93,7 @@ export default function Badge({
         text={ribbonText ?? text ?? count}
         placement={placement}
         color={`var(--color-${color === 'default' || color === 'blue' ? 'primary' : `${color}-6`})`}
-        className={cx('rounded-t-[4px] text-sm leading-normal', ribbonProps?.className)}
+        className={cx('rounded-t-[var(--radius-sm)] text-sm leading-normal', ribbonProps?.className)}
       >
         {children}
       </AntBadge.Ribbon>
@@ -112,8 +112,8 @@ export default function Badge({
       color={`var(--color-${color === 'default' || color === 'blue' ? 'error' : `${color}-6`})`}
       text={variant === 'dot' ? text : undefined}
       className={cx(
-        '[&_.ant-badge-count]:min-w-5 [&_.ant-badge-count]:rounded-[10px] [&_.ant-badge-count]:px-1.5',
-        '[&_.ant-badge-dot]:h-1.5 [&_.ant-badge-dot]:w-1.5',
+        '[&_.ant-badge-count]:min-w-[var(--badge-indicator-height)] [&_.ant-badge-count]:rounded-[var(--radius-full)] [&_.ant-badge-count]:px-[var(--space-6)]',
+        '[&_.ant-badge-dot]:h-[var(--badge-dot-size)] [&_.ant-badge-dot]:w-[var(--badge-dot-size)]',
         dotState === 'progressing' && '[&_.ant-badge-dot]:animate-pulse',
         className
       )}

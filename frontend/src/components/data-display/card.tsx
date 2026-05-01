@@ -43,7 +43,7 @@ export default function Card({
         'rounded-lg bg-[var(--color-bg-container)]',
         isSmall ? '[&_.ant-card-body]:p-3 [&_.ant-card-head]:min-h-9 [&_.ant-card-head]:px-3' : '[&_.ant-card-body]:p-6',
         !isBordered && 'border-transparent shadow-none',
-        state === 'hover' && 'shadow-[0_2px_8px_var(--color-000000-17)]',
+        state === 'hover' && 'shadow-[var(--shadow-control)]',
         className
       )}
     />

@@ -118,7 +118,7 @@ export default function Layout({
       collapsed={collapsed}
       onCollapse={onCollapse}
       trigger={type === 'customTrigger' ? null : undefined}
-      className={cx(isSiderDark ? 'bg-[var(--color-layout-sider-bg)]' : 'bg-[var(--color-bg-container)]')}
+      className={cx(isSiderDark ? 'bg-[var(--layout-sider-bg)]' : 'bg-[var(--color-bg-container)]')}
     >
       {siderSlotTop}
       <Menu
@@ -126,7 +126,7 @@ export default function Layout({
         mode="inline"
         items={siderItems}
         selectedKeys={selectedSiderKeys}
-        className={cx('border-0', isSiderDark ? 'bg-[var(--color-layout-sider-bg)]' : 'bg-[var(--color-bg-container)]')}
+        className={cx('border-0', isSiderDark ? 'bg-[var(--layout-sider-bg)]' : 'bg-[var(--color-bg-container)]')}
       />
       {siderSlotBottom}
     </Sider>
@@ -138,7 +138,7 @@ export default function Layout({
         <Header
           className={cx(
             'flex h-16 items-center gap-6 px-12',
-            isHeaderDark ? 'bg-[var(--color-layout-sider-bg)] text-[var(--color-white)]' : 'bg-[var(--color-bg-container)] text-[var(--color-text)]'
+            isHeaderDark ? 'bg-[var(--layout-sider-bg)] text-[var(--color-white)]' : 'bg-[var(--color-bg-container)] text-[var(--color-text)]'
           )}
         >
           <div className="flex shrink-0 items-center gap-3 pr-12">
@@ -151,7 +151,7 @@ export default function Layout({
             mode="horizontal"
             items={headerMenuItems}
             selectedKeys={selectedHeaderKeys}
-            className={cx('min-w-0 flex-1 border-0', isHeaderDark ? 'bg-[var(--color-layout-sider-bg)]' : 'bg-[var(--color-bg-container)]')}
+            className={cx('min-w-0 flex-1 border-0', isHeaderDark ? 'bg-[var(--layout-sider-bg)]' : 'bg-[var(--color-bg-container)]')}
           />
           {headerEnd}
         </Header>

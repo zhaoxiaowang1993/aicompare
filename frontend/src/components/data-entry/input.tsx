@@ -91,7 +91,7 @@ export default function Input({
     className: cx(
       'rounded-md',
       state === 'hover' && 'border-[var(--color-primary-hover)]',
-      state === 'active' && 'border-[var(--color-primary)] shadow-[0_0_0_2px_var(--color-primary-shadow)]',
+      state === 'active' && 'border-[var(--color-primary)] shadow-[var(--input-active-shadow)]',
       className
     )
   }
