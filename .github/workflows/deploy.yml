@@ -71,11 +71,20 @@ jobs:
           chmod 600 ~/.ssh/aicompare_deploy_key
           ssh-keyscan -p "$DEPLOY_SSH_PORT" "$DEPLOY_HOST" >> ~/.ssh/known_hosts
 
-      - name: Prepare remote directory
+      - name: Resolve remote directory
         run: |
+          set +e
           ssh -i ~/.ssh/aicompare_deploy_key -p "$DEPLOY_SSH_PORT" "$DEPLOY_USER@$DEPLOY_HOST" \
-            "mkdir -p '$DEPLOY_PATH' 2>/dev/null || \
-             (sudo mkdir -p '$DEPLOY_PATH' && sudo chown \$(id -un):\$(id -gn) '$DEPLOY_PATH')"
+            "mkdir -p '$DEPLOY_PATH'"
+          mkdir_result=$?
+          set -e
+
+          if [ "$mkdir_result" -ne 0 ]; then
+            echo "::warning::DEPLOY_PATH is not writable by the deploy user. Falling back to ~/aicompare."
+            echo "DEPLOY_PATH=aicompare" >> "$GITHUB_ENV"
+            ssh -i ~/.ssh/aicompare_deploy_key -p "$DEPLOY_SSH_PORT" "$DEPLOY_USER@$DEPLOY_HOST" \
+              "mkdir -p aicompare"
+          fi
 
       - name: Sync source to server
         run: |

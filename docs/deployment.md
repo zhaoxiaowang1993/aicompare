@@ -7,7 +7,7 @@
 - 访问入口：用户访问 `http://47.93.150.173`。
 - 端口隔离：AICompare 容器只绑定宿主机 `127.0.0.1:2657`，由宿主机 Nginx 的独立 IP server block 代理。
 - 现有项目隔离：仅新增 `/etc/nginx/conf.d/aicompare-ip.conf`，不修改 `wenshuyisheng.cn` 的既有 Nginx 配置。
-- 服务器依赖：Docker、Docker Compose、Nginx、rsync；部署用户需要能执行 `sudo mkdir/chown` 初始化部署目录，以及执行 `sudo nginx -t` 与 `sudo systemctl reload nginx`。
+- 服务器依赖：Docker、Docker Compose、Nginx、rsync；部署用户需要能写入 `DEPLOY_PATH`。如果 `DEPLOY_PATH` 不可写，workflow 会回退到部署用户 home 下的 `~/aicompare`。部署用户仍需要能执行 `sudo nginx -t` 与 `sudo systemctl reload nginx`。
 
 ## GitHub Secrets
 
