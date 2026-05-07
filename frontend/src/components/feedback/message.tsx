@@ -14,6 +14,10 @@ export type ComponentProps = Omit<ArgsProps, 'type' | 'content'> & {
 }
 export type MessageComponentProps = ComponentProps
 
+function cx(...classes: Array<string | false | null | undefined>) {
+  return classes.filter(Boolean).join(' ')
+}
+
 export default function Message({ type = 'default', state = 'default', content, openOnMount = true, ...messageProps }: ComponentProps) {
   const [api, contextHolder] = antMessage.useMessage()
   void state
@@ -21,7 +25,11 @@ export default function Message({ type = 'default', state = 'default', content, 
   useEffect(() => {
     if (!openOnMount) return
 
-    const payload = { content: content ?? defaultContentByType[type], ...messageProps }
+    const payload = {
+      content: content ?? defaultContentByType[type],
+      ...messageProps,
+      className: cx('aicompare-message', messageProps.className)
+    }
     if (type === 'default') {
       void api.open(payload)
       return

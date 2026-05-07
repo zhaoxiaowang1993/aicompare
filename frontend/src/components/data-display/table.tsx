@@ -57,7 +57,7 @@ export default function Table<RecordType extends object = object>({
         ...locale,
         emptyText:
           emptyVariant === 'empty' ? (
-            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No data" className="my-6" />
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No data" className="my-24" />
           ) : (
             locale?.emptyText
           )
@@ -65,8 +65,8 @@ export default function Table<RecordType extends object = object>({
       className={cx(
         'rounded-lg bg-[var(--color-bg-container)]',
         '[&_.ant-table]:rounded-lg [&_.ant-table-thead>tr>th]:bg-[var(--color-bg-layout)]',
-        size === 'small' && '[&_.ant-table-cell]:px-2 [&_.ant-table-cell]:py-2',
-        size === 'middle' && '[&_.ant-table-cell]:px-3 [&_.ant-table-cell]:py-3',
+        size === 'small' && '[&_.ant-table-cell]:px-12 [&_.ant-table-cell]:py-8',
+        size === 'middle' && '[&_.ant-table-cell]:px-16 [&_.ant-table-cell]:py-12',
         border === 'borderless' && '[&_.ant-table-cell]:border-x-0',
         className
       )}

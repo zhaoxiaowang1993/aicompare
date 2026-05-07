@@ -1,0 +1,542 @@
+{
+  "version": "2.11",
+  "children": [
+    {
+      "type": "frame",
+      "id": "bi8Au",
+      "x": 0,
+      "y": 0,
+      "name": "登录页 / 默认态",
+      "clip": true,
+      "width": 1440,
+      "height": 960,
+      "fill": "$m:color-bg-layout",
+      "children": [
+        {
+          "type": "frame",
+          "id": "y9YTs",
+          "name": "品牌与业务说明",
+          "width": 840,
+          "height": "fill_container",
+          "fill": "$m:color-primary-bg",
+          "layout": "vertical",
+          "gap": "$m:space-24",
+          "padding": "$m:space-48",
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "QaqlX",
+              "name": "医疗质控插图",
+              "width": "fill_container",
+              "height": 320,
+              "fill": {
+                "type": "image",
+                "enabled": true,
+                "url": "images/generated-1775805662726.png",
+                "mode": "fill"
+              },
+              "cornerRadius": "$m:radius-xl"
+            },
+            {
+              "type": "frame",
+              "id": "xN1q0",
+              "name": "系统品牌",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$m:space-8",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "i0CvG",
+                  "name": "brandTitle",
+                  "fill": "$m:color-text",
+                  "content": "南阳第一人民医院",
+                  "lineHeight": "$m:line-height-heading",
+                  "fontFamily": "SF Pro",
+                  "fontSize": "$m:font-size-heading-2",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "N1C5q",
+                  "name": "brandSub",
+                  "fill": "$m:color-text",
+                  "content": "病历质控标注系统",
+                  "lineHeight": "$m:line-height-heading",
+                  "fontFamily": "SF Pro",
+                  "fontSize": "$m:font-size-heading-4",
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "GHyli",
+          "name": "登录表单区",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$m:color-bg-container",
+          "layout": "vertical",
+          "gap": "$m:space-24",
+          "padding": "$m:space-48",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "id": "q07Fg",
+              "type": "ref",
+              "ref": "m:bXKOe",
+              "name": "账号登录卡片",
+              "width": 448,
+              "descendants": {
+                "m:hZtSk": {
+                  "content": "账号登录"
+                },
+                "m:Zg4i3": {
+                  "type": "frame",
+                  "id": "qyoX8",
+                  "name": "登录表单内容",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$m:space-16",
+                  "padding": "$m:space-24",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "G7yBI",
+                      "name": "intro",
+                      "fill": "$m:color-text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "请输入系统预置或管理员创建的账号密码。",
+                      "lineHeight": "$m:line-height",
+                      "fontFamily": "SF Pro",
+                      "fontSize": "$m:font-size",
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "id": "Aq8TR",
+                      "type": "ref",
+                      "ref": "N:RPorp",
+                      "name": "用户名",
+                      "width": "fill_container",
+                      "descendants": {
+                        "N:Ghcve": {
+                          "content": "用户名"
+                        },
+                        "N:Zd8zs": {
+                          "content": "请输入用户名"
+                        }
+                      }
+                    },
+                    {
+                      "id": "Mau1I",
+                      "type": "ref",
+                      "ref": "N:B1iAr",
+                      "name": "密码",
+                      "width": "fill_container",
+                      "descendants": {
+                        "N:c1d6x": {
+                          "content": "密码"
+                        },
+                        "N:miAUm": {
+                          "content": "请输入密码"
+                        }
+                      }
+                    },
+                    {
+                      "id": "cTno9",
+                      "type": "ref",
+                      "ref": "l:dn1qv",
+                      "name": "登录按钮",
+                      "width": "fill_container",
+                      "descendants": {
+                        "l:c2mPUe": {
+                          "content": "登录"
+                        }
+                      }
+                    },
+                    {
+                      "type": "frame",
+                      "id": "TqgH3",
+                      "name": "辅助说明",
+                      "width": "fill_container",
+                      "gap": "$m:space-8",
+                      "justifyContent": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "HzKtL",
+                          "name": "contactText",
+                          "fill": "$m:color-text-secondary",
+                          "content": "忘记密码请联系管理员",
+                          "lineHeight": "$m:line-height",
+                          "fontFamily": "SF Pro",
+                          "fontSize": "$m:font-size-sm",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "n0y7gl",
+      "x": 1504,
+      "y": 0,
+      "name": "登录页 / 加载态",
+      "clip": true,
+      "width": 1440,
+      "height": 960,
+      "fill": "$m:color-bg-layout",
+      "children": [
+        {
+          "type": "frame",
+          "id": "XLae1",
+          "name": "品牌与业务说明",
+          "width": 840,
+          "height": "fill_container",
+          "fill": "$m:color-primary-bg",
+          "layout": "vertical",
+          "gap": "$m:space-24",
+          "padding": "$m:space-48",
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "rfFHJ",
+              "name": "医疗质控插图",
+              "width": "fill_container",
+              "height": 320,
+              "fill": {
+                "type": "image",
+                "enabled": true,
+                "url": "images/generated-1775805662726.png",
+                "mode": "fill"
+              },
+              "cornerRadius": "$m:radius-xl"
+            },
+            {
+              "type": "frame",
+              "id": "UhqpI",
+              "name": "系统品牌",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$m:space-8",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "d6uUO",
+                  "name": "医院名称",
+                  "fill": "$m:color-text",
+                  "content": "南阳第一人民医院",
+                  "lineHeight": "$m:line-height-heading",
+                  "fontFamily": "Inter",
+                  "fontSize": "$m:font-size-heading-2",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "YnUIg",
+                  "name": "系统名称",
+                  "fill": "$m:color-text",
+                  "content": "病历质控标注系统",
+                  "lineHeight": "$m:line-height-heading",
+                  "fontFamily": "Inter",
+                  "fontSize": "$m:font-size-heading-4",
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "WCJui",
+          "name": "登录加载区",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$m:color-bg-container",
+          "layout": "vertical",
+          "gap": "$m:space-24",
+          "padding": "$m:space-48",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "id": "l8VkK",
+              "type": "ref",
+              "ref": "m:bXKOe",
+              "name": "登录中卡片",
+              "width": 448,
+              "descendants": {
+                "m:hZtSk": {
+                  "content": "账号登录"
+                },
+                "m:Zg4i3": {
+                  "type": "frame",
+                  "id": "G7Xnn",
+                  "name": "登录加载内容",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$m:space-16",
+                  "padding": "$m:space-24",
+                  "children": [
+                    {
+                      "id": "GSucS",
+                      "type": "ref",
+                      "ref": "F:Mq6aI",
+                      "name": "登录中提示",
+                      "descendants": {
+                        "F:davFB": {
+                          "content": "正在验证账号并签发访问令牌..."
+                        }
+                      }
+                    },
+                    {
+                      "id": "E57hAS",
+                      "type": "ref",
+                      "ref": "N:RPorp",
+                      "name": "用户名已填写",
+                      "width": "fill_container",
+                      "descendants": {
+                        "N:Ghcve": {
+                          "content": "用户名"
+                        },
+                        "N:Zd8zs": {
+                          "content": "admin"
+                        }
+                      }
+                    },
+                    {
+                      "id": "Xjeyi",
+                      "type": "ref",
+                      "ref": "N:B1iAr",
+                      "name": "密码已填写",
+                      "width": "fill_container",
+                      "descendants": {
+                        "N:c1d6x": {
+                          "content": "密码"
+                        },
+                        "N:miAUm": {
+                          "content": "••••••"
+                        }
+                      }
+                    },
+                    {
+                      "id": "DoSWf",
+                      "type": "ref",
+                      "ref": "l:o4Nzyi",
+                      "name": "登录按钮加载中",
+                      "width": "fill_container",
+                      "descendants": {
+                        "l:SxknA": {
+                          "content": "登录中"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "lsn66",
+      "x": 3008,
+      "y": 0,
+      "name": "登录页 / 错误态",
+      "clip": true,
+      "width": 1440,
+      "height": 960,
+      "fill": "$m:color-bg-layout",
+      "children": [
+        {
+          "type": "frame",
+          "id": "l7MIgQ",
+          "name": "品牌与安全说明",
+          "width": 840,
+          "height": "fill_container",
+          "fill": "$m:color-primary-bg",
+          "layout": "vertical",
+          "gap": "$m:space-24",
+          "padding": "$m:space-48",
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "MfRX5",
+              "name": "医疗质控插图",
+              "width": "fill_container",
+              "height": 320,
+              "fill": {
+                "type": "image",
+                "enabled": true,
+                "url": "images/generated-1775805662726.png",
+                "mode": "fill"
+              },
+              "cornerRadius": "$m:radius-xl"
+            },
+            {
+              "type": "frame",
+              "id": "w6Gug",
+              "name": "系统品牌",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$m:space-8",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "xrroO",
+                  "name": "医院名称",
+                  "fill": "$m:color-text",
+                  "content": "南阳第一人民医院",
+                  "lineHeight": "$m:line-height-heading",
+                  "fontFamily": "Inter",
+                  "fontSize": "$m:font-size-heading-2",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "CQ39q",
+                  "name": "系统名称",
+                  "fill": "$m:color-text",
+                  "content": "病历质控标注系统",
+                  "lineHeight": "$m:line-height-heading",
+                  "fontFamily": "Inter",
+                  "fontSize": "$m:font-size-heading-4",
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "sDuct",
+          "name": "登录错误区",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$m:color-bg-container",
+          "layout": "vertical",
+          "gap": "$m:space-24",
+          "padding": "$m:space-48",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "id": "SqTpT",
+              "type": "ref",
+              "ref": "m:bXKOe",
+              "name": "登录失败卡片",
+              "width": 448,
+              "descendants": {
+                "m:hZtSk": {
+                  "content": "账号登录"
+                },
+                "m:Zg4i3": {
+                  "type": "frame",
+                  "id": "xR4sI",
+                  "name": "登录错误内容",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$m:space-16",
+                  "padding": "$m:space-24",
+                  "children": [
+                    {
+                      "id": "tnRAX",
+                      "type": "ref",
+                      "ref": "F:ukzrA",
+                      "name": "认证失败提示",
+                      "width": "fill_container",
+                      "descendants": {
+                        "F:VPvGe": {
+                          "content": "账号或密码错误，请重新输入。"
+                        }
+                      }
+                    },
+                    {
+                      "id": "R68pTh",
+                      "type": "ref",
+                      "ref": "N:RPorp",
+                      "name": "用户名",
+                      "width": "fill_container",
+                      "descendants": {
+                        "N:Ghcve": {
+                          "content": "用户名"
+                        },
+                        "N:Zd8zs": {
+                          "content": "admin"
+                        }
+                      }
+                    },
+                    {
+                      "id": "P7pcF",
+                      "type": "ref",
+                      "ref": "N:B1iAr",
+                      "name": "密码",
+                      "width": "fill_container",
+                      "descendants": {
+                        "N:c1d6x": {
+                          "content": "密码"
+                        },
+                        "N:miAUm": {
+                          "content": "请输入密码"
+                        }
+                      }
+                    },
+                    {
+                      "id": "Yrkzf",
+                      "type": "ref",
+                      "ref": "l:dn1qv",
+                      "name": "重试登录按钮",
+                      "width": "fill_container",
+                      "descendants": {
+                        "l:c2mPUe": {
+                          "content": "重新登录"
+                        }
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "f6w8KV",
+                      "name": "errNote",
+                      "fill": "$m:color-text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "连续失败或忘记密码时，由管理员在成员管理中重置密码。",
+                      "lineHeight": "$m:line-height",
+                      "fontFamily": "Inter",
+                      "fontSize": "$m:font-size-sm",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "imports": {
+    "m": "../components/data-display.lib.pen",
+    "N": "../components/data-entry.lib.pen",
+    "F": "../components/feedback.lib.pen",
+    "l": "../components/general.lib.pen",
+    "X": "../components/layout.lib.pen",
+    "M": "../components/navigation.lib.pen"
+  }
+}

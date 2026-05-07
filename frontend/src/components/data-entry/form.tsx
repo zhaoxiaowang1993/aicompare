@@ -67,7 +67,7 @@ function renderLabel({
   labelContentType
 }: Pick<ComponentProps, 'label' | 'labelSlot' | 'labelIcon' | 'requiredMarkContent' | 'optionalText' | 'tooltip' | 'labelContentType'>) {
   return (
-    <span className="inline-flex items-center gap-1">
+    <span className="inline-flex items-center gap-4">
       {labelIcon}
       {requiredMarkContent ? <span className="text-[var(--color-error)]">{requiredMarkContent}</span> : null}
       {labelContentType === 'slot' ? labelSlot : label}
@@ -113,7 +113,7 @@ export default function Form<Values = unknown>({
         extra={extra ?? itemProps?.extra}
         validateStatus={validateStatus}
         className={cx(
-          '[&_.ant-form-item-label>label]:text-[var(--color-text)] [&_.ant-form-item-extra]:text-[var(--color-text-secondary)]',
+          '[&_.ant-form-item-explain-error]:text-caption [&_.ant-form-item-explain-error]:font-normal [&_.ant-form-item-explain-error]:text-[var(--color-error)] [&_.ant-form-item-label>label]:text-base [&_.ant-form-item-label>label]:font-normal [&_.ant-form-item-label>label]:text-[var(--color-text)] [&_.ant-form-item-extra]:text-[var(--color-text-secondary)]',
           className,
           itemProps?.className
         )}
@@ -127,7 +127,7 @@ export default function Form<Values = unknown>({
     <AntForm<Values>
       {...formProps}
       layout={itemLayout}
-      className={cx('[&_.ant-form-item]:mb-6 [&_.ant-form-item-label>label]:text-[var(--color-text)]', className)}
+      className={cx('[&_.ant-form-item]:mb-16 [&_.ant-form-item-explain-error]:text-caption [&_.ant-form-item-explain-error]:font-normal [&_.ant-form-item-explain-error]:text-[var(--color-error)] [&_.ant-form-item-label>label]:text-base [&_.ant-form-item-label>label]:font-normal [&_.ant-form-item-label>label]:text-[var(--color-text)]', className)}
     >
       {children}
     </AntForm>

@@ -89,12 +89,23 @@ export default function Input({
     value,
     defaultValue,
     className: cx(
-      'rounded-md',
+      'h-[32px] rounded-md text-base font-normal',
+      '[&::placeholder]:font-normal [&::placeholder]:text-[var(--color-text-disabled)]',
+      '[&_.ant-input]:text-base [&_.ant-input]:font-normal [&_.ant-input::placeholder]:font-normal [&_.ant-input::placeholder]:text-[var(--color-text-disabled)]',
+      '[&.ant-input-affix-wrapper-status-error]:!border-[var(--color-error)] [&.ant-input-affix-wrapper-status-error]:!shadow-none [&.ant-input-affix-wrapper-status-error:hover]:!border-[var(--color-error-hover)]',
+      '[&.ant-input-status-error]:!border-[var(--color-error)] [&.ant-input-status-error]:!shadow-none [&.ant-input-status-error:hover]:!border-[var(--color-error-hover)]',
       state === 'hover' && 'border-[var(--color-primary-hover)]',
       state === 'active' && 'border-[var(--color-primary)] shadow-[var(--input-active-shadow)]',
       className
     )
   }
+  const addonProps =
+    addon === 'none'
+      ? {}
+      : {
+          ...(addon === 'before' || addon === 'both' ? { addonBefore: addonBeforeContent } : {}),
+          ...(addon === 'after' || addon === 'both' ? { addonAfter: addonAfterContent } : {})
+        }
 
   if (kind === 'password') {
     return <AntInput.Password {...sharedProps} ref={inputRef as ReactComponentProps<typeof AntInput.Password>['ref']} />
@@ -119,9 +130,8 @@ export default function Input({
   return (
     <AntInput
       {...sharedProps}
+      {...addonProps}
       ref={inputRef as ReactComponentProps<typeof AntInput>['ref'] & React.Ref<InputRef>}
-      addonBefore={addon === 'before' || addon === 'both' ? addonBeforeContent : undefined}
-      addonAfter={addon === 'after' || addon === 'both' ? addonAfterContent : undefined}
     />
   )
 }

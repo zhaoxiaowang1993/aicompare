@@ -1,0 +1,133 @@
+name: Deploy Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  test-build-deploy:
+    runs-on: ubuntu-latest
+    env:
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+      DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+      DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+      DEPLOY_SSH_PORT: ${{ secrets.DEPLOY_SSH_PORT || '22' }}
+      APP_PORT: "2657"
+      PROD_SECRET_KEY: ${{ secrets.PROD_SECRET_KEY }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install backend dependencies
+        run: python -m pip install -r backend/requirements.txt
+
+      - name: Run backend and contract tests
+        run: python -m pytest
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+
+      - name: Lint frontend
+        working-directory: frontend
+        run: npm run lint
+
+      - name: Verify deployment secrets
+        run: |
+          test -n "$DEPLOY_HOST"
+          test -n "$DEPLOY_USER"
+          test -n "$DEPLOY_SSH_KEY"
+          test -n "$DEPLOY_PATH"
+          test -n "$PROD_SECRET_KEY"
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/aicompare_deploy_key
+          chmod 600 ~/.ssh/aicompare_deploy_key
+          ssh-keyscan -p "$DEPLOY_SSH_PORT" "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+
+      - name: Prepare remote directory
+        run: |
+          ssh -i ~/.ssh/aicompare_deploy_key -p "$DEPLOY_SSH_PORT" "$DEPLOY_USER@$DEPLOY_HOST" \
+            "mkdir -p '$DEPLOY_PATH'"
+
+      - name: Sync source to server
+        run: |
+          rsync -az --delete \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude '.venv' \
+            --exclude 'backend/.venv' \
+            --exclude 'backend/data' \
+            --exclude 'frontend/node_modules' \
+            --exclude 'frontend/dist' \
+            --exclude 'node_modules' \
+            -e "ssh -i ~/.ssh/aicompare_deploy_key -p $DEPLOY_SSH_PORT" \
+            ./ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/"
+
+      - name: Write production env
+        run: |
+          {
+            printf 'SECRET_KEY=%s\n' "$PROD_SECRET_KEY"
+            printf 'ACCESS_TOKEN_EXPIRE_MINUTES=60\n'
+            printf 'REFRESH_TOKEN_EXPIRE_DAYS=7\n'
+            printf 'APP_TIMEZONE=Asia/Shanghai\n'
+            printf 'SQLITE_PATH=/app/data/aicompare.db\n'
+            printf 'AICOMPARE_HOST_PORT=%s\n' "$APP_PORT"
+          } > /tmp/aicompare.env
+          scp -i ~/.ssh/aicompare_deploy_key -P "$DEPLOY_SSH_PORT" /tmp/aicompare.env "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/.env"
+
+      - name: Deploy Docker Compose
+        run: |
+          ssh -i ~/.ssh/aicompare_deploy_key -p "$DEPLOY_SSH_PORT" "$DEPLOY_USER@$DEPLOY_HOST" \
+            "cd '$DEPLOY_PATH' && \
+             docker compose -f docker/docker-compose.prod.yml --env-file .env up -d --build && \
+             docker compose -f docker/docker-compose.prod.yml --env-file .env ps"
+
+      - name: Configure host Nginx IP vhost
+        run: |
+          ssh -i ~/.ssh/aicompare_deploy_key -p "$DEPLOY_SSH_PORT" "$DEPLOY_USER@$DEPLOY_HOST" \
+            "printf '%s\n' \
+             'server {' \
+             '  listen 80;' \
+             '  server_name 47.93.150.173;' \
+             '' \
+             '  location / {' \
+             '    proxy_pass http://127.0.0.1:2657;' \
+             '    proxy_http_version 1.1;' \
+             '    proxy_set_header Host \$host;' \
+             '    proxy_set_header X-Real-IP \$remote_addr;' \
+             '    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' \
+             '    proxy_set_header X-Forwarded-Proto \$scheme;' \
+             '  }' \
+             '}' | sudo tee /etc/nginx/conf.d/aicompare-ip.conf >/dev/null && \
+             sudo nginx -t && \
+             sudo systemctl reload nginx"
+
+      - name: Smoke test
+        run: curl -fsS "http://$DEPLOY_HOST/api/health"

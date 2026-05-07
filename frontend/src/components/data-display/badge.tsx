@@ -93,7 +93,7 @@ export default function Badge({
         text={ribbonText ?? text ?? count}
         placement={placement}
         color={`var(--color-${color === 'default' || color === 'blue' ? 'primary' : `${color}-6`})`}
-        className={cx('rounded-t-[var(--radius-sm)] text-sm leading-normal', ribbonProps?.className)}
+        className={cx('rounded-t-[var(--radius-sm)] text-caption leading-normal', ribbonProps?.className)}
       >
         {children}
       </AntBadge.Ribbon>

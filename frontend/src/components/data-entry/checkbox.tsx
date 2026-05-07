@@ -70,7 +70,7 @@ export default function Checkbox({
         defaultValue={defaultValue}
         disabled={disabled}
         onChange={onGroupChange}
-        className={cx(direction === 'vertical' && 'flex flex-col gap-2', className)}
+        className={cx(direction === 'vertical' && 'flex flex-col gap-8', className)}
       />
     )
   }

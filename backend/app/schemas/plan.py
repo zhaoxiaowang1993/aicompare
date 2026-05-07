@@ -19,8 +19,10 @@ class PlanPatchRequest(BaseModel):
 class PlanItem(BaseModel):
     id: int
     name: str
+    description: str | None = None
     status: str
     owner_user_id: int
+    owner_username: str | None = None
     total_cases: int = 0
     annotated_cases: int = 0
 
@@ -37,5 +39,16 @@ class PlanDetail(BaseModel):
     name: str
     description: str | None = None
     owner_user_id: int
+    owner_username: str | None = None
     status: str
+    total_cases: int = 0
+    annotated_cases: int = 0
+    pending_cases: int = 0
+    completion_rate: float = 0
     created_at: datetime
+    updated_at: datetime | None = None
+
+
+class OperatorOption(BaseModel):
+    id: int
+    username: str

@@ -58,6 +58,7 @@ export default function Alert({
   secondaryActionText = 'Cancel',
   closeText,
   className,
+  closable,
   ...alertProps
 }: ComponentProps) {
   void state
@@ -77,6 +78,8 @@ export default function Alert({
         {primaryActionText}
       </Button>
     ) : undefined
+  const closableConfig =
+    closable ?? (closeType === 'icon' ? false : { closeIcon: closeType === 'text' || closeType === 'iconAndText' ? closeText : undefined })
 
   return (
     <AntAlert
@@ -86,12 +89,20 @@ export default function Alert({
       message={messageType === 'slot' ? messageSlot : message}
       description={descriptionVisible ? (descriptionType === 'slot' ? descriptionSlot : description) : undefined}
       action={action}
-      closeText={closeType === 'text' || closeType === 'iconAndText' ? closeText : undefined}
-      closable={alertProps.closable ?? closeType !== 'icon'}
+      closable={closableConfig}
       className={cx(
         'rounded-lg',
         banner && 'rounded-none',
-        '[&_.ant-alert-message]:text-[var(--color-text)] [&_.ant-alert-description]:text-[var(--color-text-secondary)]',
+        '[&_.ant-alert-message]:!text-base [&_.ant-alert-message]:!font-normal [&_.ant-alert-description]:!text-base [&_.ant-alert-description]:!font-normal',
+        type === 'error' &&
+          'border-[var(--color-error-border)] bg-[var(--color-error-bg)] [&_.ant-alert-icon]:text-[var(--color-error)] [&_.ant-alert-message]:!text-[var(--color-error-text)]',
+        type === 'info' &&
+          'border-[var(--color-info-border)] bg-[var(--color-info-bg)] [&_.ant-alert-icon]:text-[var(--color-info)] [&_.ant-alert-message]:!text-[var(--color-info-text)]',
+        type === 'warning' &&
+          'border-[var(--color-warning-border)] bg-[var(--color-warning-bg)] [&_.ant-alert-icon]:text-[var(--color-warning)] [&_.ant-alert-message]:!text-[var(--color-warning-text)]',
+        type === 'success' &&
+          'border-[var(--color-success-border)] bg-[var(--color-success-bg)] [&_.ant-alert-icon]:text-[var(--color-success)] [&_.ant-alert-message]:!text-[var(--color-success-text)]',
+        '[&_.ant-alert-description]:!text-[var(--color-text-secondary)]',
         className
       )}
     />

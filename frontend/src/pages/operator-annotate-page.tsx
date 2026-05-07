@@ -1,4 +1,5 @@
-import { Button, Card, Col, Form, Input, Radio, Row, Select, Space, Typography } from 'antd'
+import { Button, Card, Col, Form, Input, Radio, Row, Space, Typography } from 'antd'
+import Select from '../components/data-entry/select'
 import PageShell from '../components/layout/layout'
 
 export default function OperatorAnnotatePage() {
@@ -22,7 +23,7 @@ export default function OperatorAnnotatePage() {
         </Col>
       </Row>
 
-      <Card className="mt-4" title="提交标注">
+      <Card className="mt-16" title="提交标注">
         <Form layout="vertical">
           <Form.Item label="结论" required>
             <Radio.Group>
@@ -35,7 +36,7 @@ export default function OperatorAnnotatePage() {
             </Radio.Group>
           </Form.Item>
           <Form.Item label="原因（可多选）" required>
-            <Select mode="multiple" options={[
+            <Select<string[]> multiple options={[
               { value: 'NO_HIT_ERROR_RULE', label: 'NO_HIT_ERROR_RULE' },
               { value: 'NO_MISSING_RULE', label: 'NO_MISSING_RULE' },
               { value: 'NO_OVER_QC', label: 'NO_OVER_QC' },

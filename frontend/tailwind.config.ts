@@ -269,7 +269,52 @@ export default {
         "mono": ["var(--font-family-code)"]
       },
       "fontSize": {
+        "xs": ["var(--font-size-sm)", {
+          "lineHeight": "var(--line-height-sm)"
+        }],
+        "sm": ["var(--font-size)", {
+          "lineHeight": "var(--line-height)"
+        }],
         "base": ["var(--font-size)", {
+          "lineHeight": "var(--line-height)"
+        }],
+        "lg": ["var(--font-size-lg)", {
+          "lineHeight": "var(--line-height-lg)"
+        }],
+        "xl": ["var(--font-size-xl)", {
+          "lineHeight": "var(--line-height-xl)"
+        }],
+        "2xl": ["var(--font-size-heading-3)", {
+          "lineHeight": "var(--line-height-heading-3)"
+        }],
+        "3xl": ["var(--font-size-heading-2)", {
+          "lineHeight": "var(--line-height-heading-2)"
+        }],
+        "4xl": ["var(--font-size-heading-1)", {
+          "lineHeight": "var(--line-height-heading-1)"
+        }],
+        "caption": ["var(--font-size-sm)", {
+          "lineHeight": "var(--line-height-sm)"
+        }],
+        "body": ["var(--font-size)", {
+          "lineHeight": "var(--line-height)"
+        }],
+        "body-lg": ["var(--font-size-lg)", {
+          "lineHeight": "var(--line-height-lg)"
+        }],
+        "title-sm": ["var(--font-size-heading-5)", {
+          "lineHeight": "var(--line-height-heading-5)"
+        }],
+        "title": ["var(--font-size-heading-3)", {
+          "lineHeight": "var(--line-height-heading-3)"
+        }],
+        "title-lg": ["var(--font-size-heading-2)", {
+          "lineHeight": "var(--line-height-heading-2)"
+        }],
+        "icon": ["var(--font-size-icon)", {
+          "lineHeight": "var(--line-height)"
+        }],
+        "token-base": ["var(--font-size)", {
           "lineHeight": "var(--line-height)"
         }],
         "heading-1": ["var(--font-size-heading-1)", {
@@ -287,22 +332,22 @@ export default {
         "heading-5": ["var(--font-size-heading-5)", {
           "lineHeight": "var(--line-height-heading-5)"
         }],
-        "icon": ["var(--font-size-icon)", {
+        "token-icon": ["var(--font-size-icon)", {
           "lineHeight": "var(--line-height)"
         }],
-        "lg": ["var(--font-size-lg)", {
+        "token-lg": ["var(--font-size-lg)", {
           "lineHeight": "var(--line-height-lg)"
         }],
-        "sm": ["var(--font-size-sm)", {
+        "token-sm": ["var(--font-size-sm)", {
           "lineHeight": "var(--line-height-sm)"
         }],
-        "xl": ["var(--font-size-xl)", {
+        "token-xl": ["var(--font-size-xl)", {
           "lineHeight": "var(--line-height-xl)"
         }],
-        "xs": ["var(--font-size-xs)", {
+        "token-xs": ["var(--font-size-xs)", {
           "lineHeight": "var(--line-height-xs)"
         }],
-        "xxs": ["var(--font-size-xxs)", {
+        "token-xxs": ["var(--font-size-xxs)", {
           "lineHeight": "var(--line-height-xxs)"
         }]
       },

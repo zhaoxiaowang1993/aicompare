@@ -113,7 +113,7 @@ export default function Drawer({
       footer={footer}
       rootClassName={cx(blur && '[&_.ant-drawer-mask]:backdrop-blur-sm', rootClassName)}
       className={cx(
-        bodyPadding ? '[&_.ant-drawer-body]:p-6' : '[&_.ant-drawer-body]:p-0',
+        bodyPadding ? '[&_.ant-drawer-body]:p-24' : '[&_.ant-drawer-body]:p-0',
         closeHover && '[&_.ant-drawer-close:hover]:text-[var(--color-primary-hover)]',
         className
       )}

@@ -40,7 +40,7 @@ function cx(...classes: Array<string | false | null | undefined>) {
 function renderWithContent(placement: TabsPlacement, tabs: ReactNode, content: ReactNode) {
   if (placement === 'bottom') {
     return (
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-8">
         <div>{content}</div>
         {tabs}
       </div>
@@ -49,7 +49,7 @@ function renderWithContent(placement: TabsPlacement, tabs: ReactNode, content: R
 
   if (placement === 'left') {
     return (
-      <div className="flex gap-4">
+      <div className="flex gap-8">
         {tabs}
         <div className="min-w-0 flex-1">{content}</div>
       </div>
@@ -58,7 +58,7 @@ function renderWithContent(placement: TabsPlacement, tabs: ReactNode, content: R
 
   if (placement === 'right') {
     return (
-      <div className="flex gap-4">
+      <div className="flex gap-8">
         <div className="min-w-0 flex-1">{content}</div>
         {tabs}
       </div>
@@ -66,7 +66,7 @@ function renderWithContent(placement: TabsPlacement, tabs: ReactNode, content: R
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-8">
       {tabs}
       <div>{content}</div>
     </div>

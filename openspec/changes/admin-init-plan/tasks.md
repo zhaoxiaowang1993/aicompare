@@ -1,53 +1,52 @@
 - [X] 1. 设计与契约对齐（Pencil + API）
 - [X] 1.1 初始化 `design/token.lib.pen`，创建基础 Token Variables；初始化 `design/components`，创建基础组件库
 - [X] 1.2 同步 Token 到 globals.css；同步组件库设计到 `frontend/src/components`
-- [ ] 1.3 在 `design/auth-login.pen` 完成登录页线框与高保真稿（错误态、加载态、禁用态）。
-- [ ] 1.4 在 `design/admin-plan-list.pen` 完成计划列表页与“新建计划”弹窗，覆盖筛选与分页态。
-- [ ] 1.5 在 `design/admin-plan-detail.pen` 完成计划详情基础信息区与 CSV 导入反馈区（成功/失败/跳过）。
-- [ ] 1.6 在 `design/admin-plan-report.pen` 完成统计卡片、分布图区域与明细筛选表格。
-- [ ] 1.7 基于设计稿补齐页面字段映射表（UI 字段 ↔ API 字段 ↔ 数据表字段）。
-- [ ] 1.8 复核 API 契约差异并确认新增 `GET /api/admin/plans/{plan_id}` 的响应结构。
+- [X] 1.3 在 `design/auth-login.pen` 完成登录页线框与高保真稿（错误态、加载态、禁用态）。
+- [X] 1.4 在 `design/admin-plan-list.pen` 完成计划列表页与“新建计划”弹窗，覆盖筛选与分页态，CSV 导入反馈区（成功/失败/跳过）。
+- [X] 1.5 在 `design/admin-plan-detail.pen` 完成计划详情基础信息区与统计卡片、分布图区域与明细筛选表格。
+- [X] 1.6 基于设计稿补齐页面字段映射表（UI 字段 ↔ API 字段 ↔ 数据表字段）。
+- [X] 1.7 复核 API 契约差异并确认新增 `GET /api/admin/plans/{plan_id}` 的响应结构。
 
-- [ ] 2. 后端基础与数据层准备
-- [ ] 2.1 创建/校验 `users`、`plans`、`case_records`、`annotations`、`refresh_tokens` 模型与迁移。
-- [ ] 2.2 增加关键唯一约束与索引：`UNIQUE(plan_id,hospitalization_no)`、`UNIQUE(case_id,operator_user_id)`、统计查询索引。
-- [ ] 2.3 完成认证相关数据访问层（用户查询、refresh token 存储/撤销/过期判断）。
-- [ ] 2.4 完成计划相关数据访问层（列表筛选分页、详情读取、状态更新、负责人校验依赖查询）。
-- [ ] 2.5 完成导入相关数据访问层（批次写入、去重检查、错误汇总结构）。
-- [ ] 2.6 完成统计相关数据访问层（聚合统计、分布统计、明细过滤分页，按 `Asia/Shanghai` 日期边界）。
+- [X] 2. 后端基础与数据层准备
+- [X] 2.1 创建/校验 `users`、`plans`、`case_records`、`annotations`、`refresh_tokens` 模型与迁移。
+- [X] 2.2 增加关键唯一约束与索引：`UNIQUE(plan_id,hospitalization_no)`、`UNIQUE(case_id,operator_user_id)`、统计查询索引。
+- [X] 2.3 完成认证相关数据访问层（用户查询、refresh token 存储/撤销/过期判断）。
+- [X] 2.4 完成计划相关数据访问层（列表筛选分页、详情读取、状态更新、负责人校验依赖查询）。
+- [X] 2.5 完成导入相关数据访问层（批次写入、去重检查、错误汇总结构）。
+- [X] 2.6 完成统计相关数据访问层（聚合统计、分布统计、明细过滤分页，按 `Asia/Shanghai` 日期边界）。
 
-- [ ] 3. 后端业务实现（FastAPI Routers + Services）
-- [ ] 3.1 实现 `auth.py`：`POST /api/auth/login`、`POST /api/auth/refresh`、`GET /api/auth/me`。
-- [ ] 3.2 实现鉴权依赖与角色守卫，统一 401/403 错误语义与错误码映射。
-- [ ] 3.3 实现 `admin_plans.py`：创建、列表、详情、更新接口（含状态流转与冲突校验）。
-- [ ] 3.4 实现 `closed` 计划规则：允许编辑 `name/description`，拒绝导入与标注写入。
-- [ ] 3.5 实现 `admin_import.py`：CSV 文件类型与模板校验、数据清洗、去重跳过、A/B 映射固化。
-- [ ] 3.6 实现导入结果返回：`total_rows/success_rows/skipped_rows/failed_rows/errors/import_batch_id`（`errors` 不限条）。
-- [ ] 3.7 实现 `admin_reports.py`：`/stats` 与 `/annotations` 接口及过滤条件处理。
-- [ ] 3.8 实现统计与明细口径一致性校验逻辑（同一过滤条件可复算一致）。
+- [X] 3. 后端业务实现（FastAPI Routers + Services）
+- [X] 3.1 实现 `auth.py`：`POST /api/auth/login`、`POST /api/auth/refresh`、`GET /api/auth/me`。
+- [X] 3.2 实现鉴权依赖与角色守卫，统一 401/403 错误语义与错误码映射。
+- [X] 3.3 实现 `admin_plans.py`：创建、列表、详情、更新接口（含状态流转与冲突校验）。
+- [X] 3.4 实现 `closed` 计划规则：允许编辑 `name/description`，拒绝导入与标注写入。
+- [X] 3.5 实现 `admin_import.py`：CSV 文件类型与模板校验、数据清洗、去重跳过、A/B 映射固化。
+- [X] 3.6 实现导入结果返回：`total_rows/success_rows/skipped_rows/failed_rows/errors/import_batch_id`（`errors` 不限条）。
+- [X] 3.7 实现 `admin_reports.py`：`/stats` 与 `/annotations` 接口及过滤条件处理。
+- [X] 3.8 实现统计与明细口径一致性校验逻辑（同一过滤条件可复算一致）。
 
-- [ ] 4. 前端实现（React Router + 页面）
-- [ ] 4.1 实现路由守卫与鉴权流程：未登录跳转 `/login`，非 admin 禁止访问 `/admin/*`。
-- [ ] 4.2 在 `frontend/src/lib/api.ts` 实现 Bearer 注入、401 自动 refresh、失败回登录。
-- [ ] 4.3 实现登录页 `/login`：表单校验、错误提示、登录成功按角色跳转。
-- [ ] 4.4 实现计划列表页 `/admin/plans`：筛选、分页、状态展示、新建计划弹窗。
-- [ ] 4.5 接入计划详情页 `/admin/plans/:id`：基础信息、编辑信息、状态变更。
-- [ ] 4.6 实现 CSV 导入面板：上传、进度反馈、导入摘要与错误列表展示。
-- [ ] 4.7 实现统计面板：总量/完成率、决策分布、原因分布。
-- [ ] 4.8 实现明细表：按操作员/结论/日期范围筛选与分页（本地时区语义提示）。
-- [ ] 4.9 补齐 `frontend/src/types/*.ts` 与后端 DTO 对齐，消除关键 `any`。
+- [X] 4. 前端实现（React Router + 页面）
+- [X] 4.1 实现路由守卫与鉴权流程：未登录跳转 `/login`，非 admin 禁止访问 `/admin/*`。
+- [X] 4.2 在 `frontend/src/lib/api.ts` 实现 Bearer 注入、401 自动 refresh、失败回登录。
+- [X] 4.3 实现登录页 `/login`：表单校验、错误提示、登录成功按角色跳转。
+- [X] 4.4 实现计划列表页 `/admin/plans`：筛选、分页、状态展示、新建计划弹窗。
+- [X] 4.5 接入计划详情页 `/admin/plans/:id`：基础信息、编辑信息、状态变更。
+- [X] 4.6 实现 CSV 导入面板：上传、进度反馈、导入摘要与错误列表展示。
+- [X] 4.7 实现统计面板：总量/完成率、决策分布、原因分布。
+- [X] 4.8 实现明细表：按操作员/结论/日期范围筛选与分页（本地时区语义提示）。
+- [X] 4.9 补齐 `frontend/src/types/*.ts` 与后端 DTO 对齐，消除关键 `any`。
 
-- [ ] 5. 测试与联调
-- [ ] 5.1 编写后端单元测试：认证、计划状态流转、导入校验、统计过滤。
-- [ ] 5.2 编写后端接口测试：`/auth/*`、`/admin/plans*`、`/import-csv`、`/stats`、`/annotations`。
-- [ ] 5.3 编写前端关键流程测试：登录、计划创建、导入反馈、统计明细筛选。
-- [ ] 5.4 执行前后端联调脚本，核对错误码（401/403/404/409）与字段契约一致。
-- [ ] 5.5 进行统计一致性专项验证：同过滤范围下 `/stats` 与 `/annotations` 复算一致。
-- [ ] 5.6 验证 `Asia/Shanghai` 日期边界样例，确保明细过滤行为正确。
+- [X] 5. 测试与联调
+- [X] 5.1 编写后端单元测试：认证、计划状态流转、导入校验、统计过滤。
+- [X] 5.2 编写后端接口测试：`/auth/*`、`/admin/plans*`、`/import-csv`、`/stats`、`/annotations`。
+- [X] 5.3 编写前端关键流程测试：登录、计划创建、导入反馈、统计明细筛选。
+- [X] 5.4 执行前后端联调脚本，核对错误码（401/403/404/409）与字段契约一致。
+- [X] 5.5 进行统计一致性专项验证：同过滤范围下 `/stats` 与 `/annotations` 复算一致。
+- [X] 5.6 验证 `Asia/Shanghai` 日期边界样例，确保明细过滤行为正确。
 
-- [ ] 6. 发布与部署
-- [ ] 6.1 更新环境变量与配置说明（token 过期参数、时区配置、SQLite 路径）。
-- [ ] 6.2 更新 Docker / docker-compose 启动配置并完成本地镜像构建验证。
-- [ ] 6.3 执行数据库迁移并验证回滚路径（应用回滚 + 数据兼容策略）。
-- [ ] 6.4 完成发布检查清单（健康检查、接口冒烟、关键页面可用性）。
-- [ ] 6.5 产出上线说明与已知限制，明确首期不包含能力（3.4 扩展、3.6、3.7）。
+- [X] 6. 发布与部署
+- [X] 6.1 更新环境变量与配置说明（token 过期参数、时区配置、SQLite 路径）。
+- [X] 6.2 更新 Docker / docker-compose 启动配置并完成本地镜像构建验证。
+- [X] 6.3 执行数据库迁移并验证回滚路径（应用回滚 + 数据兼容策略）。
+- [X] 6.4 完成发布检查清单（健康检查、接口冒烟、关键页面可用性）。
+- [X] 6.5 产出上线说明与已知限制，明确首期不包含能力（3.4 扩展、3.6、3.7）。

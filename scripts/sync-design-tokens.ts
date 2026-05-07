@@ -394,6 +394,10 @@ function cssValue(name: string, mode: ThemeMode): string | null {
     return null
   }
 
+  if (name === 'select-option-selected-font-weight') {
+    return '400'
+  }
+
   return formatPrimitive(name, themeValue(variables[name], mode))
 }
 
@@ -449,10 +453,41 @@ function makeColorEntries(): Array<[string, string]> {
 }
 
 function makeFontSizeEntries(): Array<[string, unknown]> {
-  return tokenNames
+  const entry = (tokenName: string): [string, { lineHeight: string }] => {
+    const lineHeightName = tokenName.startsWith('font-size-heading-')
+      ? tokenName.replace('font-size-', 'line-height-')
+      : tokenName === 'font-size'
+        ? 'line-height'
+        : tokenName.replace('font-size-', 'line-height-')
+    const lineHeight = hasToken(lineHeightName) ? cssVar(lineHeightName) : cssVar('line-height')
+
+    return [cssVar(tokenName), { lineHeight }]
+  }
+
+  const semanticEntries: Array<[string, unknown]> = [
+    // Keep Tailwind's common mental model safe: text-sm is body text, not caption text.
+    ['xs', entry('font-size-sm')],
+    ['sm', entry('font-size')],
+    ['base', entry('font-size')],
+    ['lg', entry('font-size-lg')],
+    ['xl', entry('font-size-xl')],
+    ['2xl', entry('font-size-heading-3')],
+    ['3xl', entry('font-size-heading-2')],
+    ['4xl', entry('font-size-heading-1')],
+    ['caption', entry('font-size-sm')],
+    ['body', entry('font-size')],
+    ['body-lg', entry('font-size-lg')],
+    ['title-sm', entry('font-size-heading-5')],
+    ['title', entry('font-size-heading-3')],
+    ['title-lg', entry('font-size-heading-2')],
+    ['icon', entry('font-size-icon')]
+  ]
+
+  const exactTokenEntries = tokenNames
     .filter((name) => name.startsWith('font-size'))
-    .map((name) => {
-      const key = name === 'font-size' ? 'base' : tokenKey(name, 'font-size-')
+    .map((name): [string, unknown] => {
+      const rawKey = name === 'font-size' ? 'base' : tokenKey(name, 'font-size-')
+      const key = name.startsWith('font-size-heading-') ? rawKey : `token-${rawKey}`
       const lineHeightName = name.startsWith('font-size-heading-')
         ? name.replace('font-size-', 'line-height-')
         : name === 'font-size'
@@ -462,6 +497,8 @@ function makeFontSizeEntries(): Array<[string, unknown]> {
 
       return [key, [cssVar(name), { lineHeight }]]
     })
+
+  return [...semanticEntries, ...exactTokenEntries]
 }
 
 function makeScreens(): Array<[string, string]> {
@@ -535,6 +572,10 @@ function buildRuntimeTokens(): Record<string, RuntimeToken> {
   )
 }
 
+function buildAntdComponentGuardCss(): string {
+  return `/* Ant Design portal/compound DOM hardening. Keep generated so token sync cannot reintroduce bold selected values or bold toast copy. */\n.ant-select,\n.ant-select .ant-select-selector,\n.ant-select .ant-select-selection-item,\n.ant-select .ant-select-selection-item *,\n.ant-select .ant-select-selection-overflow,\n.ant-select .ant-select-selection-overflow *,\n.ant-select .ant-select-selection-placeholder,\n.ant-select .ant-select-selection-search-input,\n.ant-select-dropdown .ant-select-item-option,\n.ant-select-dropdown .ant-select-item-option * {\n  font-weight: var(--font-weight-regular) !important;\n}\n\n.ant-message,\n.ant-message-notice,\n.ant-message-notice-content,\n.ant-message-custom-content,\n.ant-message-custom-content * {\n  font-family: var(--font-family-base);\n  font-size: var(--font-size);\n  line-height: var(--line-height);\n  font-weight: var(--font-weight-regular) !important;\n}\n`
+}
+
 function buildGlobalsCss(): string {
   const cssVariableNames = tokenNames.filter((name) => !isResponsiveRuntimeOnly(name))
   const themedNames = cssVariableNames.filter((name) => isThemedValue(variables[name].value))
@@ -550,7 +591,7 @@ function buildGlobalsCss(): string {
     })
     .join('\n\n')
 
-  return `/* Generated from design/tokens.lib.pen by scripts/sync-design-tokens.ts. */\n/* Do not hand-edit token declarations in this file. */\n\n@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\n:root,\n[data-theme='light'] {\n${rootBlocks}\n}\n\n[data-theme='dark'] {\n${themedNames.map((name) => cssVarLine(name, 'dark')).join('\n')}\n}\n\n/* responsive-query, responsive-only, and responsive-hide tokens are tracked in tokens.json and must be expanded into media queries by consumers. */\n\nhtml {\n  font-family: var(--font-family-base);\n  color: var(--color-text);\n  background: var(--color-bg-layout);\n}\n\nbody {\n  margin: 0;\n  min-width: var(--responsive-device-min-mobile);\n  font-family: var(--font-family-base);\n  font-size: var(--font-size);\n  line-height: var(--line-height);\n  color: var(--color-text);\n  background: var(--color-bg-layout);\n  -webkit-font-smoothing: antialiased;\n  text-rendering: optimizeLegibility;\n}\n\n*,\n*::before,\n*::after {\n  box-sizing: border-box;\n}\n\nbutton,\ninput,\ntextarea,\nselect {\n  font: inherit;\n}\n`
+  return `/* Generated from design/tokens.lib.pen by scripts/sync-design-tokens.ts. */\n/* Do not hand-edit token declarations in this file. */\n\n@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\n:root,\n[data-theme='light'] {\n${rootBlocks}\n}\n\n[data-theme='dark'] {\n${themedNames.map((name) => cssVarLine(name, 'dark')).join('\n')}\n}\n\n/* responsive-query, responsive-only, and responsive-hide tokens are tracked in tokens.json and must be expanded into media queries by consumers. */\n\nhtml {\n  font-family: var(--font-family-base);\n  color: var(--color-text);\n  background: var(--color-bg-layout);\n}\n\nbody {\n  margin: 0;\n  min-width: var(--responsive-device-min-mobile);\n  font-family: var(--font-family-base);\n  font-size: var(--font-size);\n  line-height: var(--line-height);\n  color: var(--color-text);\n  background: var(--color-bg-layout);\n  -webkit-font-smoothing: antialiased;\n  text-rendering: optimizeLegibility;\n}\n\n*,\n*::before,\n*::after {\n  box-sizing: border-box;\n}\n\nbutton,\ninput,\ntextarea,\nselect {\n  font: inherit;\n}\n\n${buildAntdComponentGuardCss()}`
 }
 
 function buildTailwindConfig(): string {

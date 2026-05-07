@@ -445,7 +445,7 @@
   --select-option-padding: 5px 12px;
   --select-option-selected-bg: #e6f4ff;
   --select-option-selected-color: #000000e0;
-  --select-option-selected-font-weight: 700;
+  --select-option-selected-font-weight: 400;
   --select-selector-bg: #ffffff;
   --select-show-arrow-padding-inline-end: 18px;
   --select-single-item-height-lg: 40px;
@@ -1612,4 +1612,29 @@ input,
 textarea,
 select {
   font: inherit;
+}
+
+/* Ant Design portal/compound DOM hardening. Keep generated so token sync cannot reintroduce bold selected values or bold toast copy. */
+.ant-select,
+.ant-select .ant-select-selector,
+.ant-select .ant-select-selection-item,
+.ant-select .ant-select-selection-item *,
+.ant-select .ant-select-selection-overflow,
+.ant-select .ant-select-selection-overflow *,
+.ant-select .ant-select-selection-placeholder,
+.ant-select .ant-select-selection-search-input,
+.ant-select-dropdown .ant-select-item-option,
+.ant-select-dropdown .ant-select-item-option * {
+  font-weight: var(--font-weight-regular) !important;
+}
+
+.ant-message,
+.ant-message-notice,
+.ant-message-notice-content,
+.ant-message-custom-content,
+.ant-message-custom-content * {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  font-weight: var(--font-weight-regular) !important;
 }

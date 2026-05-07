@@ -52,6 +52,7 @@ export default function Button({
 
   const isDisabled = disabled ?? state === 'disabled'
   const isDanger = color === 'danger'
+  const isPrimary = color === 'primary'
 
   return (
     <AntButton
@@ -64,7 +65,12 @@ export default function Button({
       disabled={isDisabled}
       icon={icon}
       className={cx(
-        'inline-flex items-center justify-center gap-2 font-normal',
+        'inline-flex items-center justify-center gap-8 font-normal',
+        isPrimary && variant === 'solid' && 'border-[var(--color-primary)] bg-[var(--color-primary)] text-[var(--color-bg-container)]',
+        isPrimary && variant === 'outlined' && 'border-[var(--color-primary)] text-[var(--color-primary)]',
+        isPrimary && (variant === 'link' || variant === 'text') && 'text-[var(--color-primary)]',
+        isDanger && variant !== 'solid' && 'border-[var(--color-error)] text-[var(--color-error)]',
+        isDanger && variant === 'solid' && 'border-[var(--color-error)] bg-[var(--color-error)] text-[var(--color-bg-container)]',
         content === 'iconOnly' && 'aspect-square px-0',
         state === 'hover' && !isDisabled && 'border-[var(--color-primary-hover)] text-[var(--color-primary-hover)]',
         state === 'active' && !isDisabled && 'border-[var(--color-primary-active)] text-[var(--color-primary-active)]',

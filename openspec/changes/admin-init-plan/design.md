@@ -185,3 +185,61 @@ CSV 清洗与映射落库规则：
 
 - 当前无阻塞性开放问题。
 
+## UI / API / 数据字段映射
+
+### 登录页 `/login`
+
+| UI 字段 | API 字段 | 数据表字段 |
+|---|---|---|
+| 用户名 | `POST /api/auth/login.username` | `users.username` |
+| 密码 | `POST /api/auth/login.password` | `users.password_hash`（校验用，不回传） |
+| 登录错误 | `detail=AUTH_INVALID_CREDENTIALS` | 无 |
+| 当前用户角色 | `user.role`、`GET /api/auth/me.role` | `users.role` |
+
+### 计划列表页 `/admin/plans`
+
+| UI 字段 | API 字段 | 数据表字段 |
+|---|---|---|
+| 计划名称 | `items[].name` | `plans.name` |
+| 计划说明 | `items[].description` | `plans.description` |
+| 负责人 | `items[].owner_user_id`、`items[].owner_username` | `plans.owner_user_id` → `users.id/users.username` |
+| 状态 | `items[].status` | `plans.status` |
+| 样本数 | `items[].total_cases` | `COUNT(case_records.id)` |
+| 已标注 | `items[].annotated_cases` | `COUNT(DISTINCT annotations.case_id)` |
+| 分页 | `page/page_size/total` | 查询参数与聚合结果 |
+
+### 计划详情页 `/admin/plans/:id`
+
+| UI 字段 | API 字段 | 数据表字段 |
+|---|---|---|
+| 基础信息 | `GET /api/admin/plans/{plan_id}` | `plans.*` |
+| 待标注 | `pending_cases` | `total_cases - annotated_cases` |
+| 完成率 | `completion_rate` | `annotated_cases / total_cases` |
+| CSV 导入摘要 | `total_rows/success_rows/skipped_rows/failed_rows/import_batch_id/errors` | `case_records.import_batch_id` 与导入处理结果 |
+| 决策分布 | `decision_distribution` | `annotations.decision` |
+| 原因分布 | `reason_distribution` | `annotations.reason_codes` |
+| 标注明细 | `items[]` from `/annotations` | `annotations` JOIN `case_records/users` |
+| 日期范围筛选 | `start_date/end_date` | `annotations.created_at`，按 `Asia/Shanghai` 日期边界解释 |
+
+### `GET /api/admin/plans/{plan_id}` 响应结构确认
+
+本次新增详情接口返回 `PlanDetail`，用于计划详情基础信息区和统计入口：
+
+```json
+{
+  "id": 1,
+  "name": "病历质控对比评审",
+  "description": "首期评审计划",
+  "owner_user_id": 2,
+  "owner_username": "czy",
+  "status": "active",
+  "total_cases": 180,
+  "annotated_cases": 120,
+  "pending_cases": 60,
+  "completion_rate": 0.6667,
+  "created_at": "2026-05-06T08:00:00",
+  "updated_at": "2026-05-06T09:00:00"
+}
+```
+
+状态不存在时返回 `404 PLAN_NOT_FOUND`；鉴权缺失返回 `401 AUTH_UNAUTHORIZED`；非 admin 返回 `403 FORBIDDEN`。

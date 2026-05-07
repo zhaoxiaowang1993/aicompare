@@ -1,29 +1,42 @@
-version: "3.9"
+name: aicompare
 
 services:
   backend:
     build:
-      context: .
+      context: ..
       dockerfile: docker/Dockerfile
       target: backend-runtime
     environment:
-      SECRET_KEY: ${SECRET_KEY:-change-me-in-prod}
-      SQLITE_PATH: /app/data/aicompare.db
+      SECRET_KEY: ${SECRET_KEY:?SECRET_KEY is required}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-60}
+      REFRESH_TOKEN_EXPIRE_DAYS: ${REFRESH_TOKEN_EXPIRE_DAYS:-7}
+      APP_TIMEZONE: ${APP_TIMEZONE:-Asia/Shanghai}
+      SQLITE_PATH: ${SQLITE_PATH:-/app/data/aicompare.db}
+      TZ: ${APP_TIMEZONE:-Asia/Shanghai}
     volumes:
-      - ./backend/data:/app/data
+      - sqlite-data:/app/data
     expose:
       - "8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=3).read()"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
     restart: unless-stopped
 
   nginx:
     build:
-      context: .
+      context: ..
       dockerfile: docker/Dockerfile
       target: nginx-runtime
       args:
         VITE_API_BASE_URL: /api
     ports:
-      - "8080:80"
+      - "127.0.0.1:${AICOMPARE_HOST_PORT:-2657}:80"
     depends_on:
       - backend
     restart: unless-stopped
+
+volumes:
+  sqlite-data:

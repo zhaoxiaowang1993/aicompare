@@ -1,7 +1,7 @@
 from datetime import datetime
 from enum import Enum
 
-from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String, Text, UniqueConstraint
+from sqlalchemy import Boolean, DateTime, ForeignKey, Index, Integer, String, Text, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base
@@ -13,7 +13,6 @@ class UserRole(str, Enum):
 
 
 class PlanStatus(str, Enum):
-    DRAFT = "draft"
     ACTIVE = "active"
     CLOSED = "closed"
 
@@ -44,7 +43,7 @@ class Plan(Base):
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
     owner_user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
-    status: Mapped[str] = mapped_column(String(16), default=PlanStatus.DRAFT.value, nullable=False)
+    status: Mapped[str] = mapped_column(String(16), default=PlanStatus.ACTIVE.value, nullable=False)
     created_by: Mapped[int | None] = mapped_column(ForeignKey("users.id"), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
@@ -52,7 +51,10 @@ class Plan(Base):
 
 class CaseRecord(Base):
     __tablename__ = "case_records"
-    __table_args__ = (UniqueConstraint("plan_id", "hospitalization_no", name="uq_case_plan_hos_no"),)
+    __table_args__ = (
+        UniqueConstraint("plan_id", "hospitalization_no", name="uq_case_plan_hos_no"),
+        Index("ix_case_records_plan_id", "plan_id"),
+    )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     plan_id: Mapped[int] = mapped_column(ForeignKey("plans.id"), nullable=False)
@@ -68,7 +70,11 @@ class CaseRecord(Base):
 
 class Annotation(Base):
     __tablename__ = "annotations"
-    __table_args__ = (UniqueConstraint("case_id", "operator_user_id", name="uq_annotation_case_operator"),)
+    __table_args__ = (
+        UniqueConstraint("case_id", "operator_user_id", name="uq_annotation_case_operator"),
+        Index("ix_annotations_plan_created", "plan_id", "created_at"),
+        Index("ix_annotations_operator_decision", "operator_user_id", "decision"),
+    )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     plan_id: Mapped[int] = mapped_column(ForeignKey("plans.id"), nullable=False)

@@ -4,7 +4,7 @@
 
 ## 文档作用
 
-本文档记录 `frontend/src/components` 当前 React 组件代码的现状、设计系统符合度、业务引用方式和剩余治理债务。
+本文档记录 `frontend/src/components` 当前 React 基础 UI 组件代码的现状、设计系统符合度、业务引用方式和剩余治理债务。
 
 阅读场景：
 
@@ -12,7 +12,7 @@
 - 组件治理前，确认当前组件与 `design/` 设计系统的关系。
 - 代码评审时，判断组件样式是否继续沿用 runtime token，而不是新增业务硬编码。
 
-本文档不是组件 API 完整手册，也不替代 `design/components/specs/component-governace-status.md` 和 `design/components/specs/component-governace-plan.md`。Pencil 组件库仍以 `design/components/*.lib.pen` 为短期视觉契约；React 组件代码是业务前端的组件消费层。
+本文档不是组件 API 完整手册，也不替代 `design/components/specs/component-governace-status.md` 和 `design/components/specs/component-governace-plan.md`。Pencil 组件库仍以 `design/components/*.lib.pen` 为短期视觉契约；React 基础 UI 组件代码是业务前端的组件消费层。业务域组件不放在本目录，应收拢到对应 `frontend/src/pages/<domain>/components` 下。
 
 ## 一、当前组件代码现状
 
@@ -84,6 +84,9 @@
 - 已修正以下阻塞级问题：
   - `Card` 不再引用不存在的 `--color-000000-17`。
   - `Input` / `Select` 不再引用不存在的 `--color-primary-shadow`。
+  - `Input` error 状态边框必须由组件层统一覆盖到 `.ant-input-status-error` 和 `.ant-input-affix-wrapper-status-error`，避免密码框 affix wrapper 与 AntD 默认边框叠色。
+  - `Select` 选中项回填到输入框、下拉已选项均应保持普通字重；组件层和 token 生成的全局 AntD guard 已强制 `selection-item` / popup selected option 使用普通字重。
+  - `Message` / toast 文案必须保持普通字重；由于 AntD message 通过 portal 渲染，字重约束已写入 `scripts/sync-design-tokens.ts` 生成的全局样式，业务页面不得自行加粗 toast 内容。
   - `Layout` 不再引用不存在的 `--color-layout-sider-bg`。
   - `Badge` 的关键尺寸、圆角、padding 已改为 badge / radius / space token。
 
@@ -113,7 +116,7 @@
 
 ## 三、业务系统如何引用组件
 
-业务页面应优先引用 `frontend/src/components` 中的组件，而不是直接使用 AntD 原始组件拼装视觉。
+业务页面和业务域组件应优先引用 `frontend/src/components` 中的基础 UI 组件，而不是直接使用 AntD 原始组件拼装视觉。仅服务单个业务域的组件应放在对应页面域目录下，例如 `frontend/src/pages/admin/components` 或 `frontend/src/pages/auth/components`。
 
 推荐规则：
 
@@ -124,6 +127,9 @@
 5. 组件缺少变体时，先记录组件需求；不要在页面中复制组件内部结构后自行改样式。
 6. 页面级布局可使用 `Layout` 组件；App Shell 类尺寸优先遵守 `layout-shell-*` 的后续治理方向。
 7. 表单、按钮、输入、选择、表格、提示、导航等常见 UI，应优先从对应组件族中选择。
+8. 使用 `Select` 时不要在业务页面覆盖选中值字重；单选回填、多选标签和下拉已选项默认都必须保持 `font-normal`。如需强调，应新增明确业务组件，而不是改 Select 基础组件。
+9. 使用 toast/message 时不要在业务页面覆盖字号或字重；全局消息默认继承 `--font-size`、`--line-height`、`--font-weight-regular`，错误、成功、警告等状态只通过图标和颜色表达。
+10. 使用 `Input` 时不要在业务页面直接覆盖 error 边框；错误态统一通过 `status="error"` 或 Form 校验上下文触发，由组件封装覆盖普通输入框和密码输入框的 AntD 状态类。
 
 示例：
 
@@ -158,6 +164,8 @@ export function ExamplePage() {
 - 不把业务页面样式反向沉淀为设计系统 token。
 - 对尺寸、间距、状态、阴影等问题，应优先检查 `design/tokens.lib.pen` 是否已有对应 token。
 - 如果源 token 缺失，应记录为组件 token 候选，而不是在组件里临时发明值。
+- 间距类使用设计 token 数值语义：`p-16` = 16px，`p-24` = 24px，`gap-8` = 8px。不要按 Tailwind 默认比例理解 `p-6/gap-2`，它们在本项目中会变成 6px/2px，容易造成文字贴边。
+- 字号类优先使用语义别名：`text-caption` = 12px，`text-body` / `text-base` / `text-sm` = 14px，`text-body-lg` / `text-lg` = 16px，页面标题使用 `text-heading-*` 或 `text-title*`。需要精确引用原始 token 时使用 `text-token-*`，避免把 Tailwind 的 `text-sm` 误当成设计稿小号字。
 
 推荐后续顺序：
 
@@ -166,4 +174,3 @@ export function ExamplePage() {
 3. `navigation/menu.tsx`、`tabs.tsx`、`pagination.tsx`。
 4. `layout/layout.tsx`。
 5. `data-display/table.tsx`、`card.tsx`、`tag.tsx`、`badge.tsx`。
-

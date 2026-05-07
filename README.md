@@ -1,10 +1,10 @@
-# AICompare
+# 病例质控标注系统
 
-病历质控标注系统项目骨架（长期迭代版）。
+病例质控标注系统项目骨架（长期迭代版）。
 
 ## 技术栈
 
-- 前端：Vite + React 18 + TypeScript + Tailwind CSS + Ant Design
+- 前端：Vite + React + TypeScript + Tailwind CSS + Ant Design
 - 后端：FastAPI + Pydantic v2 + SQLite
 - 部署：Docker + docker-compose（生产含 Nginx 反代）
 
@@ -27,9 +27,9 @@
 
 ## Design 文件
 
-- `design/login.pen`
-- `design/admin-plans.pen`
-- `design/admin-plan-detail.pen`
+- `design/pages/oauth-login.pen`
+- `design/pages/admin-plan-list.pen`
+- `design/pages/admin-plan-detail.pen`
 - `design/admin-users.pen`
 - `design/admin-rules.pen`
 - `design/operator-plans.pen`
@@ -72,8 +72,9 @@ npm run dev
 docker compose -f docker/docker-compose.prod.yml up --build -d
 ```
 
-- 对外入口：`http://localhost:8080`
+- 本机入口：`http://127.0.0.1:2657`
 - 反向代理：`/api/* -> backend:8000`
+- 线上说明：见 `docs/deployment.md`
 
 ## 规范入口
 

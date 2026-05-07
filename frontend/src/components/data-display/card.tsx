@@ -36,12 +36,12 @@ export default function Card({
     <AntCard
       {...cardProps}
       type={isInner ? 'inner' : undefined}
-      size={isSmall ? 'small' : 'default'}
-      bordered={isBordered}
+      size={isSmall ? 'small' : 'medium'}
+      variant={isBordered ? 'outlined' : 'borderless'}
       hoverable={hoverable ?? state === 'hover'}
       className={cx(
         'rounded-lg bg-[var(--color-bg-container)]',
-        isSmall ? '[&_.ant-card-body]:p-3 [&_.ant-card-head]:min-h-9 [&_.ant-card-head]:px-3' : '[&_.ant-card-body]:p-6',
+        isSmall ? '[&_.ant-card-body]:p-12 [&_.ant-card-head]:min-h-9 [&_.ant-card-head]:px-12' : '[&_.ant-card-body]:p-24',
         !isBordered && 'border-transparent shadow-none',
         state === 'hover' && 'shadow-[var(--shadow-control)]',
         className

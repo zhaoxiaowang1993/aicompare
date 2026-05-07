@@ -103,9 +103,9 @@ export default function Layout({
   const isHeaderDark = headerTheme === 'dark'
   const isSiderDark = siderTheme === 'dark'
   const layoutContent = (
-    <Content className={cx('min-h-0 bg-[var(--color-bg-layout)] p-6', contentClassName)}>
-      {breadcrumbItems ? <Breadcrumb items={breadcrumbItems} className="mb-4" /> : null}
-      <div className="min-h-[280px] rounded-lg bg-[var(--color-bg-container)] p-6">
+    <Content className={cx('min-h-0 bg-[var(--color-bg-layout)] p-24', contentClassName)}>
+      {breadcrumbItems ? <Breadcrumb items={breadcrumbItems} className="mb-16" /> : null}
+      <div className="min-h-[280px] rounded-lg bg-[var(--color-bg-container)] p-24">
         {children ?? <span className="text-[var(--color-text-secondary)]">Content</span>}
       </div>
     </Content>
@@ -137,11 +137,11 @@ export default function Layout({
       {hasHeader(type) && !headerEmpty ? (
         <Header
           className={cx(
-            'flex h-16 items-center gap-6 px-12',
+            'flex h-[64px] items-center gap-16 px-24',
             isHeaderDark ? 'bg-[var(--layout-sider-bg)] text-[var(--color-white)]' : 'bg-[var(--color-bg-container)] text-[var(--color-text)]'
           )}
         >
-          <div className="flex shrink-0 items-center gap-3 pr-12">
+          <div className="flex shrink-0 items-center gap-12 pr-12">
             {logo}
             {title ? <span className="text-base font-medium">{title}</span> : null}
             {headerStart}
@@ -160,7 +160,7 @@ export default function Layout({
         {sider}
         <AntLayout>
           {type === 'customTrigger' ? (
-            <div className="flex h-12 items-center bg-[var(--color-bg-container)] px-4">
+            <div className="flex h-[48px] items-center bg-[var(--color-bg-container)] px-16">
               {trigger ?? <Button type="text" onClick={() => onCollapse?.(!collapsed)}>{collapsed ? 'Expand' : 'Collapse'}</Button>}
             </div>
           ) : null}

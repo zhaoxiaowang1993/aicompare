@@ -1,5 +1,8 @@
 from datetime import UTC, datetime, timedelta
 
+from hashlib import sha256
+from uuid import uuid4
+
 from jose import jwt
 from passlib.context import CryptContext
 
@@ -19,9 +22,17 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 def create_access_token(subject: str, role: str) -> str:
     expire = datetime.now(UTC) + timedelta(minutes=settings.access_token_expire_minutes)
-    return jwt.encode({"sub": subject, "role": role, "exp": expire}, settings.secret_key, algorithm=ALGORITHM)
+    return jwt.encode({"sub": subject, "role": role, "exp": expire, "jti": uuid4().hex}, settings.secret_key, algorithm=ALGORITHM)
 
 
 def create_refresh_token(subject: str) -> str:
     expire = datetime.now(UTC) + timedelta(days=settings.refresh_token_expire_days)
-    return jwt.encode({"sub": subject, "exp": expire, "type": "refresh"}, settings.secret_key, algorithm=ALGORITHM)
+    return jwt.encode({"sub": subject, "exp": expire, "type": "refresh", "jti": uuid4().hex}, settings.secret_key, algorithm=ALGORITHM)
+
+
+def decode_token(token: str) -> dict:
+    return jwt.decode(token, settings.secret_key, algorithms=[ALGORITHM])
+
+
+def hash_token(token: str) -> str:
+    return sha256(token.encode("utf-8")).hexdigest()

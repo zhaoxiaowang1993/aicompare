@@ -132,7 +132,7 @@ export default function Tag({
   const mergedStyle = { ...styleFor(appearance, effectiveColor), ...style }
 
   const classes = cx(
-    'inline-flex min-h-[22px] items-center rounded px-[7px] py-0 text-xs leading-normal',
+    'inline-flex min-h-[22px] items-center rounded px-[7px] py-0 text-caption leading-normal',
     'transition-colors',
     interactionState === 'hover' && 'bg-[var(--color-fill-secondary)] text-[var(--color-primary)]',
     interactionState === 'pressed' && 'bg-[var(--color-fill-secondary)] text-[var(--color-primary-active)]',

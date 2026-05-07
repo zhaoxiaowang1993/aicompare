@@ -84,7 +84,7 @@ export default function Radio({
         buttonStyle={buttonStyle}
         size={mapSize(size)}
         onChange={onGroupChange}
-        className={cx(direction === 'vertical' && 'flex flex-col gap-2', className)}
+        className={cx(direction === 'vertical' && 'flex flex-col gap-8', className)}
       >
         {mode === 'button'
           ? (children ??
