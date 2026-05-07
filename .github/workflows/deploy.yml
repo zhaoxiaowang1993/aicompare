@@ -74,7 +74,8 @@ jobs:
       - name: Prepare remote directory
         run: |
           ssh -i ~/.ssh/aicompare_deploy_key -p "$DEPLOY_SSH_PORT" "$DEPLOY_USER@$DEPLOY_HOST" \
-            "mkdir -p '$DEPLOY_PATH'"
+            "mkdir -p '$DEPLOY_PATH' 2>/dev/null || \
+             (sudo mkdir -p '$DEPLOY_PATH' && sudo chown \$(id -un):\$(id -gn) '$DEPLOY_PATH')"
 
       - name: Sync source to server
         run: |
