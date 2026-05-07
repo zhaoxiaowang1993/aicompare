@@ -1,9 +1,9 @@
 - [X] 1. 设计与契约对齐（Pencil + API）
-- [X] 1.1 初始化 `design/token.lib.pen`，创建基础 Token Variables；初始化 `design/components`，创建基础组件库
+- [X] 1.1 初始化 `design/tokens.lib.pen`，创建基础 Token Variables；初始化 `design/components`，创建基础组件库
 - [X] 1.2 同步 Token 到 globals.css；同步组件库设计到 `frontend/src/components`
-- [X] 1.3 在 `design/auth-login.pen` 完成登录页线框与高保真稿（错误态、加载态、禁用态）。
-- [X] 1.4 在 `design/admin-plan-list.pen` 完成计划列表页与“新建计划”弹窗，覆盖筛选与分页态，CSV 导入反馈区（成功/失败/跳过）。
-- [X] 1.5 在 `design/admin-plan-detail.pen` 完成计划详情基础信息区与统计卡片、分布图区域与明细筛选表格。
+- [X] 1.3 在 `design/pages/oauth-login.pen` 完成登录页线框与高保真稿（错误态、加载态、禁用态）。
+- [X] 1.4 在 `design/pages/admin-plan-list.pen` 完成计划列表页与“新建计划”流程，覆盖筛选与分页态，CSV 导入反馈区（成功/失败/跳过）。
+- [X] 1.5 在 `design/pages/admin-plan-detail.pen` 完成计划详情基础信息区与统计卡片、分布图区域与明细筛选表格。
 - [X] 1.6 基于设计稿补齐页面字段映射表（UI 字段 ↔ API 字段 ↔ 数据表字段）。
 - [X] 1.7 复核 API 契约差异并确认新增 `GET /api/admin/plans/{plan_id}` 的响应结构。
 
@@ -18,8 +18,8 @@
 - [X] 3. 后端业务实现（FastAPI Routers + Services）
 - [X] 3.1 实现 `auth.py`：`POST /api/auth/login`、`POST /api/auth/refresh`、`GET /api/auth/me`。
 - [X] 3.2 实现鉴权依赖与角色守卫，统一 401/403 错误语义与错误码映射。
-- [X] 3.3 实现 `admin_plans.py`：创建、列表、详情、更新接口（含状态流转与冲突校验）。
-- [X] 3.4 实现 `closed` 计划规则：允许编辑 `name/description`，拒绝导入与标注写入。
+- [X] 3.3 实现 `admin_plans.py`：列表、详情、更新接口（含 `active`/`closed` 状态切换与冲突校验），并拒绝无导入的单独创建。
+- [X] 3.4 实现 `closed` 计划规则：允许编辑 `name/description`，拒绝导入，禁止操作员查看/操作任务与标注写入。
 - [X] 3.5 实现 `admin_import.py`：CSV 文件类型与模板校验、数据清洗、去重跳过、A/B 映射固化。
 - [X] 3.6 实现导入结果返回：`total_rows/success_rows/skipped_rows/failed_rows/errors/import_batch_id`（`errors` 不限条）。
 - [X] 3.7 实现 `admin_reports.py`：`/stats` 与 `/annotations` 接口及过滤条件处理。
@@ -37,7 +37,7 @@
 - [X] 4.9 补齐 `frontend/src/types/*.ts` 与后端 DTO 对齐，消除关键 `any`。
 
 - [X] 5. 测试与联调
-- [X] 5.1 编写后端单元测试：认证、计划状态流转、导入校验、统计过滤。
+- [X] 5.1 编写后端单元测试：认证、计划状态切换、导入校验、统计过滤。
 - [X] 5.2 编写后端接口测试：`/auth/*`、`/admin/plans*`、`/import-csv`、`/stats`、`/annotations`。
 - [X] 5.3 编写前端关键流程测试：登录、计划创建、导入反馈、统计明细筛选。
 - [X] 5.4 执行前后端联调脚本，核对错误码（401/403/404/409）与字段契约一致。

@@ -82,11 +82,12 @@
   - `POST /api/auth/refresh`
   - `GET /api/auth/me`
 - `backend/app/routers/admin_plans.py`
-  - `POST /api/admin/plans`
+  - `POST /api/admin/plans`（不创建未导入计划，缺少导入时返回 `PLAN_IMPORT_REQUIRED`）
   - `GET /api/admin/plans`
   - `GET /api/admin/plans/{plan_id}`
   - `PATCH /api/admin/plans/{plan_id}`
 - `backend/app/routers/admin_import.py`
+  - `POST /api/admin/plans/import-csv`
   - `POST /api/admin/plans/{plan_id}/import-csv`
 - `backend/app/routers/admin_reports.py`
   - `GET /api/admin/plans/{plan_id}/stats`
@@ -95,7 +96,7 @@
 对应 service：
 
 - `AuthService`：密码校验、token 签发/刷新、refresh token 失效策略。
-- `PlanService`：负责人合法性校验、状态流转校验（draft→active→closed）、计划详情读取。
+- `PlanService`：负责人合法性校验、状态切换校验（active↔closed）、计划详情读取。
 - `CsvImportService`：模板校验、清洗、重复检测、A/B 映射固化、导入结果汇总。
 - `ReportService`：统计聚合、明细过滤分页、统计-明细口径一致性。
 
@@ -131,8 +132,12 @@ CSV 清洗与映射落库规则：
 
 计划状态与编辑规则：
 
+- 计划仅包含 `active` 与 `closed` 两个状态。
+- 管理员输入基础信息并成功导入至少一条有效 CSV 数据后，计划才创建成功，初始状态为 `active`。
+- `POST /api/admin/plans` 不创建计划，缺少导入时返回 `400 PLAN_IMPORT_REQUIRED`。
+- 管理员可在 `active` 与 `closed` 之间切换状态。
 - `closed` 状态下仍允许管理员编辑 `name/description`。
-- `closed` 状态下仍禁止导入新样本与操作员继续提交标注。
+- `closed` 状态下仍禁止导入新样本，操作员不可查看或操作该计划任务，也不可继续提交标注。
 
 统计时间口径：
 
@@ -142,20 +147,23 @@ CSV 清洗与映射落库规则：
 
 决策：按页面与场景拆分 `.pen` 文件，避免单文件过大并便于评审。
 
-- `design/auth-login.pen`
+- `design/pages/oauth-login.pen`
   - 对应页面：`/login`
   - 内容：账号密码表单、错误提示、加载态。
-- `design/admin-plan-list.pen`
+- `design/pages/admin-plan-list.pen`
   - 对应页面：`/admin/plans`
   - 内容：筛选栏、计划表格、新建计划弹窗、状态标签。
-- `design/admin-plan-detail.pen`
+- `design/pages/admin-plan-detail.pen`
   - 对应页面：`/admin/plans/:id`
-  - 内容：计划信息卡、CSV 导入面板、导入反馈面板。
-- `design/admin-plan-report.pen`
-  - 对应页面：`/admin/plans/:id`（统计与明细分区）
-  - 内容：统计总览卡、决策分布、原因分布、明细筛选与表格。
+  - 内容：计划信息卡、CSV 导入面板、导入反馈面板、统计总览卡、决策分布、原因分布、明细筛选与表格。
 - 共享设计系统
-  - `design/design-system.lib.pen`：按钮、输入、表格、标签、卡片等复用组件。
+  - `design/tokens.lib.pen`：设计 Token。
+  - `design/components/general.lib.pen`：通用组件。
+  - `design/components/data-entry.lib.pen`：输入、选择、上传等录入组件。
+  - `design/components/data-display.lib.pen`：表格、标签、卡片等展示组件。
+  - `design/components/navigation.lib.pen`：菜单、面包屑、分页等导航组件。
+  - `design/components/feedback.lib.pen`：弹窗、提示、结果反馈组件。
+  - `design/components/layout.lib.pen`：页面布局组件。
 - 设计系统 Token 同步文件：frontend/src/styles/globals.css
 - Design Tokens
   - 主色：#1677ff（Ant Design 默认）

@@ -8,9 +8,14 @@ The system MUST accept only `.csv` uploads and SHALL validate the fixed 4-column
 - **WHEN** the client calls `POST /api/admin/plans/{plan_id}/import-csv`
 - **THEN** the API starts import processing and returns import summary payload
 
+#### Scenario: Create plan with valid csv template
+- **GIVEN** an authenticated admin, valid plan basic fields, an active operator owner, and a valid CSV file with required headers
+- **WHEN** the client calls `POST /api/admin/plans/import-csv`
+- **THEN** the API creates an `active` plan, imports valid rows, and returns created plan data plus import summary payload
+
 #### Scenario: Reject non-csv or unparseable file
 - **GIVEN** uploaded file is not `.csv`, empty, or cannot be parsed
-- **WHEN** the client calls `POST /api/admin/plans/{plan_id}/import-csv`
+- **WHEN** the client calls `POST /api/admin/plans/import-csv` or `POST /api/admin/plans/{plan_id}/import-csv`
 - **THEN** the API returns `400 CSV_INVALID_TEMPLATE` or `400 CSV_PARSE_ERROR`
 
 ### Requirement: Data Cleaning and Persistence
