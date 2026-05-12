@@ -12,7 +12,7 @@ type AdminShellProps = {
 const navItems = [
   { key: 'plans', label: '标注计划', href: '/admin/plans', icon: ProfileOutlined },
   { key: 'users', label: '成员管理', icon: TeamOutlined },
-  { key: 'rules', label: '质控规则', icon: SafetyCertificateOutlined }
+  { key: 'rules', label: '质控规则', href: '/admin/rules', icon: SafetyCertificateOutlined }
 ] as const
 
 function cx(...classes: Array<string | false | null | undefined>) {
@@ -29,11 +29,11 @@ export default function AdminShell({ activeKey, children }: AdminShellProps) {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--color-bg-layout)] text-[var(--color-text)] [font-family:Inter,var(--font-family-base)]">
-      <header className="flex h-[64px] items-center justify-between border-b border-[var(--color-border-secondary)] bg-[var(--color-bg-container)] px-24">
+    <div className="min-h-screen bg-[var(--color-bg-layout)] pt-[64px] text-[var(--color-text)] [font-family:Inter,var(--font-family-base)]">
+      <header className="fixed inset-x-0 top-0 z-30 flex h-[64px] items-center justify-between border-b border-[var(--color-border-secondary)] bg-[var(--color-bg-container)] px-16 md:px-24">
         <Link to="/admin/plans" className="flex items-center gap-8 text-[var(--color-text)] no-underline">
           <FileTextOutlined className="text-[24px] text-[var(--color-primary)]" aria-hidden="true" />
-          <span className="text-lg font-medium">病历质控标注系统</span>
+          <span className="hidden text-lg font-medium sm:inline">病历质控标注系统</span>
         </Link>
         <Dropdown
           trigger={['click']}
@@ -53,14 +53,14 @@ export default function AdminShell({ activeKey, children }: AdminShellProps) {
           </button>
         </Dropdown>
       </header>
-      <div className="flex min-h-[calc(100vh-64px)]">
-        <aside className="w-[232px] shrink-0 border-r border-[var(--color-border-secondary)] bg-[var(--color-bg-container)] p-16">
-          <nav className="flex flex-col gap-8">
+      <div className="flex min-h-[calc(100vh-64px)] flex-col md:block">
+        <aside className="sticky top-[64px] z-20 shrink-0 border-b border-[var(--color-border-secondary)] bg-[var(--color-bg-container)] p-12 md:fixed md:bottom-0 md:left-0 md:top-[64px] md:w-[232px] md:overflow-y-auto md:border-b-0 md:border-r md:p-16">
+          <nav className="flex gap-8 overflow-x-auto md:flex-col md:overflow-visible">
             {navItems.map((item) => {
               const active = item.key === activeKey
               const Icon = item.icon
               const className = cx(
-                'flex h-[40px] w-full items-center gap-8 rounded-md px-12 text-left text-base no-underline transition-colors',
+                'flex h-[40px] min-w-max items-center gap-8 rounded-md px-12 text-left text-base no-underline transition-colors md:w-full',
                 active
                   ? 'bg-[var(--color-primary-bg)] font-medium text-[var(--color-primary)]'
                   : 'text-[var(--color-text)] hover:bg-[var(--color-fill-quaternary)]'
@@ -92,7 +92,7 @@ export default function AdminShell({ activeKey, children }: AdminShellProps) {
             })}
           </nav>
         </aside>
-        <main className="min-w-0 flex-1 p-24">{children}</main>
+        <main className="min-w-0 flex-1 p-16 md:ml-[232px] md:p-24">{children}</main>
       </div>
     </div>
   )

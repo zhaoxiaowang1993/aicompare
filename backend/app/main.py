@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import text
 
 from app.core.config import settings
 from app.db.base import Base
@@ -20,6 +21,8 @@ app.add_middleware(
 
 @app.on_event("startup")
 def on_startup() -> None:
+    with engine.begin() as connection:
+        connection.execute(text("DROP TABLE IF EXISTS rules"))
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
     try:

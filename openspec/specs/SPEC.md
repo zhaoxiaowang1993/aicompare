@@ -91,7 +91,6 @@
 - 子功能
   - 获取下一条待标注任务。
   - 三栏展示：病历内容 / 结果 A / 结果 B（Markdown + HTML 标签识别渲染）。
-  - 标注详情页展示全局生效质控规则（仅阅读，用于对比时参考依据）。
   - 提交标注：结论单选、原因多选（固定值）、其他原因文本、备注选填。
 - 验收标准
   - 操作员仅能领取自己负责计划的任务，跨计划或非负责人访问返回 `403`。
@@ -128,11 +127,15 @@
 
 - 子功能
   - 维护“质控规则”列表（增删改查）。
-  - 质控规则包含规则名称、规则描述、分值。
-  - 全部计划统一遵守并展示当前生效质控规则。
+  - 质控规则包含规则分类、规则内容、分值。
+  - 支持 CSV 模板下载和 CSV 批量导入。
+  - 删除规则采用软删除，删除后的规则在规则管理列表中立即不可见。
 - 验收标准
-  - 规则可按名称模糊搜索并分页展示。
-  - 标注详情页始终展示规则最新版本（本期不做规则版本冻结）。
+  - 规则可按规则内容模糊搜索并分页展示。
+  - 规则可按规则分类筛选，不按分值搜索或筛选。
+  - 规则分类固定为：入院病历、首次病程记录、上级医师查房记录、日常病程、出院记录。
+  - 分值按文本保存，不引入规则启用、停用或版本冻结。
+  - CSV 导入允许重复规则；如果文件中包含缺项或非法分类，整个文件不导入并返回行级错误。
 
 ### 3.8 核心业务流程
 
@@ -148,7 +151,7 @@ flowchart TD
   E --> F[激活计划]
   F --> G[负责人登录并进入标注]
   G --> H[领取下一条待标注任务]
-  H --> I[查看病历、A/B结果、质控规则]
+  H --> I[查看病历、A/B结果]
   I --> J[提交标注]
   J --> K{该计划是否还有待标注任务}
   K -- 是 --> H
@@ -167,7 +170,6 @@ flowchart LR
   Clean --> Case[(CaseRecord)]
   Case --> Map[随机A/B映射固化]
   Map --> TaskAPI[任务接口]
-  Rules[(Rule)] --> TaskAPI
   TaskAPI --> UI[标注详情页]
   UI --> Submit[提交标注]
   Submit --> Annotation[(Annotation)]
@@ -208,8 +210,8 @@ stateDiagram-v2
 | 计划列表页 | `/admin/plans` | 管理员 | 计划列表、状态筛选、负责人筛选 | 新建计划、进入详情、修改状态 | 可分页检索；状态与数量显示正确 |
 | 计划详情页 | `/admin/plans/:id` | 管理员 | 计划基本信息、导入结果、统计、标注明细 | 上传CSV、查看统计、筛选明细 | 导入反馈和统计口径一致；不可导出 |
 | 成员管理页 | `/admin/users` | 管理员 | 用户列表、角色、状态 | 新增用户、禁用用户、重置密码 | 用户状态变更即时生效 |
-| 规则管理页 | `/admin/rules` | 管理员 | 质控规则列表与编辑区 | 新增/编辑/删除规则 | 列表可搜索分页；详情页可看到最新规则 |
-| 标注详情页 | `/operator/plans/:id/annotate` | 操作员 | 病历内容、A/B输出、质控规则、标注表单 | 提交标注、加载下一条 | 仅负责人可访问；提交后进入下一条或完成提示 |
+| 规则管理页 | `/admin/rules` | 管理员 | 质控规则列表与编辑区 | 新增/编辑/删除/批量导入规则 | 列表可按规则内容搜索、按分类筛选并分页 |
+| 标注详情页 | `/operator/plans/:id/annotate` | 操作员 | 病历内容、A/B输出、标注表单 | 提交标注、加载下一条 | 仅负责人可访问；提交后进入下一条或完成提示 |
 
 ---
 
@@ -266,14 +268,13 @@ stateDiagram-v2
 - `updated_at` DATETIME NOT NULL
 - 约束：`UNIQUE(case_id, operator_user_id)`
 
-#### Rule
+#### QualityRule
 
 - `id` INTEGER PK
-- `code` TEXT UNIQUE NOT NULL
-- `name` TEXT NOT NULL
-- `description` TEXT NULL
-- `score` INTEGER NOT NULL DEFAULT 0
-- `is_active` BOOLEAN NOT NULL DEFAULT true
+- `category` TEXT NOT NULL（`admission_record`/`first_course_record`/`superior_physician_round`/`daily_course_record`/`discharge_record`）
+- `content` TEXT NOT NULL
+- `score` TEXT NOT NULL
+- `deleted_at` DATETIME NULL
 - `created_by` INTEGER FK -> User.id
 - `created_at` DATETIME NOT NULL
 - `updated_at` DATETIME NOT NULL
@@ -293,6 +294,7 @@ stateDiagram-v2
 erDiagram
   USER ||--o{ PLAN : owns
   USER ||--o{ PLAN : creates
+  USER ||--o{ QUALITY_RULE : creates
   PLAN ||--o{ CASE_RECORD : contains
   PLAN ||--o{ ANNOTATION : aggregates
   USER ||--o{ ANNOTATION : submits
@@ -346,13 +348,12 @@ erDiagram
     datetime updated_at
   }
 
-  RULE {
+  QUALITY_RULE {
     int id PK
-    string code UK
-    string name
-    text description
-    int score
-    bool is_active
+    string category
+    text content
+    string score
+    datetime deleted_at
     int created_by FK
     datetime created_at
     datetime updated_at
@@ -704,17 +705,24 @@ null
 
 - Response 200: 规则列表
 
+#### GET `/admin/rules/template.csv`
+
+- Response 200: CSV 模板，表头为 `规则分类,规则内容,分值`
+
+#### POST `/admin/rules/import-csv`
+
+- Request Body: multipart CSV 文件
+- Response 200: 导入汇总，包含总行数、成功行数、失败行数和行级错误
+
 #### POST `/admin/rules`
 
 - Request Body
 
 ```json
 {
-  "code": "RULE_CHIEF_COMPLAINT_MAX_20",
-  "name": "主诉不得超过20字",
-  "description": "主诉字段内容长度需不超过20个汉字",
-  "score": 5,
-  "is_active": true
+  "category": "admission_record",
+  "content": "入院记录应在患者入院后24小时内完成",
+  "score": "5分"
 }
 ```
 
@@ -726,10 +734,9 @@ null
 
 ```json
 {
-  "name": "主诉不得超过20字（修订）",
-  "description": "可选",
-  "score": 5,
-  "is_active": true
+  "category": "first_course_record",
+  "content": "首次病程记录需包含初步诊断和诊疗计划",
+  "score": "10分"
 }
 ```
 

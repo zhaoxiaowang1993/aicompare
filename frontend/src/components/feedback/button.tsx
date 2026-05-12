@@ -53,6 +53,7 @@ export default function Button({
   const isDisabled = disabled ?? state === 'disabled'
   const isDanger = color === 'danger'
   const isPrimary = color === 'primary'
+  const isTextual = variant === 'link' || variant === 'text'
 
   return (
     <AntButton
@@ -66,16 +67,22 @@ export default function Button({
       icon={icon}
       className={cx(
         'inline-flex items-center justify-center gap-8 font-normal',
+        isTextual && '!border-transparent !bg-transparent !shadow-none',
         isPrimary && variant === 'solid' && 'border-[var(--color-primary)] bg-[var(--color-primary)] text-[var(--color-bg-container)]',
         isPrimary && variant === 'outlined' && 'border-[var(--color-primary)] text-[var(--color-primary)]',
-        isPrimary && (variant === 'link' || variant === 'text') && 'text-[var(--color-primary)]',
-        isDanger && variant !== 'solid' && 'border-[var(--color-error)] text-[var(--color-error)]',
+        isPrimary && isTextual && 'text-[var(--color-primary)]',
+        isDanger && variant !== 'solid' && !isTextual && 'border-[var(--color-error)] text-[var(--color-error)]',
+        isDanger && isTextual && 'text-[var(--color-error)]',
         isDanger && variant === 'solid' && 'border-[var(--color-error)] bg-[var(--color-error)] text-[var(--color-bg-container)]',
         content === 'iconOnly' && 'aspect-square px-0',
-        state === 'hover' && !isDisabled && 'border-[var(--color-primary-hover)] text-[var(--color-primary-hover)]',
-        state === 'active' && !isDisabled && 'border-[var(--color-primary-active)] text-[var(--color-primary-active)]',
-        isDanger && state === 'hover' && !isDisabled && 'border-[var(--color-error-hover)] text-[var(--color-error-hover)]',
-        isDanger && state === 'active' && !isDisabled && 'border-[var(--color-error-active)] text-[var(--color-error-active)]',
+        state === 'hover' && !isDisabled && !isTextual && 'border-[var(--color-primary-hover)] text-[var(--color-primary-hover)]',
+        state === 'active' && !isDisabled && !isTextual && 'border-[var(--color-primary-active)] text-[var(--color-primary-active)]',
+        state === 'hover' && !isDisabled && isTextual && 'text-[var(--color-primary-hover)]',
+        state === 'active' && !isDisabled && isTextual && 'text-[var(--color-primary-active)]',
+        isDanger && state === 'hover' && !isDisabled && !isTextual && 'border-[var(--color-error-hover)] text-[var(--color-error-hover)]',
+        isDanger && state === 'active' && !isDisabled && !isTextual && 'border-[var(--color-error-active)] text-[var(--color-error-active)]',
+        isDanger && state === 'hover' && !isDisabled && isTextual && 'text-[var(--color-error-hover)]',
+        isDanger && state === 'active' && !isDisabled && isTextual && 'text-[var(--color-error-active)]',
         className
       )}
     >

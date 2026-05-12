@@ -55,10 +55,11 @@ export default function Select<ValueType = unknown, OptionType extends object = 
       size={mapSize(size)}
       maxTagCount={wrap ? undefined : 'responsive'}
       className={cx(
-        'min-w-40',
+        'aicompare-select min-w-40',
         '[&_.ant-select-selection-item]:!font-normal [&_.ant-select-selection-item_*]:!font-normal [&_.ant-select-selection-item-content]:!font-normal [&_.ant-select-selection-overflow]:!font-normal [&_.ant-select-selection-overflow_*]:!font-normal',
         '[&_.ant-select-selection-placeholder]:!font-normal [&_.ant-select-selection-search-input]:!font-normal',
-        '[&_.ant-select-selector]:text-base [&_.ant-select-selector]:!font-normal [&_.ant-select-selector_*]:!font-normal',
+        '[&_.ant-select-selector]:text-base [&_.ant-select-selector]:!font-normal [&_.ant-select-selector]:!outline-none [&_.ant-select-selector_*]:!font-normal',
+        '[&.ant-select-focused_.ant-select-selector]:!outline-none',
         state === 'hover' && '[&_.ant-select-selector]:border-[var(--color-primary-hover)]',
         state === 'active' &&
           '[&_.ant-select-selector]:border-[var(--select-active-border-color)] [&_.ant-select-selector]:shadow-[0_0_0_var(--control-outline-width)_var(--select-active-outline-color)]',

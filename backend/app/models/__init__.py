@@ -1,4 +1,4 @@
-from app.models.entities import Annotation, CaseRecord, Decision, Plan, PlanStatus, RefreshToken, Rule, User, UserRole
+from app.models.entities import Annotation, CaseRecord, Decision, Plan, PlanStatus, QualityRule, RefreshToken, RuleCategory, User, UserRole
 
 __all__ = [
     "Annotation",
@@ -6,8 +6,9 @@ __all__ = [
     "Decision",
     "Plan",
     "PlanStatus",
+    "QualityRule",
     "RefreshToken",
-    "Rule",
+    "RuleCategory",
     "User",
     "UserRole",
 ]

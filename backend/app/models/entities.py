@@ -24,6 +24,14 @@ class Decision(str, Enum):
     BOTH_GOOD = "BOTH_GOOD"
 
 
+class RuleCategory(str, Enum):
+    ADMISSION_RECORD = "admission_record"
+    FIRST_COURSE_RECORD = "first_course_record"
+    SUPERIOR_PHYSICIAN_ROUND = "superior_physician_round"
+    DAILY_COURSE_RECORD = "daily_course_record"
+    DISCHARGE_RECORD = "discharge_record"
+
+
 class User(Base):
     __tablename__ = "users"
 
@@ -88,15 +96,19 @@ class Annotation(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
 
-class Rule(Base):
-    __tablename__ = "rules"
+class QualityRule(Base):
+    __tablename__ = "quality_rules"
+    __table_args__ = (
+        Index("ix_quality_rules_category", "category"),
+        Index("ix_quality_rules_deleted_at", "deleted_at"),
+        Index("ix_quality_rules_updated_at", "updated_at"),
+    )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    code: Mapped[str] = mapped_column(String(128), unique=True, nullable=False)
-    name: Mapped[str] = mapped_column(String(255), nullable=False)
-    description: Mapped[str | None] = mapped_column(Text, nullable=True)
-    score: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
-    is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+    category: Mapped[str] = mapped_column(String(32), nullable=False)
+    content: Mapped[str] = mapped_column(Text, nullable=False)
+    score: Mapped[str] = mapped_column(String(64), nullable=False)
+    deleted_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     created_by: Mapped[int | None] = mapped_column(ForeignKey("users.id"), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)

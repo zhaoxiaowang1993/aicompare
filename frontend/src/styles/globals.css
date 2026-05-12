@@ -1628,6 +1628,25 @@ select {
   font-weight: var(--font-weight-regular) !important;
 }
 
+.ant-form-item-has-error .aicompare-select.ant-select:not(.ant-select-disabled) .ant-select-selector,
+.aicompare-select.ant-select-status-error:not(.ant-select-disabled):not(.ant-select-customize-input) .ant-select-selector {
+  border-color: var(--color-error) !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.ant-form-item-has-error .aicompare-select.ant-select-focused:not(.ant-select-disabled) .ant-select-selector,
+.aicompare-select.ant-select-focused.ant-select-status-error:not(.ant-select-disabled):not(.ant-select-customize-input) .ant-select-selector {
+  border-color: var(--color-error) !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.ant-form-item-has-error .aicompare-select.ant-select:not(.ant-select-disabled):hover .ant-select-selector,
+.aicompare-select.ant-select-status-error:not(.ant-select-disabled):not(.ant-select-customize-input):hover .ant-select-selector {
+  border-color: var(--color-error-hover) !important;
+}
+
 .ant-message,
 .ant-message-notice,
 .ant-message-notice-content,
