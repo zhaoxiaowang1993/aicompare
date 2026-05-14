@@ -6,14 +6,30 @@ from sqlalchemy.orm import Session
 
 from app.db.session import get_db
 from app.deps import require_admin
-from app.models.entities import Decision, User
+from app.models.entities import Annotation, Decision, User
 from app.repositories.plans import get_plan_progress
-from app.repositories.reports import annotation_detail_rows, annotation_query, get_case, get_plan, get_user, plan_total_cases
+from app.repositories.reports import annotation_query, get_case, get_plan, get_user, plan_total_cases
 from app.schemas.report import AnnotationDetailItem, AnnotationListResponse, DistributionItem, PlanStatsResponse
 
 router = APIRouter(prefix="/admin/plans", tags=["admin-reports"])
 
 REASON_KEYS = ["NO_HIT_ERROR_RULE", "NO_MISSING_RULE", "NO_OVER_QC", "OTHER"]
+
+
+def source_to_original_decision(source: str, fallback: str) -> str:
+    if source == "agent_a_output":
+        return Decision.A_BETTER.value
+    if source == "agent_b_output":
+        return Decision.B_BETTER.value
+    return fallback
+
+
+def original_agent_decision(decision: str, display_a_source: str, display_b_source: str) -> str:
+    if decision == Decision.A_BETTER.value:
+        return source_to_original_decision(display_a_source, decision)
+    if decision == Decision.B_BETTER.value:
+        return source_to_original_decision(display_b_source, decision)
+    return decision
 
 
 def parse_reason_codes(raw: str) -> list[str]:
@@ -43,21 +59,32 @@ def plan_stats(
         db,
         plan_id=plan_id,
         operator_user_id=operator_user_id,
-        decision=decision,
         start_date=start_date,
         end_date=end_date,
     )
     annotations = scoped_query.all()
     total_cases = plan_total_cases(db, plan_id)
-    annotated_cases = len({item.case_id for item in annotations}) if any([operator_user_id, decision, start_date, end_date]) else get_plan_progress(db, plan_id)[1]
-    pending_cases = max(total_cases - annotated_cases, 0)
     decision_distribution = {item.value: 0 for item in Decision}
     reason_counts = {key: 0 for key in REASON_KEYS}
+    included_case_ids: set[int] = set()
     for item in annotations:
-        if item.decision in decision_distribution:
-            decision_distribution[item.decision] += 1
+        case = get_case(db, item.case_id)
+        if not case:
+            continue
+        normalized_decision = original_agent_decision(item.decision, case.display_a_source, case.display_b_source)
+        if decision and normalized_decision != decision:
+            continue
+        included_case_ids.add(item.case_id)
+        if normalized_decision in decision_distribution:
+            decision_distribution[normalized_decision] += 1
         for reason in parse_reason_codes(item.reason_codes):
             reason_counts[reason if reason in reason_counts else "OTHER"] += 1
+    annotated_cases = (
+        len(included_case_ids)
+        if any([operator_user_id, decision, start_date, end_date])
+        else get_plan_progress(db, plan_id)[1]
+    )
+    pending_cases = max(total_cases - annotated_cases, 0)
 
     return PlanStatsResponse(
         plan_id=plan_id,
@@ -91,17 +118,23 @@ def plan_annotations(
         db,
         plan_id=plan_id,
         operator_user_id=operator_user_id,
-        decision=decision,
         start_date=start_date,
         end_date=end_date,
     )
-    total = query.count()
-    items: list[AnnotationDetailItem] = []
-    for annotation in annotation_detail_rows(query, page, page_size):
+    normalized_rows = []
+    for annotation in query.order_by(Annotation.created_at.desc()).all():
         case = get_case(db, annotation.case_id)
         operator = get_user(db, annotation.operator_user_id)
         if not case:
             continue
+        normalized_decision = original_agent_decision(annotation.decision, case.display_a_source, case.display_b_source)
+        if decision and normalized_decision != decision:
+            continue
+        normalized_rows.append((annotation, case, operator, normalized_decision))
+
+    total = len(normalized_rows)
+    items: list[AnnotationDetailItem] = []
+    for annotation, case, operator, normalized_decision in normalized_rows[(page - 1) * page_size : page * page_size]:
         items.append(
             AnnotationDetailItem(
                 id=annotation.id,
@@ -109,7 +142,7 @@ def plan_annotations(
                 hospitalization_no=case.hospitalization_no,
                 operator_user_id=annotation.operator_user_id,
                 operator_username=operator.username if operator else None,
-                decision=annotation.decision,
+                decision=normalized_decision,
                 reason_codes=parse_reason_codes(annotation.reason_codes),
                 other_reason_text=annotation.other_reason_text,
                 notes=annotation.notes,

@@ -16,12 +16,11 @@
 ├── backend/                    # 后端工程
 ├── design/                     # 页面设计稿 .pen
 ├── docker/                     # Dockerfile、compose、nginx 配置
-├── specs/                      # 规范文档
+├── openspec/                   # 规范文档与变更记录
 ├── tests/                      # 测试
 ├── .env.example
 ├── .gitignore
 ├── environment.yml
-├── AGENTS.md
 └── README.md
 ```
 
@@ -30,11 +29,10 @@
 - `design/pages/oauth-login.pen`
 - `design/pages/admin-plan-list.pen`
 - `design/pages/admin-plan-detail.pen`
-- `design/admin-users.pen`
-- `design/admin-rules.pen`
-- `design/operator-plans.pen`
-- `design/operator-annotate.pen`
-- `design/images/generated-1775805662726.png`
+- `design/pages/admin-users.pen`
+- `design/pages/admin-rules.pen`
+- `design/pages/operator.pen`
+- `design/pages/images/generated-1775805662726.png`
 
 ## 本地开发启动顺序
 
@@ -78,4 +76,4 @@ docker compose -f docker/docker-compose.prod.yml up --build -d
 
 ## 规范入口
 
-- `specs/SPEC.md`（唯一规范副本）
+- `openspec/specs/SPEC.md`（唯一规范副本）

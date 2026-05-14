@@ -15,7 +15,7 @@ export default function LoginPage() {
     setError(null)
     try {
       const response = await login(values.username, values.password)
-      navigate(response.user.role === 'admin' ? '/admin/plans' : '/operator/plans/1/annotate', { replace: true })
+      navigate(response.user.role === 'admin' ? '/admin/plans' : '/operator/plans', { replace: true })
     } catch (err) {
       const detail = (err as AxiosError<{ detail?: string }>).response?.data?.detail
       setError(detail === 'AUTH_INVALID_CREDENTIALS' ? '账号或密码错误，请重新输入。' : '登录失败，请稍后重试。')

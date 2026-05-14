@@ -1647,6 +1647,64 @@ select {
   border-color: var(--color-error-hover) !important;
 }
 
+.aicompare-radio,
+.aicompare-radio *,
+.aicompare-radio-group,
+.aicompare-radio-group *,
+.aicompare-checkbox,
+.aicompare-checkbox *,
+.aicompare-checkbox-group,
+.aicompare-checkbox-group * {
+  font-weight: var(--font-weight-regular) !important;
+}
+
+.aicompare-radio-group .ant-radio-button-wrapper {
+  color: var(--color-text) !important;
+}
+
+.aicompare-radio-group .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+  border-color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
+  box-shadow: var(--shadow-focus) !important;
+}
+
+.aicompare-radio-group .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover {
+  border-color: var(--color-primary-hover) !important;
+  color: var(--color-primary-hover) !important;
+}
+
+.aicompare-checkbox .ant-checkbox + span,
+.aicompare-checkbox-group .ant-checkbox + span {
+  color: var(--color-text) !important;
+}
+
+.aicompare-checkbox.ant-checkbox-wrapper-checked .ant-checkbox + span,
+.aicompare-checkbox-group .ant-checkbox-wrapper-checked .ant-checkbox + span,
+.aicompare-checkbox:has(.ant-checkbox-input:checked) .ant-checkbox + span,
+.aicompare-checkbox-group .ant-checkbox-wrapper:has(.ant-checkbox-input:checked) .ant-checkbox + span {
+  color: var(--color-primary) !important;
+}
+
+.aicompare-checkbox .ant-checkbox-checked .ant-checkbox-inner,
+.aicompare-checkbox-group .ant-checkbox-checked .ant-checkbox-inner,
+.aicompare-checkbox .ant-checkbox:has(.ant-checkbox-input:checked) .ant-checkbox-inner,
+.aicompare-checkbox-group .ant-checkbox:has(.ant-checkbox-input:checked) .ant-checkbox-inner {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+}
+
+.aicompare-checkbox .ant-checkbox-checked .ant-checkbox-inner::after,
+.aicompare-checkbox-group .ant-checkbox-checked .ant-checkbox-inner::after,
+.aicompare-checkbox .ant-checkbox:has(.ant-checkbox-input:checked) .ant-checkbox-inner::after,
+.aicompare-checkbox-group .ant-checkbox:has(.ant-checkbox-input:checked) .ant-checkbox-inner::after {
+  border-color: #ffffff !important;
+}
+
+.aicompare-checkbox:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner,
+.aicompare-checkbox-group .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner {
+  border-color: var(--color-primary-hover) !important;
+}
+
 .ant-message,
 .ant-message-notice,
 .ant-message-notice-content,

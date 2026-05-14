@@ -1,0 +1,5468 @@
+{
+  "version": "2.11",
+  "children": [
+    {
+      "type": "frame",
+      "id": "Ko0b7",
+      "x": 0,
+      "y": 3120,
+      "name": "操作员-计划列表-默认",
+      "width": 1440,
+      "height": 960,
+      "fill": "$D:color-bg-layout",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "ZJtbq",
+          "x": 0,
+          "y": 0,
+          "name": "Header",
+          "width": 1440,
+          "height": 64,
+          "fill": "$D:color-bg-container",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$D:color-border-secondary"
+          },
+          "padding": [
+            0,
+            "$D:space-24"
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "FgWTm",
+              "name": "Logo",
+              "gap": "$D:space-8",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "aY5hW",
+                  "name": "Logo Icon",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "file-text",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-primary"
+                },
+                {
+                  "type": "text",
+                  "id": "AHUJ2",
+                  "name": "System Name",
+                  "fill": "$D:color-text",
+                  "content": "病历质控标注系统",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "dHz64",
+              "name": "User Dropdown",
+              "height": 32,
+              "gap": "$D:space-4",
+              "padding": [
+                0,
+                "$D:space-8"
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "zn7sn",
+                  "name": "User",
+                  "fill": "$D:color-text-secondary",
+                  "content": "操作员 czy",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "koyis",
+                  "name": "Chevron",
+                  "width": 14,
+                  "height": 14,
+                  "iconFontName": "chevron-down",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-text-secondary"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "YcHyk",
+          "x": 0,
+          "y": 64,
+          "name": "Content",
+          "width": 1440,
+          "height": 896,
+          "layout": "vertical",
+          "gap": "$D:space-16",
+          "padding": "$D:space-24",
+          "children": [
+            {
+              "type": "frame",
+              "id": "ssdcH",
+              "name": "Page Title Row",
+              "width": "fill_container",
+              "height": 40,
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "GYRCf",
+                  "name": "Page Title",
+                  "fill": "$D:color-text",
+                  "content": "我的标注计划",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-heading-3",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "r57nTF",
+                  "name": "Summary",
+                  "fill": "$D:color-text-secondary",
+                  "content": "共 4 个负责计划",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "zqql9",
+              "name": "Plan List",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-12",
+              "padding": "$D:space-20",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "g4ZULF",
+                  "name": "Plan Row Active",
+                  "width": "fill_container",
+                  "height": 96,
+                  "fill": "$D:color-bg-container",
+                  "cornerRadius": "$D:radius",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "$D:color-border-secondary"
+                  },
+                  "padding": "$D:space-16",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "N59kte",
+                      "name": "Info",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$D:space-8",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "bRPrx",
+                          "name": "Title Line",
+                          "gap": "$D:space-8",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "IOsNL",
+                              "name": "Title",
+                              "fill": "$D:color-text",
+                              "content": "胸痛病历质控专项",
+                              "fontFamily": "PingFang SC",
+                              "fontSize": "$D:font-size-lg",
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "wfijK",
+                              "name": "Status Tag",
+                              "height": 24,
+                              "fill": "$D:color-primary-bg",
+                              "cornerRadius": "$D:radius-sm",
+                              "padding": [
+                                2,
+                                "$D:space-8"
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "ZegVl",
+                                  "name": "Status",
+                                  "fill": "$D:color-primary",
+                                  "content": "进行中",
+                                  "fontFamily": "PingFang SC",
+                                  "fontSize": "$D:font-size-sm",
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "WVPo4",
+                          "name": "Meta",
+                          "fill": "$D:color-text-secondary",
+                          "content": "6 例 · 已标注 2 · 待标注 4 · 完成率 33%",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "pEP5m",
+                      "name": "Primary Button",
+                      "height": 36,
+                      "fill": "$D:color-primary",
+                      "cornerRadius": "$D:radius",
+                      "padding": [
+                        0,
+                        "$D:space-16"
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "F1pVl",
+                          "name": "Button Text",
+                          "fill": "$D:color-bg-container",
+                          "content": "开始标注",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "500"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "ySgdg",
+                  "name": "Plan Row Ready",
+                  "width": "fill_container",
+                  "height": 96,
+                  "fill": "$D:color-bg-container",
+                  "cornerRadius": "$D:radius",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "$D:color-border-secondary"
+                  },
+                  "padding": "$D:space-16",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "MOS3e",
+                      "name": "Info",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$D:space-8",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "xSXLV",
+                          "name": "Title Line",
+                          "gap": "$D:space-8",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "diDdu",
+                              "name": "Title",
+                              "fill": "$D:color-text",
+                              "content": "住院记录抽检复核",
+                              "fontFamily": "PingFang SC",
+                              "fontSize": "$D:font-size-lg",
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "TbVj9",
+                              "name": "Status Tag",
+                              "height": 24,
+                              "fill": "$D:color-gray-3",
+                              "cornerRadius": "$D:radius-sm",
+                              "padding": [
+                                2,
+                                "$D:space-8"
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "tCUV0",
+                                  "name": "Status",
+                                  "fill": "$D:color-text-secondary",
+                                  "content": "未开始",
+                                  "fontFamily": "PingFang SC",
+                                  "fontSize": "$D:font-size-sm",
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "BLHO0",
+                          "name": "Meta",
+                          "fill": "$D:color-text-secondary",
+                          "content": "12 例 · 已标注 0 · 待标注 12 · 完成率 0%",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Srvz7",
+                      "name": "Primary Button",
+                      "height": 36,
+                      "fill": "$D:color-primary",
+                      "cornerRadius": "$D:radius",
+                      "padding": [
+                        0,
+                        "$D:space-16"
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Pysdc",
+                          "name": "Button Text",
+                          "fill": "$D:color-bg-container",
+                          "content": "开始标注",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "500"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "IvVYL",
+                  "name": "Plan Row Done",
+                  "width": "fill_container",
+                  "height": 96,
+                  "fill": "$D:color-bg-container",
+                  "cornerRadius": "$D:radius",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "$D:color-border-secondary"
+                  },
+                  "padding": "$D:space-16",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "AC4oC",
+                      "name": "Info",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$D:space-8",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "c2gHWd",
+                          "name": "Title Line",
+                          "gap": "$D:space-8",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "fBz7V",
+                              "name": "Title",
+                              "fill": "$D:color-text",
+                              "content": "出院小结完整性评审",
+                              "fontFamily": "PingFang SC",
+                              "fontSize": "$D:font-size-lg",
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "k8Xyj5",
+                              "name": "Status Tag",
+                              "height": 24,
+                              "fill": "$D:color-green-1",
+                              "cornerRadius": "$D:radius-sm",
+                              "padding": [
+                                2,
+                                "$D:space-8"
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "p70W66",
+                                  "name": "Status",
+                                  "fill": "$D:color-success",
+                                  "content": "已完成",
+                                  "fontFamily": "PingFang SC",
+                                  "fontSize": "$D:font-size-sm",
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "t8oD7",
+                          "name": "Meta",
+                          "fill": "$D:color-text-secondary",
+                          "content": "20 例 · 已标注 20 · 待标注 0 · 完成率 100%",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "tlFbZ",
+                      "name": "Disabled Button",
+                      "height": 36,
+                      "fill": "$D:color-fill-tertiary",
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-border"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-16"
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "edQov",
+                          "name": "Button Text",
+                          "fill": "$D:color-text-disabled",
+                          "content": "已完成",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Hp9qI",
+                  "name": "Plan Row Closed",
+                  "width": "fill_container",
+                  "height": 96,
+                  "fill": "$D:color-bg-container",
+                  "cornerRadius": "$D:radius",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "$D:color-border-secondary"
+                  },
+                  "padding": "$D:space-16",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "E2oUy",
+                      "name": "Info",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$D:space-8",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "YlEbl",
+                          "name": "Title Line",
+                          "gap": "$D:space-8",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "novae",
+                              "name": "Title",
+                              "fill": "$D:color-text",
+                              "content": "病程记录一致性复核",
+                              "fontFamily": "PingFang SC",
+                              "fontSize": "$D:font-size-lg",
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "eMNDI",
+                              "name": "Status Tag",
+                              "height": 24,
+                              "fill": "$D:color-gray-3",
+                              "cornerRadius": "$D:radius-sm",
+                              "padding": [
+                                2,
+                                "$D:space-8"
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "MAMNo",
+                                  "name": "Status",
+                                  "fill": "$D:color-text-disabled",
+                                  "content": "已关闭",
+                                  "fontFamily": "PingFang SC",
+                                  "fontSize": "$D:font-size-sm",
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "gUFzT",
+                          "name": "Meta",
+                          "fill": "$D:color-text-secondary",
+                          "content": "18 例 · 已标注 9 · 待标注 9 · 已由管理员关闭",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "u7SCC",
+                      "name": "Disabled Button",
+                      "height": 36,
+                      "fill": "$D:color-fill-tertiary",
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-border"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-16"
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "RkQO6",
+                          "name": "Button Text",
+                          "fill": "$D:color-text-disabled",
+                          "content": "已关闭",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "yMRxD",
+      "x": 0,
+      "y": 6551,
+      "name": "操作员-标注工作台-计划已完成",
+      "width": 1440,
+      "height": 960,
+      "fill": "$D:color-bg-layout",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "RcttX",
+          "x": 0,
+          "y": 0,
+          "name": "Header",
+          "width": 1440,
+          "height": 64,
+          "fill": "$D:color-bg-container",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$D:color-border-secondary"
+          },
+          "padding": [
+            0,
+            "$D:space-24"
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "FPfdS",
+              "name": "Logo",
+              "gap": "$D:space-8",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "WB0XT",
+                  "name": "Logo Icon",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "file-text",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-primary"
+                },
+                {
+                  "type": "text",
+                  "id": "p1Y1zo",
+                  "name": "System Name",
+                  "fill": "$D:color-text",
+                  "content": "病历质控标注系统",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "je3sN",
+              "name": "User Dropdown",
+              "height": 32,
+              "gap": "$D:space-4",
+              "padding": [
+                0,
+                "$D:space-8"
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "b221Q",
+                  "name": "User",
+                  "fill": "$D:color-text-secondary",
+                  "content": "操作员 czy",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "ywW4O",
+                  "name": "Chevron",
+                  "width": 14,
+                  "height": 14,
+                  "iconFontName": "chevron-down",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-text-secondary"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "fiJSZ",
+          "x": 0,
+          "y": 64,
+          "name": "Content",
+          "width": 1440,
+          "height": 896,
+          "layout": "vertical",
+          "padding": "$D:space-24",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "u9gqf",
+              "name": "Result Panel",
+              "width": 560,
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-16",
+              "padding": "$D:space-32",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "EkEHl",
+                  "name": "Icon",
+                  "width": 44,
+                  "height": 44,
+                  "iconFontName": "circle-check",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-success"
+                },
+                {
+                  "type": "text",
+                  "id": "ZiKA6",
+                  "fill": "$D:color-text",
+                  "content": "当前计划已完成",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "PEzH0",
+                  "fill": "$D:color-text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "已完成全部 6 条任务，可返回计划列表查看其他计划。",
+                  "textAlign": "center",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "UGUxJ",
+                  "height": 36,
+                  "fill": "$D:color-primary",
+                  "cornerRadius": "$D:radius",
+                  "padding": [
+                    0,
+                    "$D:space-16"
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "w9OdFj",
+                      "fill": "$D:color-bg-container",
+                      "content": "返回列表",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "VNfBn",
+      "x": 1512,
+      "y": 3120,
+      "name": "操作员-计划列表-无负责计划",
+      "width": 1440,
+      "height": 960,
+      "fill": "$D:color-bg-layout",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "onCQc",
+          "x": 0,
+          "y": 0,
+          "name": "Header",
+          "width": 1440,
+          "height": 64,
+          "fill": "$D:color-bg-container",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$D:color-border-secondary"
+          },
+          "padding": [
+            0,
+            "$D:space-24"
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "hC1jw",
+              "name": "Logo",
+              "gap": "$D:space-8",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "x0o9p",
+                  "name": "Logo Icon",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "file-text",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-primary"
+                },
+                {
+                  "type": "text",
+                  "id": "LLDEs",
+                  "name": "System Name",
+                  "fill": "$D:color-text",
+                  "content": "病历质控标注系统",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "of1oV",
+              "name": "User Dropdown",
+              "height": 32,
+              "gap": "$D:space-4",
+              "padding": [
+                0,
+                "$D:space-8"
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "KOzaA",
+                  "name": "User",
+                  "fill": "$D:color-text-secondary",
+                  "content": "操作员 czy",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "uQ7xt",
+                  "name": "Chevron",
+                  "width": 14,
+                  "height": 14,
+                  "iconFontName": "chevron-down",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-text-secondary"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "R8At7K",
+          "x": 0,
+          "y": 64,
+          "name": "Content",
+          "width": 1440,
+          "height": 896,
+          "layout": "vertical",
+          "padding": "$D:space-24",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "UGusb",
+              "name": "Empty Panel",
+              "width": 520,
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-16",
+              "padding": "$D:space-32",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "ZNj3w",
+                  "name": "Empty Icon",
+                  "width": 40,
+                  "height": 40,
+                  "iconFontName": "inbox",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-text-disabled"
+                },
+                {
+                  "type": "text",
+                  "id": "E4Iip",
+                  "name": "Title",
+                  "fill": "$D:color-text",
+                  "content": "暂无负责的标注计划",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "Qi4rk",
+                  "name": "Description",
+                  "fill": "$D:color-text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "管理员分配计划后，会在这里显示可标注任务。",
+                  "textAlign": "center",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "PiLbl",
+      "x": 3024,
+      "y": 3120,
+      "name": "操作员-计划列表-加载中",
+      "width": 1440,
+      "height": 960,
+      "fill": "$D:color-bg-layout",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "MpZ8p",
+          "x": 0,
+          "y": 0,
+          "name": "Header",
+          "width": 1440,
+          "height": 64,
+          "fill": "$D:color-bg-container",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$D:color-border-secondary"
+          },
+          "padding": [
+            0,
+            "$D:space-24"
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "M6Tfr",
+              "name": "Logo",
+              "gap": "$D:space-8",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "uwo3V",
+                  "name": "Logo Icon",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "file-text",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-primary"
+                },
+                {
+                  "type": "text",
+                  "id": "U48tR4",
+                  "name": "System Name",
+                  "fill": "$D:color-text",
+                  "content": "病历质控标注系统",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "UCVqb",
+              "name": "User Dropdown",
+              "height": 32,
+              "gap": "$D:space-4",
+              "padding": [
+                0,
+                "$D:space-8"
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "u3nGp",
+                  "name": "User",
+                  "fill": "$D:color-text-secondary",
+                  "content": "操作员 czy",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "uCuP6",
+                  "name": "Chevron",
+                  "width": 14,
+                  "height": 14,
+                  "iconFontName": "chevron-down",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-text-secondary"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "r1qMOM",
+          "x": 0,
+          "y": 64,
+          "name": "Content",
+          "width": 1440,
+          "height": 896,
+          "layout": "vertical",
+          "gap": "$D:space-16",
+          "padding": "$D:space-24",
+          "children": [
+            {
+              "type": "frame",
+              "id": "PzoQC",
+              "name": "Title Skeleton",
+              "width": 260,
+              "height": 32,
+              "fill": "$D:color-fill-tertiary",
+              "cornerRadius": "$D:radius"
+            },
+            {
+              "type": "frame",
+              "id": "uVMyR",
+              "name": "Skeleton Panel",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-16",
+              "padding": "$D:space-20",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "B6LqA",
+                  "name": "Row Skeleton 1",
+                  "width": "fill_container",
+                  "height": 96,
+                  "fill": "$D:color-gray-3",
+                  "cornerRadius": "$D:radius"
+                },
+                {
+                  "type": "frame",
+                  "id": "s9sof",
+                  "name": "Row Skeleton 2",
+                  "width": "fill_container",
+                  "height": 96,
+                  "fill": "$D:color-gray-3",
+                  "cornerRadius": "$D:radius"
+                },
+                {
+                  "type": "frame",
+                  "id": "NKquL",
+                  "name": "Row Skeleton 3",
+                  "width": "fill_container",
+                  "height": 96,
+                  "fill": "$D:color-gray-3",
+                  "cornerRadius": "$D:radius"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "cQeUj",
+      "x": 4536,
+      "y": 3120,
+      "name": "操作员-计划列表-加载失败",
+      "width": 1440,
+      "height": 960,
+      "fill": "$D:color-bg-layout",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "g8mvg4",
+          "x": 0,
+          "y": 0,
+          "name": "Header",
+          "width": 1440,
+          "height": 64,
+          "fill": "$D:color-bg-container",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$D:color-border-secondary"
+          },
+          "padding": [
+            0,
+            "$D:space-24"
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "K1apd",
+              "name": "Logo",
+              "gap": "$D:space-8",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "LDJtr",
+                  "name": "Logo Icon",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "file-text",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-primary"
+                },
+                {
+                  "type": "text",
+                  "id": "ATQZU",
+                  "name": "System Name",
+                  "fill": "$D:color-text",
+                  "content": "病历质控标注系统",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "cDpyZ",
+              "name": "User Dropdown",
+              "height": 32,
+              "gap": "$D:space-4",
+              "padding": [
+                0,
+                "$D:space-8"
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "wlSBU",
+                  "name": "User",
+                  "fill": "$D:color-text-secondary",
+                  "content": "操作员 czy",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "HFCtw",
+                  "name": "Chevron",
+                  "width": 14,
+                  "height": 14,
+                  "iconFontName": "chevron-down",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-text-secondary"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "AJhFl",
+          "x": 0,
+          "y": 64,
+          "name": "Content",
+          "width": 1440,
+          "height": 896,
+          "layout": "vertical",
+          "padding": "$D:space-24",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "jZiuq",
+              "name": "Error Result",
+              "width": 560,
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-16",
+              "padding": "$D:space-32",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "N7CwxM",
+                  "name": "Error Icon",
+                  "width": 40,
+                  "height": 40,
+                  "iconFontName": "circle-alert",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-error"
+                },
+                {
+                  "type": "text",
+                  "id": "m6TAS",
+                  "name": "Title",
+                  "fill": "$D:color-text",
+                  "content": "计划列表加载失败",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "o9ybID",
+                  "name": "Description",
+                  "fill": "$D:color-text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "请检查网络连接后重试。",
+                  "textAlign": "center",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "KTCOZ",
+                  "name": "Retry Button",
+                  "height": 36,
+                  "fill": "$D:color-primary",
+                  "cornerRadius": "$D:radius",
+                  "padding": [
+                    0,
+                    "$D:space-16"
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "W7QklW",
+                      "name": "Button Text",
+                      "fill": "$D:color-bg-container",
+                      "content": "重新加载",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "j4IUqw",
+      "x": 0,
+      "y": 4160,
+      "name": "操作员-标注工作台-任务已加载",
+      "width": 1440,
+      "height": 960,
+      "fill": "$D:color-bg-layout",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "Ok3hK",
+          "x": 0,
+          "y": 0,
+          "name": "Header",
+          "width": 1440,
+          "height": 64,
+          "fill": "$D:color-bg-container",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$D:color-border-secondary"
+          },
+          "padding": [
+            0,
+            "$D:space-24"
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "R1lEY",
+              "name": "Logo",
+              "gap": "$D:space-8",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "E1VOU",
+                  "name": "Logo Icon",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "file-text",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-primary"
+                },
+                {
+                  "type": "text",
+                  "id": "xD9zI",
+                  "name": "System Name",
+                  "fill": "$D:color-text",
+                  "content": "病历质控标注系统",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "DMVqb",
+              "name": "User Dropdown",
+              "height": 32,
+              "gap": "$D:space-4",
+              "padding": [
+                0,
+                "$D:space-8"
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "hrEte",
+                  "name": "User",
+                  "fill": "$D:color-text-secondary",
+                  "content": "操作员 czy",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "u9j6W",
+                  "name": "Chevron",
+                  "width": 14,
+                  "height": 14,
+                  "iconFontName": "chevron-down",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-text-secondary"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "q2uWQ",
+          "x": 0,
+          "y": 64,
+          "name": "Top Bar",
+          "width": 1440,
+          "height": 64,
+          "fill": "$D:color-bg-container",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$D:color-border-secondary"
+          },
+          "padding": [
+            0,
+            "$D:space-24"
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "fihZy",
+              "name": "Task Meta",
+              "gap": "$D:space-16",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "FPaXx",
+                  "name": "Back",
+                  "fill": "$D:color-primary",
+                  "content": "← 返回列表",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "oZPOl",
+                  "name": "Plan Title",
+                  "fill": "$D:color-text",
+                  "content": "胸痛病历质控专项",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "DWejh",
+                  "name": "Status Tag",
+                  "height": 24,
+                  "fill": "$D:color-primary-bg",
+                  "cornerRadius": "$D:radius-full",
+                  "padding": [
+                    2,
+                    "$D:space-8"
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "NRbdp",
+                      "name": "Status",
+                      "fill": "$D:color-primary",
+                      "content": "进行中 2/6",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size-sm",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "N27MdA",
+              "name": "Annotate Button",
+              "height": 36,
+              "fill": "$D:color-primary",
+              "cornerRadius": "$D:radius",
+              "padding": [
+                0,
+                "$D:space-16"
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "U956r",
+                  "name": "Button Text",
+                  "fill": "$D:color-bg-container",
+                  "content": "标注",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "f6JFXV",
+          "x": 0,
+          "y": 128,
+          "name": "Three Column Content",
+          "width": 1440,
+          "height": 832,
+          "gap": "$D:space-16",
+          "padding": "$D:space-20",
+          "children": [
+            {
+              "type": "frame",
+              "id": "Q7HfgX",
+              "name": "病历数据",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-12",
+              "padding": "$D:space-16",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "uAx8K",
+                  "name": "Panel Header",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "vJlwa",
+                      "name": "Hospital No",
+                      "fill": "$D:color-text",
+                      "content": "住院号：ZY20260001",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size-lg",
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "O9JBI",
+                      "name": "Rules Link",
+                      "fill": "$D:color-primary",
+                      "content": "查看质控规则",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "rRbLC",
+                  "name": "Medical Record Text",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "$D:color-gray-2",
+                  "cornerRadius": "$D:radius",
+                  "padding": "$D:space-16",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Kp3lZ",
+                      "name": "Record",
+                      "fill": "$D:color-text",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "主诉：反复胸痛 3 小时。\n\n现病史：患者入院前突发胸骨后压榨样疼痛，伴出汗，无明显呼吸困难。既往高血压病史 10 年。\n\n查体：血压 152/92mmHg，心率 86 次/分。\n\n初步诊断：急性冠脉综合征待排。",
+                      "lineHeight": "$D:line-height-relaxed",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "LsDV3",
+              "name": "标注结果 A",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-12",
+              "padding": "$D:space-16",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "EkhLP",
+                  "name": "Title",
+                  "fill": "$D:color-text",
+                  "content": "结果 A",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "gdQA6",
+                  "name": "Result Body",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "$D:color-gray-2",
+                  "cornerRadius": "$D:radius",
+                  "padding": "$D:space-16",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Yn0hk",
+                      "name": "Result Text",
+                      "fill": "$D:color-text",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "### 质控发现\n- 病历已记录胸痛起病时间。\n- 建议补充心电图完成时间。\n- 未见肌钙蛋白复查计划。\n\n结论：存在轻度遗漏。",
+                      "lineHeight": "$D:line-height-relaxed",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "FCeV5",
+              "name": "标注结果 B",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-12",
+              "padding": "$D:space-16",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "mQqCB",
+                  "name": "Title",
+                  "fill": "$D:color-text",
+                  "content": "结果 B",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "h6NUW",
+                  "name": "Result Body",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "$D:color-gray-2",
+                  "cornerRadius": "$D:radius",
+                  "padding": "$D:space-16",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "D8W5wS",
+                      "name": "Result Text",
+                      "fill": "$D:color-text",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "### 质控发现\n- 病历内容完整覆盖主诉、现病史、既往史。\n- 对 ACS 风险已有提示。\n- 建议补充用药禁忌核查。\n\n结论：整体更完整。",
+                      "lineHeight": "$D:line-height-relaxed",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "Fvpqh",
+      "x": 1512,
+      "y": 4160,
+      "name": "操作员-标注工作台-质控规则Popover",
+      "width": 1440,
+      "height": 960,
+      "fill": "$D:color-bg-layout",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "DxS0K",
+          "x": 0,
+          "y": 0,
+          "name": "Header",
+          "width": 1440,
+          "height": 64,
+          "fill": "$D:color-bg-container",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$D:color-border-secondary"
+          },
+          "padding": [
+            0,
+            "$D:space-24"
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "l9JPRn",
+              "name": "Logo",
+              "gap": "$D:space-8",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "QgXLv",
+                  "name": "Logo Icon",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "file-text",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-primary"
+                },
+                {
+                  "type": "text",
+                  "id": "msnUt",
+                  "name": "System Name",
+                  "fill": "$D:color-text",
+                  "content": "病历质控标注系统",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "P5z7sd",
+              "name": "User Dropdown",
+              "height": 32,
+              "gap": "$D:space-4",
+              "padding": [
+                0,
+                "$D:space-8"
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "A4oqo",
+                  "name": "User",
+                  "fill": "$D:color-text-secondary",
+                  "content": "操作员 czy",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "tMXoM",
+                  "name": "Chevron",
+                  "width": 14,
+                  "height": 14,
+                  "iconFontName": "chevron-down",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-text-secondary"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "fzrm9",
+          "x": 0,
+          "y": 64,
+          "name": "Top Bar",
+          "width": 1440,
+          "height": 64,
+          "fill": "$D:color-bg-container",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$D:color-border-secondary"
+          },
+          "padding": [
+            0,
+            "$D:space-24"
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "j0TjXY",
+              "name": "Task Meta",
+              "gap": "$D:space-16",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "F3Cn0",
+                  "name": "Back",
+                  "fill": "$D:color-primary",
+                  "content": "← 返回列表",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "H2hp6S",
+                  "name": "Plan Title",
+                  "fill": "$D:color-text",
+                  "content": "胸痛病历质控专项",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "Rxwbk",
+                  "name": "Status Tag",
+                  "height": 24,
+                  "fill": "$D:color-primary-bg",
+                  "cornerRadius": "$D:radius-full",
+                  "padding": [
+                    2,
+                    "$D:space-8"
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "VvnZ6",
+                      "name": "Status",
+                      "fill": "$D:color-primary",
+                      "content": "进行中 2/6",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size-sm",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "c0fGy",
+              "name": "Annotate Button",
+              "height": 36,
+              "fill": "$D:color-primary",
+              "cornerRadius": "$D:radius",
+              "padding": [
+                0,
+                "$D:space-16"
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "AJXIO",
+                  "name": "Button Text",
+                  "fill": "$D:color-bg-container",
+                  "content": "标注",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "ie81B",
+          "x": 0,
+          "y": 128,
+          "name": "Three Column Content",
+          "width": 1440,
+          "height": 832,
+          "gap": "$D:space-16",
+          "padding": "$D:space-20",
+          "children": [
+            {
+              "type": "frame",
+              "id": "krOMY",
+              "name": "病历数据",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-12",
+              "padding": "$D:space-16",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "bFqZx",
+                  "name": "Panel Header",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Q4Xjm",
+                      "name": "Hospital No",
+                      "fill": "$D:color-text",
+                      "content": "住院号：ZY20260001",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size-lg",
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "MuCln",
+                      "name": "Rules Link",
+                      "fill": "$D:color-primary",
+                      "content": "查看质控规则",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "FGrV7",
+                  "name": "Medical Record Text",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "$D:color-gray-2",
+                  "cornerRadius": "$D:radius",
+                  "padding": "$D:space-16",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Iz1gQ",
+                      "name": "Record",
+                      "fill": "$D:color-text",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "主诉：反复胸痛 3 小时。\n\n现病史：患者入院前突发胸骨后压榨样疼痛，伴出汗，无明显呼吸困难。既往高血压病史 10 年。\n\n查体：血压 152/92mmHg，心率 86 次/分。\n\n初步诊断：急性冠脉综合征待排。",
+                      "lineHeight": "$D:line-height-relaxed",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "duoca",
+              "name": "标注结果 A",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-12",
+              "padding": "$D:space-16",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "O0uISB",
+                  "name": "Title",
+                  "fill": "$D:color-text",
+                  "content": "结果 A",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "D3DYe",
+                  "name": "Result Body",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "$D:color-gray-2",
+                  "cornerRadius": "$D:radius",
+                  "padding": "$D:space-16",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "x0PQze",
+                      "name": "Result Text",
+                      "fill": "$D:color-text",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "### 质控发现\n- 病历已记录胸痛起病时间。\n- 建议补充心电图完成时间。\n- 未见肌钙蛋白复查计划。\n\n结论：存在轻度遗漏。",
+                      "lineHeight": "$D:line-height-relaxed",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "b7dLP",
+              "name": "标注结果 B",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-12",
+              "padding": "$D:space-16",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "a4zX8",
+                  "name": "Title",
+                  "fill": "$D:color-text",
+                  "content": "结果 B",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "uctPv",
+                  "name": "Result Body",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "$D:color-gray-2",
+                  "cornerRadius": "$D:radius",
+                  "padding": "$D:space-16",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "R2Q84o",
+                      "name": "Result Text",
+                      "fill": "$D:color-text",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "### 质控发现\n- 病历内容完整覆盖主诉、现病史、既往史。\n- 对 ACS 风险已有提示。\n- 建议补充用药禁忌核查。\n\n结论：整体更完整。",
+                      "lineHeight": "$D:line-height-relaxed",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "YqKEi",
+          "x": 492,
+          "y": 176,
+          "name": "质控规则Popover",
+          "width": 456,
+          "height": 420,
+          "fill": "$D:color-bg-container",
+          "cornerRadius": "$D:radius-lg",
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "$D:color-border-secondary"
+          },
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "$D:color-000000-14",
+            "offset": {
+              "x": 0,
+              "y": 8
+            },
+            "blur": 24
+          },
+          "layout": "vertical",
+          "gap": "$D:space-12",
+          "padding": "$D:space-16",
+          "children": [
+            {
+              "type": "text",
+              "id": "nx0wx",
+              "name": "Title",
+              "fill": "$D:color-text",
+              "content": "质控规则",
+              "fontFamily": "PingFang SC",
+              "fontSize": "$D:font-size-lg",
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "PlBlA",
+              "name": "Doc Type Tabs",
+              "width": "fill_container",
+              "gap": "$D:space-8",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "zhm9O",
+                  "name": "Tab Active",
+                  "height": 32,
+                  "fill": "$D:color-primary-bg",
+                  "cornerRadius": "$D:radius",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "$D:color-primary-border"
+                  },
+                  "padding": [
+                    0,
+                    "$D:space-12"
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "IHkWE",
+                      "name": "Text",
+                      "fill": "$D:color-primary",
+                      "content": "入院病历",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "v7xzdi",
+                  "name": "Tab",
+                  "height": 32,
+                  "fill": "$D:color-bg-container",
+                  "cornerRadius": "$D:radius",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "$D:color-border"
+                  },
+                  "padding": [
+                    0,
+                    "$D:space-12"
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "PvHVL",
+                      "name": "Text",
+                      "fill": "$D:color-text-secondary",
+                      "content": "首次病程",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "PBazf",
+                  "name": "Tab",
+                  "height": 32,
+                  "fill": "$D:color-bg-container",
+                  "cornerRadius": "$D:radius",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "$D:color-border"
+                  },
+                  "padding": [
+                    0,
+                    "$D:space-12"
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "vNQ8U",
+                      "name": "Text",
+                      "fill": "$D:color-text-secondary",
+                      "content": "出院记录",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "SZrXf",
+              "name": "Rule List",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "gap": "$D:space-12",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "cubVd",
+                  "name": "Rule Item",
+                  "width": "fill_container",
+                  "fill": "$D:color-bg-container",
+                  "cornerRadius": "$D:radius",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "$D:color-border-secondary"
+                  },
+                  "padding": "$D:space-12",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "TiUF7",
+                      "name": "Rule Text",
+                      "fill": "$D:color-text",
+                      "content": "入院记录应在 24 小时内完成",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "IZsrO",
+                      "name": "Score",
+                      "fill": "$D:color-error",
+                      "content": "5分",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "yBKvF",
+                  "name": "Rule Item",
+                  "width": "fill_container",
+                  "fill": "$D:color-bg-container",
+                  "cornerRadius": "$D:radius",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "$D:color-border-secondary"
+                  },
+                  "padding": "$D:space-12",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "pKtkz",
+                      "name": "Rule Text",
+                      "fill": "$D:color-text",
+                      "content": "主诉需简明记录主要症状和持续时间",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "QGRz1",
+                      "name": "Score",
+                      "fill": "$D:color-error",
+                      "content": "3分",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "600"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "AREjz",
+      "x": 3024,
+      "y": 5301,
+      "name": "操作员-标注工作台-表单校验错误",
+      "width": 1440,
+      "height": 960,
+      "fill": "$D:color-bg-layout",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "JiIyH",
+          "x": 0,
+          "y": 0,
+          "name": "Header",
+          "width": 1440,
+          "height": 64,
+          "fill": "$D:color-bg-container",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$D:color-border-secondary"
+          },
+          "padding": [
+            0,
+            "$D:space-24"
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "Sh8bk",
+              "name": "Logo",
+              "gap": "$D:space-8",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "z8IBIC",
+                  "name": "Logo Icon",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "file-text",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-primary"
+                },
+                {
+                  "type": "text",
+                  "id": "W6q8KG",
+                  "name": "System Name",
+                  "fill": "$D:color-text",
+                  "content": "病历质控标注系统",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "DtBiC",
+              "name": "User Dropdown",
+              "height": 32,
+              "gap": "$D:space-4",
+              "padding": [
+                0,
+                "$D:space-8"
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "OKPgj",
+                  "name": "User",
+                  "fill": "$D:color-text-secondary",
+                  "content": "操作员 czy",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "inKnG",
+                  "name": "Chevron",
+                  "width": 14,
+                  "height": 14,
+                  "iconFontName": "chevron-down",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-text-secondary"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "OXvfg",
+          "x": 0,
+          "y": 64,
+          "name": "Top Bar",
+          "width": 1440,
+          "height": 64,
+          "fill": "$D:color-bg-container",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$D:color-border-secondary"
+          },
+          "padding": [
+            0,
+            "$D:space-24"
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "XIDhy",
+              "name": "Task Meta",
+              "gap": "$D:space-16",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "vB7CV",
+                  "name": "Back",
+                  "fill": "$D:color-primary",
+                  "content": "← 返回列表",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "r5WOY8",
+                  "name": "Plan Title",
+                  "fill": "$D:color-text",
+                  "content": "胸痛病历质控专项",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "U6Qaf",
+                  "name": "Status Tag",
+                  "height": 24,
+                  "fill": "$D:color-primary-bg",
+                  "cornerRadius": "$D:radius-full",
+                  "padding": [
+                    2,
+                    "$D:space-8"
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "TxClS",
+                      "name": "Status",
+                      "fill": "$D:color-primary",
+                      "content": "进行中 2/6",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size-sm",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "kpJ9f",
+              "name": "Annotate Button",
+              "height": 36,
+              "fill": "$D:color-primary",
+              "cornerRadius": "$D:radius",
+              "padding": [
+                0,
+                "$D:space-16"
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "wT51y",
+                  "name": "Button Text",
+                  "fill": "$D:color-bg-container",
+                  "content": "标注",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "XQeaw",
+          "x": 0,
+          "y": 128,
+          "name": "Three Column Content",
+          "width": 1440,
+          "height": 832,
+          "gap": "$D:space-16",
+          "padding": "$D:space-20",
+          "children": [
+            {
+              "type": "frame",
+              "id": "EtKwq",
+              "name": "病历数据",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-12",
+              "padding": "$D:space-16",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "xNnat",
+                  "name": "Panel Header",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "PiIgN",
+                      "name": "Hospital No",
+                      "fill": "$D:color-text",
+                      "content": "住院号：ZY20260001",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size-lg",
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "NS92K",
+                      "name": "Rules Link",
+                      "fill": "$D:color-primary",
+                      "content": "查看质控规则",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "pvDlk",
+                  "name": "Text",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "$D:color-gray-2",
+                  "cornerRadius": "$D:radius",
+                  "padding": "$D:space-16",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "i3bDt1",
+                      "fill": "$D:color-text",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "主诉：反复胸痛 3 小时。\n现病史：患者入院前突发胸骨后压榨样疼痛。\n查体：血压 152/92mmHg。",
+                      "lineHeight": "$D:line-height-relaxed",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ErKFt",
+              "name": "标注结果 A",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-12",
+              "padding": "$D:space-16",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "a46sp",
+                  "fill": "$D:color-text",
+                  "content": "结果 A",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "M1HUX",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "$D:color-gray-2",
+                  "cornerRadius": "$D:radius",
+                  "padding": "$D:space-16",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "mcOCP",
+                      "fill": "$D:color-text",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "存在轻度遗漏，建议补充心电图完成时间。",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "oqkrx",
+              "name": "标注结果 B",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-12",
+              "padding": "$D:space-16",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "i79Ts",
+                  "fill": "$D:color-text",
+                  "content": "结果 B",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "w2SZh",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "$D:color-gray-2",
+                  "cornerRadius": "$D:radius",
+                  "padding": "$D:space-16",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "pCVpq",
+                      "fill": "$D:color-text",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "整体更完整，已覆盖 ACS 风险提示。",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "l7bEQ",
+          "x": 0,
+          "y": 0,
+          "name": "Modal Mask",
+          "width": 1440,
+          "height": 960,
+          "fill": "$D:color-000000-40"
+        },
+        {
+          "type": "frame",
+          "id": "MtI4v",
+          "x": 400,
+          "y": 150,
+          "name": "标注弹窗-校验错误",
+          "width": 640,
+          "height": 620,
+          "fill": "$D:color-bg-container",
+          "cornerRadius": "$D:radius-lg",
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "$D:color-border-secondary"
+          },
+          "layout": "vertical",
+          "gap": "$D:space-16",
+          "padding": "$D:space-20",
+          "children": [
+            {
+              "type": "frame",
+              "id": "hTWkS",
+              "name": "Modal Header",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "aTXHz",
+                  "fill": "$D:color-text",
+                  "content": "标注",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-xl",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "jBZQX",
+                  "width": 18,
+                  "height": 18,
+                  "iconFontName": "x",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-text-secondary"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "ujBYa",
+              "fill": "$D:color-text-secondary",
+              "content": "请确认结论并选择原因后提交。",
+              "fontFamily": "PingFang SC",
+              "fontSize": "$D:font-size",
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "VALoA",
+              "name": "FormItem-标注结论",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$D:space-8",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "P7UQNO",
+                  "fill": "$D:color-text",
+                  "content": "标注结论",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "jSsdz",
+                  "gap": "$D:space-8",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "vm2Q1",
+                      "height": 32,
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-error"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "XP9x7",
+                          "fill": "$D:color-text",
+                          "content": "A 更好",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "qTRJ2",
+                      "height": 32,
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-error"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "iLh8u",
+                          "fill": "$D:color-text",
+                          "content": "B 更好",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "OVD2E",
+                      "height": 32,
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-error"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "s7Rnwp",
+                          "fill": "$D:color-text",
+                          "content": "一样好",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "q6ybo",
+                      "name": "conBad",
+                      "height": 32,
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-error"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "orBAR",
+                          "fill": "$D:color-text",
+                          "content": "都不好",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "Afgp9",
+                  "fill": "$D:color-error",
+                  "content": "请选择标注结论",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-sm",
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "u9TX9c",
+              "name": "FormItem-标注原因",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$D:space-8",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "bAnxo",
+                  "fill": "$D:color-text",
+                  "content": "标注原因",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "m66UG",
+                  "gap": "$D:space-8",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "n1iaI",
+                      "height": 32,
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-error"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "o1LXw",
+                          "fill": "$D:color-text",
+                          "content": "无遗漏规则",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "uKkyD",
+                      "height": 32,
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-error"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "PNj4w",
+                          "fill": "$D:color-text",
+                          "content": "无命中错误规则",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "rXUcb",
+                      "height": 32,
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-error"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "S1JpFL",
+                          "fill": "$D:color-text",
+                          "content": "无过度质控",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "psfwB",
+                      "height": 32,
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-error"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "q39hQ3",
+                          "fill": "$D:color-text",
+                          "content": "其他",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "Qdm2R",
+                  "fill": "$D:color-error",
+                  "content": "请至少选择一个标注原因",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-sm",
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "k33mg",
+              "name": "FormItem-补充说明",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$D:space-8",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "fwqAf",
+                  "fill": "$D:color-text",
+                  "content": "补充说明",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "igaPh",
+                  "width": "fill_container",
+                  "height": 88,
+                  "fill": "$D:color-bg-container",
+                  "cornerRadius": "$D:radius",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "$D:color-border"
+                  },
+                  "padding": "$D:space-12",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ZIHhJ",
+                      "fill": "$D:color-text-disabled",
+                      "content": "请输入补充说明（选填）",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Adi8m",
+              "name": "Footer",
+              "width": "fill_container",
+              "gap": "$D:space-8",
+              "justifyContent": "end",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "N13HD",
+                  "height": 36,
+                  "cornerRadius": "$D:radius",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "$D:color-border"
+                  },
+                  "padding": [
+                    0,
+                    "$D:space-16"
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "bEdwE",
+                      "fill": "$D:color-text",
+                      "content": "取消",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Ef2jS",
+                  "height": 36,
+                  "fill": "$D:color-primary",
+                  "cornerRadius": "$D:radius",
+                  "padding": [
+                    0,
+                    "$D:space-16"
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "DEVoF",
+                      "fill": "$D:color-bg-container",
+                      "content": "提交标注",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "kP4qH",
+      "x": 1512,
+      "y": 5301,
+      "name": "操作员-标注工作台-提交中",
+      "width": 1440,
+      "height": 960,
+      "fill": "$D:color-bg-layout",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "GoLTS",
+          "x": 0,
+          "y": 0,
+          "name": "Header",
+          "width": 1440,
+          "height": 64,
+          "fill": "$D:color-bg-container",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$D:color-border-secondary"
+          },
+          "padding": [
+            0,
+            "$D:space-24"
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "z8qM2",
+              "name": "Logo",
+              "gap": "$D:space-8",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "UYU8V",
+                  "name": "Logo Icon",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "file-text",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-primary"
+                },
+                {
+                  "type": "text",
+                  "id": "hGkdE",
+                  "name": "System Name",
+                  "fill": "$D:color-text",
+                  "content": "病历质控标注系统",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "opaoq",
+              "name": "User Dropdown",
+              "height": 32,
+              "gap": "$D:space-4",
+              "padding": [
+                0,
+                "$D:space-8"
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ReaWi",
+                  "name": "User",
+                  "fill": "$D:color-text-secondary",
+                  "content": "操作员 czy",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "Sgt79",
+                  "name": "Chevron",
+                  "width": 14,
+                  "height": 14,
+                  "iconFontName": "chevron-down",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-text-secondary"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "A6mn1A",
+          "x": 0,
+          "y": 64,
+          "name": "Top Bar",
+          "width": 1440,
+          "height": 64,
+          "fill": "$D:color-bg-container",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$D:color-border-secondary"
+          },
+          "padding": [
+            0,
+            "$D:space-24"
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "UkDJO",
+              "name": "Task Meta",
+              "gap": "$D:space-16",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "qET8F",
+                  "name": "Back",
+                  "fill": "$D:color-primary",
+                  "content": "← 返回列表",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "aXDuY",
+                  "name": "Plan Title",
+                  "fill": "$D:color-text",
+                  "content": "胸痛病历质控专项",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "EmJih",
+                  "name": "Status Tag",
+                  "height": 24,
+                  "fill": "$D:color-primary-bg",
+                  "cornerRadius": "$D:radius-full",
+                  "padding": [
+                    2,
+                    "$D:space-8"
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "zyPH4",
+                      "name": "Status",
+                      "fill": "$D:color-primary",
+                      "content": "进行中 2/6",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size-sm",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "pAJwo",
+              "name": "Annotate Button",
+              "height": 36,
+              "fill": "$D:color-primary",
+              "cornerRadius": "$D:radius",
+              "padding": [
+                0,
+                "$D:space-16"
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Oi2tM",
+                  "name": "Button Text",
+                  "fill": "$D:color-bg-container",
+                  "content": "标注",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "do1vB",
+          "x": 0,
+          "y": 128,
+          "name": "Three Column Content",
+          "width": 1440,
+          "height": 832,
+          "gap": "$D:space-16",
+          "padding": "$D:space-20",
+          "children": [
+            {
+              "type": "frame",
+              "id": "hvxKY",
+              "name": "病历数据",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-12",
+              "padding": "$D:space-16",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "c2gQyX",
+                  "fill": "$D:color-text",
+                  "content": "住院号：ZY20260001",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "SqNaX",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "$D:color-gray-2",
+                  "cornerRadius": "$D:radius"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "LU7fM",
+              "name": "标注结果 A",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-12",
+              "padding": "$D:space-16",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "V0hIL",
+                  "fill": "$D:color-text",
+                  "content": "结果 A",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "stqwh",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "$D:color-gray-2",
+                  "cornerRadius": "$D:radius"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "UB6jD",
+              "name": "标注结果 B",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-12",
+              "padding": "$D:space-16",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "zDJM2",
+                  "fill": "$D:color-text",
+                  "content": "结果 B",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "RnM6P",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "$D:color-gray-2",
+                  "cornerRadius": "$D:radius"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "wV0O9",
+          "x": 0,
+          "y": 0,
+          "name": "Modal Mask",
+          "width": 1440,
+          "height": 960,
+          "fill": "$D:color-000000-40"
+        },
+        {
+          "type": "frame",
+          "id": "poZYj",
+          "x": 400,
+          "y": 150,
+          "name": "标注弹窗-提交中",
+          "width": 640,
+          "height": 620,
+          "fill": "$D:color-bg-container",
+          "cornerRadius": "$D:radius-lg",
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "$D:color-border-secondary"
+          },
+          "layout": "vertical",
+          "gap": "$D:space-16",
+          "padding": "$D:space-20",
+          "children": [
+            {
+              "type": "frame",
+              "id": "u1AnU",
+              "name": "Modal Header",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "frD8n",
+                  "fill": "$D:color-text",
+                  "content": "标注",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-xl",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "cKDXB",
+                  "width": 18,
+                  "height": 18,
+                  "iconFontName": "x",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-text-disabled"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "jKniZ",
+              "fill": "$D:color-text-secondary",
+              "content": "请确认结论并选择原因后提交。",
+              "fontFamily": "PingFang SC",
+              "fontSize": "$D:font-size",
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "AzLXq",
+              "name": "FormItem-标注结论",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$D:space-8",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "wc8MX",
+                  "fill": "$D:color-text",
+                  "content": "标注结论",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "wipth",
+                  "gap": "$D:space-8",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "cua6E",
+                      "height": 32,
+                      "fill": "$D:color-primary-bg",
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-primary-border"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "TNtNF",
+                          "fill": "$D:color-primary",
+                          "content": "A 更好",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "PIRvG",
+                      "height": 32,
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-border"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "EMumR",
+                          "fill": "$D:color-text",
+                          "content": "B 更好",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "IvbU7",
+                      "height": 32,
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-border"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "y1vtqE",
+                          "fill": "$D:color-text",
+                          "content": "一样好",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "E3rAZR",
+                      "name": "conBad",
+                      "height": 32,
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-border"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "mOYPJ",
+                          "fill": "$D:color-text",
+                          "content": "都不好",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "jdnUg",
+              "name": "FormItem-标注原因",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$D:space-8",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "fXVTS",
+                  "fill": "$D:color-text",
+                  "content": "标注原因",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "jodvY",
+                  "gap": "$D:space-8",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "c9Vu9v",
+                      "height": 32,
+                      "fill": "$D:color-primary-bg",
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-primary-border"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "WzGp5",
+                          "fill": "$D:color-primary",
+                          "content": "无遗漏规则",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "OtpKH",
+                      "height": 32,
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-border"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "F6CnPY",
+                          "fill": "$D:color-text",
+                          "content": "无命中错误规则",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "X2Flin",
+                      "height": 32,
+                      "fill": "$D:color-primary-bg",
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-primary-border"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "S8bKh8",
+                          "fill": "$D:color-primary",
+                          "content": "无过度质控",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "HEEsm",
+                      "height": 32,
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-border"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "zB1jc",
+                          "fill": "$D:color-text",
+                          "content": "其他",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "a79UD",
+              "name": "FormItem-补充说明",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$D:space-8",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "X6Bgv7",
+                  "fill": "$D:color-text",
+                  "content": "补充说明",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "b04JD",
+                  "width": "fill_container",
+                  "height": 88,
+                  "fill": "$D:color-bg-container",
+                  "cornerRadius": "$D:radius",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "$D:color-border"
+                  },
+                  "padding": "$D:space-12",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "gBwnp",
+                      "fill": "$D:color-text",
+                      "content": "A 对遗漏规则的提示更准确，适合作为本条标注结论。",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "iZOu2",
+              "name": "Footer",
+              "width": "fill_container",
+              "gap": "$D:space-8",
+              "justifyContent": "end",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "vI1K4",
+                  "height": 36,
+                  "cornerRadius": "$D:radius",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "$D:color-border"
+                  },
+                  "padding": [
+                    0,
+                    "$D:space-16"
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "fFsKB",
+                      "fill": "$D:color-text-disabled",
+                      "content": "取消",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "oZ1LC",
+                  "height": 36,
+                  "fill": "$D:color-primary",
+                  "cornerRadius": "$D:radius",
+                  "gap": "$D:space-8",
+                  "padding": [
+                    0,
+                    "$D:space-16"
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "H57nM",
+                      "width": 14,
+                      "height": 14,
+                      "iconFontName": "loader-circle",
+                      "iconFontFamily": "lucide",
+                      "fill": "$D:color-bg-container"
+                    },
+                    {
+                      "type": "text",
+                      "id": "CMakS",
+                      "fill": "$D:color-bg-container",
+                      "content": "提交中",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "Z9pMUA",
+      "x": 1512,
+      "y": 6551,
+      "name": "操作员-标注工作台-任务加载失败",
+      "width": 1440,
+      "height": 960,
+      "fill": "$D:color-bg-layout",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "FYc2K",
+          "x": 0,
+          "y": 0,
+          "name": "Header",
+          "width": 1440,
+          "height": 64,
+          "fill": "$D:color-bg-container",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$D:color-border-secondary"
+          },
+          "padding": [
+            0,
+            "$D:space-24"
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "gj0on",
+              "name": "Logo",
+              "gap": "$D:space-8",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "rFYUI",
+                  "name": "Logo Icon",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "file-text",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-primary"
+                },
+                {
+                  "type": "text",
+                  "id": "U76WAW",
+                  "name": "System Name",
+                  "fill": "$D:color-text",
+                  "content": "病历质控标注系统",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "U7cL7",
+              "name": "User Dropdown",
+              "height": 32,
+              "gap": "$D:space-4",
+              "padding": [
+                0,
+                "$D:space-8"
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "vvcZH",
+                  "name": "User",
+                  "fill": "$D:color-text-secondary",
+                  "content": "操作员 czy",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "EKttI",
+                  "name": "Chevron",
+                  "width": 14,
+                  "height": 14,
+                  "iconFontName": "chevron-down",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-text-secondary"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "F7Ymy",
+          "x": 0,
+          "y": 64,
+          "name": "Content",
+          "width": 1440,
+          "height": 896,
+          "layout": "vertical",
+          "padding": "$D:space-24",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "aJKcV",
+              "name": "Result Panel",
+              "width": 560,
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-16",
+              "padding": "$D:space-32",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "Zm8la",
+                  "name": "Icon",
+                  "width": 44,
+                  "height": 44,
+                  "iconFontName": "circle-alert",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-error"
+                },
+                {
+                  "type": "text",
+                  "id": "Z4UinD",
+                  "fill": "$D:color-text",
+                  "content": "任务加载失败",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "c0a2an",
+                  "fill": "$D:color-text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "暂时无法获取下一条标注任务，请稍后重试。",
+                  "textAlign": "center",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "WseNv",
+                  "name": "Actions",
+                  "gap": "$D:space-8",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "KcdBb",
+                      "height": 36,
+                      "fill": "$D:color-primary",
+                      "cornerRadius": "$D:radius",
+                      "padding": [
+                        0,
+                        "$D:space-16"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "i5xxD",
+                          "fill": "$D:color-bg-container",
+                          "content": "重新加载",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "MN0K8",
+                      "height": 36,
+                      "fill": "$D:color-bg-container",
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-border"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-16"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "mgrso",
+                          "fill": "$D:color-text",
+                          "content": "返回列表",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "s8Xo2",
+      "x": 3024,
+      "y": 6551,
+      "name": "操作员-标注工作台-无权限",
+      "width": 1440,
+      "height": 960,
+      "fill": "$D:color-bg-layout",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "pnDsM",
+          "x": 0,
+          "y": 0,
+          "name": "Header",
+          "width": 1440,
+          "height": 64,
+          "fill": "$D:color-bg-container",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$D:color-border-secondary"
+          },
+          "padding": [
+            0,
+            "$D:space-24"
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "J32S3",
+              "name": "Logo",
+              "gap": "$D:space-8",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "ssggB",
+                  "name": "Logo Icon",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "file-text",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-primary"
+                },
+                {
+                  "type": "text",
+                  "id": "rI5mt",
+                  "name": "System Name",
+                  "fill": "$D:color-text",
+                  "content": "病历质控标注系统",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "GJtYn",
+              "name": "User Dropdown",
+              "height": 32,
+              "gap": "$D:space-4",
+              "padding": [
+                0,
+                "$D:space-8"
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "RaR1m",
+                  "name": "User",
+                  "fill": "$D:color-text-secondary",
+                  "content": "操作员 czy",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "AyWXS",
+                  "name": "Chevron",
+                  "width": 14,
+                  "height": 14,
+                  "iconFontName": "chevron-down",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-text-secondary"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "IS3sH",
+          "x": 0,
+          "y": 64,
+          "name": "Content",
+          "width": 1440,
+          "height": 896,
+          "layout": "vertical",
+          "padding": "$D:space-24",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "mRgVt",
+              "name": "Result Panel",
+              "width": 560,
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-16",
+              "padding": "$D:space-32",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "JzMZo",
+                  "name": "Icon",
+                  "width": 44,
+                  "height": 44,
+                  "iconFontName": "shield-alert",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-warning"
+                },
+                {
+                  "type": "text",
+                  "id": "f1wEOR",
+                  "fill": "$D:color-text",
+                  "content": "无权限访问该计划",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "fdjiq",
+                  "fill": "$D:color-text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "当前账号不是该计划负责人，无法进入标注工作台。",
+                  "textAlign": "center",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "jjve4",
+                  "height": 36,
+                  "fill": "$D:color-primary",
+                  "cornerRadius": "$D:radius",
+                  "padding": [
+                    0,
+                    "$D:space-16"
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "QXa3F",
+                      "fill": "$D:color-bg-container",
+                      "content": "返回列表",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "knEwo",
+      "x": 4536,
+      "y": 6551,
+      "name": "操作员-标注工作台-计划已关闭",
+      "width": 1440,
+      "height": 960,
+      "fill": "$D:color-bg-layout",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "I7JjR",
+          "x": 0,
+          "y": 0,
+          "name": "Header",
+          "width": 1440,
+          "height": 64,
+          "fill": "$D:color-bg-container",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$D:color-border-secondary"
+          },
+          "padding": [
+            0,
+            "$D:space-24"
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "u1IkVD",
+              "name": "Logo",
+              "gap": "$D:space-8",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "vVks4",
+                  "name": "Logo Icon",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "file-text",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-primary"
+                },
+                {
+                  "type": "text",
+                  "id": "D3cKy",
+                  "name": "System Name",
+                  "fill": "$D:color-text",
+                  "content": "病历质控标注系统",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "dhom2",
+              "name": "User Dropdown",
+              "height": 32,
+              "gap": "$D:space-4",
+              "padding": [
+                0,
+                "$D:space-8"
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "vkjN6",
+                  "name": "User",
+                  "fill": "$D:color-text-secondary",
+                  "content": "操作员 czy",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "TCgD1",
+                  "name": "Chevron",
+                  "width": 14,
+                  "height": 14,
+                  "iconFontName": "chevron-down",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-text-secondary"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "ppgnR",
+          "x": 0,
+          "y": 64,
+          "name": "Content",
+          "width": 1440,
+          "height": 896,
+          "layout": "vertical",
+          "padding": "$D:space-24",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "hMZQI",
+              "name": "Result Panel",
+              "width": 560,
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-16",
+              "padding": "$D:space-32",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "wIWba",
+                  "name": "Icon",
+                  "width": 44,
+                  "height": 44,
+                  "iconFontName": "lock",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-text-disabled"
+                },
+                {
+                  "type": "text",
+                  "id": "g6pcMy",
+                  "fill": "$D:color-text",
+                  "content": "计划已关闭",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "gsQUk",
+                  "fill": "$D:color-text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "该计划已由管理员关闭，无法继续标注。",
+                  "textAlign": "center",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "gkTwg",
+                  "height": 36,
+                  "fill": "$D:color-primary",
+                  "cornerRadius": "$D:radius",
+                  "padding": [
+                    0,
+                    "$D:space-16"
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "oNtGS",
+                      "fill": "$D:color-bg-container",
+                      "content": "返回列表",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "gHV9k",
+      "x": 0,
+      "y": 5301,
+      "name": "操作员-标注工作台-默认态",
+      "width": 1440,
+      "height": 960,
+      "fill": "$D:color-bg-layout",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "M4NyMe",
+          "x": 0,
+          "y": 0,
+          "name": "Header",
+          "width": 1440,
+          "height": 64,
+          "fill": "$D:color-bg-container",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$D:color-border-secondary"
+          },
+          "padding": [
+            0,
+            "$D:space-24"
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "TZet6",
+              "name": "Logo",
+              "gap": "$D:space-8",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "s2zUD",
+                  "name": "Logo Icon",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "file-text",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-primary"
+                },
+                {
+                  "type": "text",
+                  "id": "T01hHj",
+                  "name": "System Name",
+                  "fill": "$D:color-text",
+                  "content": "病历质控标注系统",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Wqr7i",
+              "name": "User Dropdown",
+              "height": 32,
+              "gap": "$D:space-4",
+              "padding": [
+                0,
+                "$D:space-8"
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "g8dneA",
+                  "name": "User",
+                  "fill": "$D:color-text-secondary",
+                  "content": "操作员 czy",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "F6db5",
+                  "name": "Chevron",
+                  "width": 14,
+                  "height": 14,
+                  "iconFontName": "chevron-down",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-text-secondary"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Y3XEoD",
+          "x": 0,
+          "y": 64,
+          "name": "Top Bar",
+          "width": 1440,
+          "height": 64,
+          "fill": "$D:color-bg-container",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$D:color-border-secondary"
+          },
+          "padding": [
+            0,
+            "$D:space-24"
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "lY6kX",
+              "name": "Task Meta",
+              "gap": "$D:space-16",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "aLRXU",
+                  "name": "Back",
+                  "fill": "$D:color-primary",
+                  "content": "← 返回列表",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "v0zrt",
+                  "name": "Plan Title",
+                  "fill": "$D:color-text",
+                  "content": "胸痛病历质控专项",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "RmBYp",
+                  "name": "Status Tag",
+                  "height": 24,
+                  "fill": "$D:color-primary-bg",
+                  "cornerRadius": "$D:radius-full",
+                  "padding": [
+                    2,
+                    "$D:space-8"
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "zA8Rw",
+                      "name": "Status",
+                      "fill": "$D:color-primary",
+                      "content": "进行中 2/6",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size-sm",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "b0os5",
+              "name": "Annotate Button",
+              "height": 36,
+              "fill": "$D:color-primary",
+              "cornerRadius": "$D:radius",
+              "padding": [
+                0,
+                "$D:space-16"
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "U1Mrsz",
+                  "name": "Button Text",
+                  "fill": "$D:color-bg-container",
+                  "content": "标注",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "iES4F",
+          "x": 0,
+          "y": 128,
+          "name": "Three Column Content",
+          "width": 1440,
+          "height": 832,
+          "gap": "$D:space-16",
+          "padding": "$D:space-20",
+          "children": [
+            {
+              "type": "frame",
+              "id": "P81L4",
+              "name": "病历数据",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-12",
+              "padding": "$D:space-16",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "n8yII3",
+                  "name": "Panel Header",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "rA8U1",
+                      "name": "Hospital No",
+                      "fill": "$D:color-text",
+                      "content": "住院号：ZY20260001",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size-lg",
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "AlA2K",
+                      "name": "Rules Link",
+                      "fill": "$D:color-primary",
+                      "content": "查看质控规则",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "UH9oP",
+                  "name": "Medical Record Text",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "$D:color-gray-2",
+                  "cornerRadius": "$D:radius",
+                  "padding": "$D:space-16",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "TtZEE",
+                      "name": "Record",
+                      "fill": "$D:color-text",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "主诉：反复胸痛 3 小时。\n\n现病史：患者入院前突发胸骨后压榨样疼痛，伴出汗，无明显呼吸困难。既往高血压病史 10 年。\n\n查体：血压 152/92mmHg，心率 86 次/分。\n\n初步诊断：急性冠脉综合征待排。",
+                      "lineHeight": "$D:line-height-relaxed",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Xnc2s",
+              "name": "标注结果 A",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-12",
+              "padding": "$D:space-16",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "r3QgS",
+                  "name": "Title",
+                  "fill": "$D:color-text",
+                  "content": "结果 A",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "S5Sktm",
+                  "name": "Result Body",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "$D:color-gray-2",
+                  "cornerRadius": "$D:radius",
+                  "padding": "$D:space-16",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "oCJKF",
+                      "name": "Result Text",
+                      "fill": "$D:color-text",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "### 质控发现\n- 病历已记录胸痛起病时间。\n- 建议补充心电图完成时间。\n- 未见肌钙蛋白复查计划。\n\n结论：存在轻度遗漏。",
+                      "lineHeight": "$D:line-height-relaxed",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "gZbSP",
+              "name": "标注结果 B",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$D:color-bg-container",
+              "cornerRadius": "$D:radius-lg",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$D:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$D:space-12",
+              "padding": "$D:space-16",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "hyo0v",
+                  "name": "Title",
+                  "fill": "$D:color-text",
+                  "content": "结果 B",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-lg",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "rSW2n",
+                  "name": "Result Body",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "$D:color-gray-2",
+                  "cornerRadius": "$D:radius",
+                  "padding": "$D:space-16",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "E5A3L",
+                      "name": "Result Text",
+                      "fill": "$D:color-text",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "### 质控发现\n- 病历内容完整覆盖主诉、现病史、既往史。\n- 对 ACS 风险已有提示。\n- 建议补充用药禁忌核查。\n\n结论：整体更完整。",
+                      "lineHeight": "$D:line-height-relaxed",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "i8z3g",
+          "x": 0,
+          "y": 0,
+          "name": "Modal Mask",
+          "width": 1440,
+          "height": 960,
+          "fill": "$D:color-000000-40"
+        },
+        {
+          "type": "frame",
+          "id": "TLnna",
+          "x": 400,
+          "y": 150,
+          "name": "标注弹窗-默认",
+          "width": 640,
+          "height": 620,
+          "fill": "$D:color-bg-container",
+          "cornerRadius": "$D:radius-lg",
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "$D:color-border-secondary"
+          },
+          "layout": "vertical",
+          "gap": "$D:space-16",
+          "padding": "$D:space-20",
+          "children": [
+            {
+              "type": "frame",
+              "id": "y6EXqK",
+              "name": "Modal Header",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "l5j0V",
+                  "name": "modalTitle",
+                  "fill": "$D:color-text",
+                  "content": "标注",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size-xl",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "RAO6J",
+                  "name": "modalClose",
+                  "width": 18,
+                  "height": 18,
+                  "iconFontName": "x",
+                  "iconFontFamily": "lucide",
+                  "fill": "$D:color-text-secondary"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "I6pdRZ",
+              "name": "modalDesc",
+              "fill": "$D:color-text-secondary",
+              "content": "请确认结论并选择原因后提交。",
+              "fontFamily": "PingFang SC",
+              "fontSize": "$D:font-size",
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "uQdMP",
+              "name": "FormItem-标注结论",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$D:space-8",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "x6NwY",
+                  "name": "conLabel",
+                  "fill": "$D:color-text",
+                  "content": "标注结论",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "QQJeZ",
+                  "name": "conOptions",
+                  "gap": "$D:space-8",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "SjMkh",
+                      "name": "conA",
+                      "height": 32,
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-border"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "DNtOJ",
+                          "fill": "$D:color-text",
+                          "content": "A 更好",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "eT4Xx",
+                      "name": "conB",
+                      "height": 32,
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-border"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "WKh4z",
+                          "fill": "$D:color-text",
+                          "content": "B 更好",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "uEc2y",
+                      "name": "conTie",
+                      "height": 32,
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-border"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "mRRlt",
+                          "fill": "$D:color-text",
+                          "content": "一样好",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "PGahj",
+                      "name": "conBad",
+                      "height": 32,
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-border"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "ifJrS",
+                          "fill": "$D:color-text",
+                          "content": "都不好",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "A0bJ4",
+              "name": "FormItem-标注原因",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$D:space-8",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "e6RzxC",
+                  "fill": "$D:color-text",
+                  "content": "标注原因",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "y9jrt",
+                  "name": "reasonOptions",
+                  "gap": "$D:space-8",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "noP6u",
+                      "height": 32,
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-border"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "NSQuM",
+                          "fill": "$D:color-text",
+                          "content": "无遗漏规则",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "i9Rhc",
+                      "height": 32,
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-border"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "PgMlS",
+                          "fill": "$D:color-text",
+                          "content": "无命中错误规则",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "RCGum",
+                      "height": 32,
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-border"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "FuRGV",
+                          "fill": "$D:color-text",
+                          "content": "无过度质控",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ciHJm",
+                      "height": 32,
+                      "cornerRadius": "$D:radius",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$D:color-border"
+                      },
+                      "padding": [
+                        0,
+                        "$D:space-12"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "l5czG",
+                          "fill": "$D:color-text",
+                          "content": "其他",
+                          "fontFamily": "PingFang SC",
+                          "fontSize": "$D:font-size",
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "I31uJ",
+              "name": "FormItem-补充说明",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$D:space-8",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "EW9KQ",
+                  "name": "noteLabel",
+                  "fill": "$D:color-text",
+                  "content": "补充说明",
+                  "fontFamily": "PingFang SC",
+                  "fontSize": "$D:font-size",
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "eg4Jo",
+                  "name": "textarea",
+                  "width": "fill_container",
+                  "height": 88,
+                  "fill": "$D:color-bg-container",
+                  "cornerRadius": "$D:radius",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "$D:color-border"
+                  },
+                  "padding": "$D:space-12",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nAhEa",
+                      "fill": "$D:color-text-disabled",
+                      "content": "请输入补充说明（选填）",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "wLRqj",
+              "name": "Footer",
+              "width": "fill_container",
+              "gap": "$D:space-8",
+              "justifyContent": "end",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "NSQbP",
+                  "name": "cancel",
+                  "height": 36,
+                  "cornerRadius": "$D:radius",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "$D:color-border"
+                  },
+                  "padding": [
+                    0,
+                    "$D:space-16"
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "g3dVz",
+                      "fill": "$D:color-text",
+                      "content": "取消",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "N7Hy8",
+                  "name": "submit",
+                  "height": 36,
+                  "fill": "$D:color-primary",
+                  "cornerRadius": "$D:radius",
+                  "padding": [
+                    0,
+                    "$D:space-16"
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "UrN2B",
+                      "fill": "$D:color-bg-container",
+                      "content": "提交标注",
+                      "fontFamily": "PingFang SC",
+                      "fontSize": "$D:font-size",
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "imports": {
+    "D": "../components/data-display.lib.pen",
+    "y": "../components/data-entry.lib.pen",
+    "X": "../components/feedback.lib.pen",
+    "l": "../components/general.lib.pen",
+    "R": "../components/layout.lib.pen",
+    "E": "../components/navigation.lib.pen"
+  }
+}

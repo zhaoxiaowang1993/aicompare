@@ -84,7 +84,11 @@ export default function Radio({
         buttonStyle={buttonStyle}
         size={mapSize(size)}
         onChange={onGroupChange}
-        className={cx(direction === 'vertical' && 'flex flex-col gap-8', className)}
+        className={cx(
+          'aicompare-radio-group',
+          direction === 'vertical' && 'flex flex-col gap-8',
+          className
+        )}
       >
         {mode === 'button'
           ? (children ??
@@ -103,7 +107,7 @@ export default function Radio({
       {...radioProps}
       checked={checked}
       disabled={disabled}
-      className={cx(hover && !disabled && '[&_.ant-radio-inner]:border-[var(--color-primary-hover)]', className)}
+      className={cx('aicompare-radio', hover && !disabled && '[&_.ant-radio-inner]:border-[var(--color-primary-hover)]', className)}
     >
       {children ?? label}
     </AntRadio>
