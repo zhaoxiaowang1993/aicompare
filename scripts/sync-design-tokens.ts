@@ -534,6 +534,29 @@ function makeAntdEntries(mapping: Record<string, string>): Array<[string, string
     .map(([antdName, tokenName]) => [antdName, cssVar(tokenName)])
 }
 
+function antdSeedValue(tokenName: string): string | number | boolean {
+  const rawValue = themeValue(variables[tokenName], 'light')
+
+  if (typeof rawValue !== 'string') {
+    return rawValue
+  }
+
+  const reference = rawValue.match(/^\$([a-z0-9-]+)$/i)?.[1]
+  if (reference && hasToken(reference)) {
+    return antdSeedValue(reference)
+  }
+
+  return rawValue.replace(/\$([a-z0-9-]+)/gi, (_match, referenceName: string) =>
+    hasToken(referenceName) ? String(antdSeedValue(referenceName)) : _match
+  )
+}
+
+function makeAntdSeedEntries(mapping: Record<string, string>): Array<[string, string | number | boolean]> {
+  return Object.entries(mapping)
+    .filter(([, tokenName]) => hasToken(tokenName))
+    .map(([antdName, tokenName]) => [antdName, antdSeedValue(tokenName)])
+}
+
 function makeComponentTokenEntries(): Array<[string, Record<string, string>]> {
   const components: Record<string, Record<string, string>> = {}
 
@@ -573,7 +596,7 @@ function buildRuntimeTokens(): Record<string, RuntimeToken> {
 }
 
 function buildAntdComponentGuardCss(): string {
-  return `/* Ant Design portal/compound DOM hardening. Keep generated so token sync cannot reintroduce bold selected values or bold toast copy. */\n.ant-select,\n.ant-select .ant-select-selector,\n.ant-select .ant-select-selection-item,\n.ant-select .ant-select-selection-item *,\n.ant-select .ant-select-selection-overflow,\n.ant-select .ant-select-selection-overflow *,\n.ant-select .ant-select-selection-placeholder,\n.ant-select .ant-select-selection-search-input,\n.ant-select-dropdown .ant-select-item-option,\n.ant-select-dropdown .ant-select-item-option * {\n  font-weight: var(--font-weight-regular) !important;\n}\n\n.ant-message,\n.ant-message-notice,\n.ant-message-notice-content,\n.ant-message-custom-content,\n.ant-message-custom-content * {\n  font-family: var(--font-family-base);\n  font-size: var(--font-size);\n  line-height: var(--line-height);\n  font-weight: var(--font-weight-regular) !important;\n}\n`
+  return `/* Ant Design portal/compound DOM hardening. Keep generated so token sync cannot reintroduce bold selected values or bold toast copy. */\n.ant-select,\n.ant-select .ant-select-selector,\n.ant-select .ant-select-selection-item,\n.ant-select .ant-select-selection-item *,\n.ant-select .ant-select-selection-overflow,\n.ant-select .ant-select-selection-overflow *,\n.ant-select .ant-select-selection-placeholder,\n.ant-select .ant-select-selection-search-input,\n.ant-select-dropdown .ant-select-item-option,\n.ant-select-dropdown .ant-select-item-option * {\n  font-weight: var(--font-weight-regular) !important;\n}\n\n.aicompare-radio,\n.aicompare-radio *,\n.aicompare-radio-group,\n.aicompare-radio-group *,\n.aicompare-checkbox,\n.aicompare-checkbox *,\n.aicompare-checkbox-group,\n.aicompare-checkbox-group * {\n  font-weight: var(--font-weight-regular) !important;\n}\n\n.aicompare-radio-group .ant-radio-button-wrapper {\n  color: var(--color-text) !important;\n}\n\n.aicompare-radio-group .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {\n  border-color: var(--color-primary) !important;\n  color: var(--color-primary) !important;\n  box-shadow: var(--shadow-focus) !important;\n}\n\n.aicompare-radio-group .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover {\n  border-color: var(--color-primary-hover) !important;\n  color: var(--color-primary-hover) !important;\n}\n\n.aicompare-checkbox .ant-checkbox + span,\n.aicompare-checkbox-group .ant-checkbox + span {\n  color: var(--color-text) !important;\n}\n\n.aicompare-checkbox.ant-checkbox-wrapper-checked .ant-checkbox + span,\n.aicompare-checkbox-group .ant-checkbox-wrapper-checked .ant-checkbox + span,\n.aicompare-checkbox:has(.ant-checkbox-input:checked) .ant-checkbox + span,\n.aicompare-checkbox-group .ant-checkbox-wrapper:has(.ant-checkbox-input:checked) .ant-checkbox + span {\n  color: var(--color-primary) !important;\n}\n\n.aicompare-checkbox .ant-checkbox-checked .ant-checkbox-inner,\n.aicompare-checkbox-group .ant-checkbox-checked .ant-checkbox-inner,\n.aicompare-checkbox .ant-checkbox:has(.ant-checkbox-input:checked) .ant-checkbox-inner,\n.aicompare-checkbox-group .ant-checkbox:has(.ant-checkbox-input:checked) .ant-checkbox-inner {\n  background-color: var(--color-primary) !important;\n  border-color: var(--color-primary) !important;\n}\n\n.aicompare-checkbox .ant-checkbox-checked .ant-checkbox-inner::after,\n.aicompare-checkbox-group .ant-checkbox-checked .ant-checkbox-inner::after,\n.aicompare-checkbox .ant-checkbox:has(.ant-checkbox-input:checked) .ant-checkbox-inner::after,\n.aicompare-checkbox-group .ant-checkbox:has(.ant-checkbox-input:checked) .ant-checkbox-inner::after {\n  border-color: #ffffff !important;\n}\n\n.aicompare-checkbox:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner,\n.aicompare-checkbox-group .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner {\n  border-color: var(--color-primary-hover) !important;\n}\n\n.ant-message,\n.ant-message-notice,\n.ant-message-notice-content,\n.ant-message-custom-content,\n.ant-message-custom-content * {\n  font-family: var(--font-family-base);\n  font-size: var(--font-size);\n  line-height: var(--line-height);\n  font-weight: var(--font-weight-regular) !important;\n}\n`
 }
 
 function buildGlobalsCss(): string {
@@ -636,7 +659,7 @@ function buildTailwindConfig(): string {
 }
 
 function buildAntdTheme(): string {
-  const seedEntries = makeAntdEntries(antdSeedTokenMap)
+  const seedEntries = makeAntdSeedEntries(antdSeedTokenMap)
   const mapEntries = makeAntdEntries(antdMapTokenMap)
   const aliasEntries = makeAntdEntries(antdAliasTokenMap)
   const componentEntries = makeComponentTokenEntries()

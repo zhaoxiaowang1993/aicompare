@@ -231,6 +231,25 @@ def test_plan_import_status_conflicts_and_error_contracts(api_context: ApiContex
     assert restart_response.json()["status"] == "active"
 
 
+def test_plan_import_preserves_multiline_case_and_agent_outputs(api_context: ApiContext) -> None:
+    client = api_context.client
+    admin_token = login(client, "admin", "admin")["access_token"]
+    owner_user_id = operator_id(client, admin_token)
+    csv_text = (
+        "住院号,病历内容,智能体A输出,智能体B输出\n"
+        'M001,"入院记录\n主诉：腹痛\n现病史：持续 1 天","## A 结果\n|规则|扣分|\n|---|---|\n|主诉完整|0.5|","B 第一行\nB 第二行"\n'
+    )
+
+    payload = create_plan_with_csv(client, admin_token, owner_user_id, csv_text, name="多行 CSV 保留测试")
+    plan_id = payload["plan"]["id"]
+
+    with api_context.session_factory() as db:
+        case = db.query(CaseRecord).filter(CaseRecord.plan_id == plan_id).one()
+        assert case.record_text == "入院记录\n主诉：腹痛\n现病史：持续 1 天"
+        assert case.agent_a_output == "## A 结果\n|规则|扣分|\n|---|---|\n|主诉完整|0.5|"
+        assert case.agent_b_output == "B 第一行\nB 第二行"
+
+
 def test_stats_annotations_consistency_and_shanghai_date_boundaries(api_context: ApiContext) -> None:
     client = api_context.client
     admin_token = login(client, "admin", "admin")["access_token"]
@@ -247,6 +266,9 @@ def test_stats_annotations_consistency_and_shanghai_date_boundaries(api_context:
 
     with api_context.session_factory() as db:
         cases = db.query(CaseRecord).filter(CaseRecord.plan_id == plan_id).order_by(CaseRecord.hospitalization_no.asc()).all()
+        for case in cases:
+            case.display_a_source = "agent_a_output"
+            case.display_b_source = "agent_b_output"
         annotations = [
             Annotation(
                 plan_id=plan_id,
@@ -320,3 +342,78 @@ def test_stats_annotations_consistency_and_shanghai_date_boundaries(api_context:
             recomputed_reasons[reason] += 1
     assert recomputed_decisions == stats["decision_distribution"]
     assert recomputed_reasons == reason_counts
+
+
+def test_admin_reports_normalize_decisions_to_original_agent_sources(api_context: ApiContext) -> None:
+    client = api_context.client
+    admin_token = login(client, "admin", "admin")["access_token"]
+    owner_user_id = operator_id(client, admin_token)
+    csv_text = (
+        "住院号,病历内容,智能体A输出,智能体B输出\n"
+        "M001,病例1,智能体A-1,智能体B-1\n"
+        "M002,病例2,智能体A-2,智能体B-2\n"
+        "M003,病例3,智能体A-3,智能体B-3\n"
+    )
+    payload = create_plan_with_csv(client, admin_token, owner_user_id, csv_text, name="原始归属统计测试计划")
+    plan_id = payload["plan"]["id"]
+
+    with api_context.session_factory() as db:
+        cases = db.query(CaseRecord).filter(CaseRecord.plan_id == plan_id).order_by(CaseRecord.hospitalization_no.asc()).all()
+        cases[0].display_a_source = "agent_a_output"
+        cases[0].display_b_source = "agent_b_output"
+        cases[1].display_a_source = "agent_b_output"
+        cases[1].display_b_source = "agent_a_output"
+        cases[2].display_a_source = "agent_a_output"
+        cases[2].display_b_source = "agent_b_output"
+        db.add_all(
+            [
+                Annotation(
+                    plan_id=plan_id,
+                    case_id=cases[0].id,
+                    operator_user_id=owner_user_id,
+                    decision="A_BETTER",
+                    reason_codes=json.dumps(["NO_HIT_ERROR_RULE"]),
+                ),
+                Annotation(
+                    plan_id=plan_id,
+                    case_id=cases[1].id,
+                    operator_user_id=owner_user_id,
+                    decision="B_BETTER",
+                    reason_codes=json.dumps(["NO_MISSING_RULE"]),
+                ),
+                Annotation(
+                    plan_id=plan_id,
+                    case_id=cases[2].id,
+                    operator_user_id=owner_user_id,
+                    decision="A_BETTER",
+                    reason_codes=json.dumps(["NO_OVER_QC"]),
+                ),
+            ]
+        )
+        db.commit()
+
+    stats_response = client.get(f"/api/admin/plans/{plan_id}/stats", headers=auth_headers(admin_token))
+    assert stats_response.status_code == 200
+    stats = stats_response.json()
+    assert stats["decision_distribution"]["A_BETTER"] == 3
+    assert stats["decision_distribution"]["B_BETTER"] == 0
+    assert stats["decision_distribution"]["BOTH_BAD"] == 0
+    assert stats["decision_distribution"]["BOTH_GOOD"] == 0
+
+    detail_response = client.get(
+        f"/api/admin/plans/{plan_id}/annotations",
+        headers=auth_headers(admin_token),
+        params={"page": 1, "page_size": 20},
+    )
+    assert detail_response.status_code == 200
+    detail = detail_response.json()
+    assert detail["total"] == 3
+    assert {item["decision"] for item in detail["items"]} == {"A_BETTER"}
+
+    filtered_response = client.get(
+        f"/api/admin/plans/{plan_id}/annotations",
+        headers=auth_headers(admin_token),
+        params={"decision": "B_BETTER", "page": 1, "page_size": 20},
+    )
+    assert filtered_response.status_code == 200
+    assert filtered_response.json()["total"] == 0

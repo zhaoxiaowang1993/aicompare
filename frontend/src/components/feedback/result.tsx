@@ -40,6 +40,19 @@ function cx(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(' ')
 }
 
+function statusClass(status: ResultStatus) {
+  if (status === 'success') {
+    return '[&_.ant-result-icon]:!text-[var(--color-success)] [&_.ant-result-icon_.anticon]:!text-[var(--color-success)]'
+  }
+  if (status === 'error' || status === '500') {
+    return '[&_.ant-result-icon]:!text-[var(--color-error)] [&_.ant-result-icon_.anticon]:!text-[var(--color-error)]'
+  }
+  if (status === 'warning' || status === '403') {
+    return '[&_.ant-result-icon]:!text-[var(--color-warning)] [&_.ant-result-icon_.anticon]:!text-[var(--color-warning)]'
+  }
+  return '[&_.ant-result-icon]:!text-[var(--color-primary)] [&_.ant-result-icon_.anticon]:!text-[var(--color-primary)]'
+}
+
 export default function Result({
   variant = 'default',
   status = 'info',
@@ -79,7 +92,12 @@ export default function Result({
       title={title}
       subTitle={subTitle}
       extra={extra}
-      className={cx('[&_.ant-result-title]:text-[var(--color-text)] [&_.ant-result-subtitle]:text-[var(--color-text-secondary)]', className)}
+      className={cx(
+        '[&_.ant-result-title]:text-[var(--color-text)] [&_.ant-result-subtitle]:text-[var(--color-text-secondary)]',
+        '[&_.ant-result-icon]:font-semibold',
+        statusClass(status),
+        className
+      )}
     >
       {contentType === 'slot' ? contentSlot : content}
     </AntResult>

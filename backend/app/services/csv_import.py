@@ -30,6 +30,10 @@ def clean_text(value: str | None) -> str:
     return " ".join((value or "").replace("\ufeff", "").split())
 
 
+def clean_multiline_text(value: str | None) -> str:
+    return (value or "").replace("\ufeff", "").replace("\r\n", "\n").replace("\r", "\n").strip()
+
+
 def parse_csv(content: bytes) -> tuple[list[CleanRow], list[RowImportError]]:
     if not content:
         raise HTTPException(status_code=400, detail="CSV_PARSE_ERROR")
@@ -51,9 +55,9 @@ def parse_csv(content: bytes) -> tuple[list[CleanRow], list[RowImportError]]:
     errors: list[RowImportError] = []
     for row_number, row in enumerate(reader, start=2):
         hospitalization_no = clean_text(row.get("住院号"))
-        record_text = clean_text(row.get("病历内容"))
-        agent_a_output = clean_text(row.get("智能体A输出"))
-        agent_b_output = clean_text(row.get("智能体B输出"))
+        record_text = clean_multiline_text(row.get("病历内容"))
+        agent_a_output = clean_multiline_text(row.get("智能体A输出"))
+        agent_b_output = clean_multiline_text(row.get("智能体B输出"))
         missing = [
             label
             for label, value in (

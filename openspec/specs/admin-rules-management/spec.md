@@ -113,10 +113,10 @@ The system MUST abandon the legacy rule structure based on code, name, descripti
 - **WHEN** the system processes rule data
 - **THEN** the system SHALL NOT require, return, or persist enabled or disabled state fields
 
-### Requirement: Operator Rule Display Is Excluded From This Change
-The system SHALL NOT add operator annotation page rule-display UI or change `design/pages/operator-annotate.pen` as part of this capability. Future operator display work MAY query non-deleted rules, but that UI work is outside this change.
+### Requirement: Operator Rule Display Is Owned By Operator Capability
+The admin rule management capability SHALL provide non-deleted rule data for downstream display. Operator annotation UI behavior and `design/pages/operator.pen` changes SHALL be owned by the operator annotation capability, not by admin rule management.
 
-#### Scenario: Operator annotation page remains unchanged
-- **GIVEN** the current operator annotation page
-- **WHEN** this change is implemented
-- **THEN** the system MUST NOT add rule display UI to the operator annotation page in this phase
+#### Scenario: Operator annotation reads active rules without owning admin behavior
+- **GIVEN** active non-deleted quality rules
+- **WHEN** the operator annotation capability needs rule context
+- **THEN** it MAY query those active rules without changing admin create, update, import, or soft-delete semantics

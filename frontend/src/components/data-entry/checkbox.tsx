@@ -70,7 +70,11 @@ export default function Checkbox({
         defaultValue={defaultValue}
         disabled={disabled}
         onChange={onGroupChange}
-        className={cx(direction === 'vertical' && 'flex flex-col gap-8', className)}
+        className={cx(
+          'aicompare-checkbox-group',
+          direction === 'vertical' && 'flex flex-col gap-8',
+          className
+        )}
       />
     )
   }
@@ -82,6 +86,7 @@ export default function Checkbox({
       disabled={disabled}
       indeterminate={indeterminate}
       className={cx(
+        'aicompare-checkbox',
         'inline-flex items-center text-sm',
         hover && !disabled && '[&_.ant-checkbox-inner]:border-[var(--color-primary-hover)]',
         className

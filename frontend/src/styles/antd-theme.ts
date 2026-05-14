@@ -3,11 +3,11 @@
 import type { ThemeConfig } from 'antd'
 
 export const antdSeedToken = {
-  "colorPrimary": "var(--color-primary)",
-  "colorSuccess": "var(--color-success)",
-  "colorWarning": "var(--color-warning)",
-  "colorError": "var(--color-error)",
-  "colorInfo": "var(--color-info)",
+  "colorPrimary": "#1677ff",
+  "colorSuccess": "#52c41a",
+  "colorWarning": "#faad14",
+  "colorError": "#ff4d4f",
+  "colorInfo": "#3496ff",
   "borderRadius": 6,
   "fontFamily": "var(--font-family-base)",
   "fontSize": 14,
