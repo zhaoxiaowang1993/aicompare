@@ -50,6 +50,8 @@ function flattenRules(task: OperatorTask): ManualQualityRuleOption[] {
 }
 
 function presetEntries(task: OperatorTask, rules: ManualQualityRuleOption[]): ManualLayoutEntry[] {
+  if (rules.length === 0) return []
+
   const recordText = firstDocumentText(task)
   const snippets = ['患者入院后未及时完善入院记录', '未见心电图完成时间记录', '未见肌钙蛋白复查计划']
   return snippets.map((snippet, index) => {

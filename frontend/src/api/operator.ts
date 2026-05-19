@@ -61,7 +61,7 @@ type BackendTaskPayload = {
     A: 'agent_a' | 'agent_b'
     B: 'agent_a' | 'agent_b'
   }
-  quality_rules: BackendQualityRule[]
+  quality_rules?: BackendQualityRule[]
 }
 
 const documentTypes: OperatorDocumentType[] = ['admission', 'first_course', 'superior_round', 'daily_course', 'discharge']
@@ -108,7 +108,7 @@ function emptyQualityRules(): Record<OperatorDocumentType, OperatorQualityRule[]
   )
 }
 
-function mapQualityRules(rules: BackendQualityRule[]) {
+function mapQualityRules(rules: BackendQualityRule[] = []) {
   return rules.reduce((grouped, rule) => {
     const type = ruleCategoryMap[rule.category] ?? 'admission'
     grouped[type].push({

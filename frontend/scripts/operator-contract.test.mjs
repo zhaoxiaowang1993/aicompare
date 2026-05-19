@@ -177,6 +177,7 @@ test('manual workbench supports offset highlight, card crud and submit confirmat
   assert.match(workbench, /footerContentType="slot"/)
   assert.match(workbench, /function deleteEntry/)
   assert.match(workbench, /current\.mode === 'edit' && current\.entryId === target\.id/)
+  assert.match(workbench, /rules\.length === 0/)
   assert.match(workbench, /documentTypeLabels/)
   assert.match(workbench, /previewState === 'confirm-none'/)
   assert.match(workbench, /标注条目已保存/)
