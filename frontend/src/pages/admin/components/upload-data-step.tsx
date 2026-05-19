@@ -41,7 +41,7 @@ function downloadCsvTemplate(annotationType: PlanAnnotationType) {
   const url = URL.createObjectURL(blob)
   const link = document.createElement('a')
   link.href = url
-  link.download = `${templateTitle(annotationType)}.csv`
+  link.download = annotationType === 'manual' ? `${templateTitle(annotationType)}.csv` : '标注计划数据模板.csv'
   document.body.appendChild(link)
   link.click()
   link.remove()
