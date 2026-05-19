@@ -514,6 +514,56 @@
                         },
                         {
                           "type": "frame",
+                          "id": "p6hvn",
+                          "name": "Type field",
+                          "width": 180,
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "pX5rD",
+                              "name": "typeBox",
+                              "width": "fill_container",
+                              "height": 32,
+                              "fill": "$3:color-bg-container",
+                              "cornerRadius": 6,
+                              "stroke": {
+                                "thickness": 1,
+                                "fill": "$3:color-border"
+                              },
+                              "padding": [
+                                0,
+                                11
+                              ],
+                              "justifyContent": "space_between",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Zbwt1",
+                                  "name": "typeSelectText",
+                                  "fill": "$3:color-text-disabled",
+                                  "content": "全部模式",
+                                  "fontFamily": "Inter",
+                                  "fontSize": "$3:font-size",
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "icon_font",
+                                  "id": "wARQj",
+                                  "name": "typeSelectIcon",
+                                  "width": 14,
+                                  "height": 14,
+                                  "iconFontName": "chevron-down",
+                                  "iconFontFamily": "lucide",
+                                  "fill": "$3:color-text-secondary"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
                           "id": "Qx56N",
                           "name": "Owner field",
                           "width": 180,
@@ -635,6 +685,37 @@
                               "name": "hc1t",
                               "fill": "$3:color-text",
                               "content": "计划名称",
+                              "fontFamily": "Inter",
+                              "fontSize": "$3:font-size",
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "HPCfi",
+                          "name": "Type cell",
+                          "width": 128,
+                          "height": "fill_container",
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": {
+                              "bottom": 1
+                            },
+                            "fill": "$3:color-border-secondary"
+                          },
+                          "padding": [
+                            0,
+                            "$3:space-12"
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "WNiuO",
+                              "name": "typeHeaderText",
+                              "fill": "$3:color-text",
+                              "content": "标注模式",
                               "fontFamily": "Inter",
                               "fontSize": "$3:font-size",
                               "fontWeight": "600"
@@ -809,6 +890,38 @@
                         },
                         {
                           "type": "frame",
+                          "id": "qERNA",
+                          "name": "Type",
+                          "width": 128,
+                          "height": "fill_container",
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": {
+                              "bottom": 1
+                            },
+                            "fill": "$3:color-border-secondary"
+                          },
+                          "padding": [
+                            0,
+                            "$3:space-12"
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "id": "nIOvW",
+                              "type": "ref",
+                              "ref": "x:7LCmc",
+                              "name": "r1typeTag",
+                              "descendants": {
+                                "x:LJjdt": {
+                                  "content": "对比模式"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
                           "id": "oY24V",
                           "name": "Owner",
                           "width": 160,
@@ -952,7 +1065,7 @@
                     {
                       "type": "frame",
                       "id": "Tp1Hw",
-                      "name": "Row draft",
+                      "name": "Row active manual",
                       "width": "fill_container",
                       "height": 52,
                       "children": [
@@ -986,6 +1099,38 @@
                               "fontFamily": "Inter",
                               "fontSize": "$3:font-size",
                               "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "GWIoQ",
+                          "name": "Type",
+                          "width": 128,
+                          "height": "fill_container",
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": {
+                              "bottom": 1
+                            },
+                            "fill": "$3:color-border-secondary"
+                          },
+                          "padding": [
+                            0,
+                            "$3:space-12"
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "id": "cPSak",
+                              "type": "ref",
+                              "ref": "x:9W9rZ",
+                              "name": "r2typeTag",
+                              "descendants": {
+                                "x:dKYIV": {
+                                  "content": "手动模式"
+                                }
+                              }
                             }
                           ]
                         },
@@ -1046,7 +1191,7 @@
                               "id": "kaXff",
                               "name": "r2p",
                               "fill": "$3:color-text",
-                              "content": "0/0",
+                              "content": "24/80",
                               "fontFamily": "Inter",
                               "fontSize": "$3:font-size",
                               "fontWeight": "normal"
@@ -1073,13 +1218,13 @@
                           "alignItems": "center",
                           "children": [
                             {
-                              "id": "z3TS4",
+                              "id": "qWrXn",
                               "type": "ref",
-                              "ref": "x:jmBYa",
-                              "name": "r2tag",
+                              "ref": "x:CzVqT",
+                              "name": "r2status",
                               "descendants": {
-                                "x:axcCC": {
-                                  "content": "草稿"
+                                "x:hCRjm": {
+                                  "content": "进行中"
                                 }
                               }
                             }
@@ -1123,7 +1268,7 @@
                               "name": "r2b",
                               "descendants": {
                                 "U:l3z4R9": {
-                                  "content": "激活"
+                                  "content": "关闭"
                                 }
                               }
                             }
@@ -1168,6 +1313,38 @@
                               "fontFamily": "Inter",
                               "fontSize": "$3:font-size",
                               "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "VI96X",
+                          "name": "Type",
+                          "width": 128,
+                          "height": "fill_container",
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": {
+                              "bottom": 1
+                            },
+                            "fill": "$3:color-border-secondary"
+                          },
+                          "padding": [
+                            0,
+                            "$3:space-12"
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "id": "s8avWs",
+                              "type": "ref",
+                              "ref": "x:9W9rZ",
+                              "name": "r3typeTag",
+                              "descendants": {
+                                "x:dKYIV": {
+                                  "content": "手动模式"
+                                }
+                              }
                             }
                           ]
                         },
@@ -1760,6 +1937,128 @@
                                   "fill": "$3:color-text-disabled"
                                 }
                               }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "ZvibZ",
+                          "name": "Annotation type field",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space-8",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "V6POQ",
+                              "name": "typeLabelRow",
+                              "gap": 4,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "ipDtA",
+                                  "name": "typeLabelText",
+                                  "fill": "$3:color-text",
+                                  "content": "标注模式",
+                                  "fontFamily": "Inter",
+                                  "fontSize": "$3:font-size",
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "oGD5y",
+                                  "name": "typeStar",
+                                  "fill": "$3:color-error",
+                                  "content": "*",
+                                  "fontFamily": "Inter",
+                                  "fontSize": "$3:font-size",
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "Pqpeg",
+                              "name": "Annotation type options",
+                              "width": "fill_container",
+                              "gap": "$3:space-8",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "eFfj9",
+                                  "name": "Comparison type option",
+                                  "width": 240,
+                                  "fill": "$3:color-primary-bg",
+                                  "cornerRadius": "$3:radius",
+                                  "stroke": {
+                                    "thickness": 1,
+                                    "fill": "$3:color-primary"
+                                  },
+                                  "layout": "vertical",
+                                  "gap": "$3:space-4",
+                                  "padding": "$3:space-12",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "z8VNgb",
+                                      "name": "Compare title",
+                                      "fill": "$3:color-primary",
+                                      "content": "对比模式",
+                                      "fontFamily": "Inter",
+                                      "fontSize": "$3:font-size",
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "SwXCs",
+                                      "name": "Compare desc",
+                                      "fill": "$3:color-text-secondary",
+                                      "content": "对两个 AI 结果进行比较",
+                                      "fontFamily": "Inter",
+                                      "fontSize": "$3:font-size-sm",
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "hXcG3",
+                                  "name": "Manual type option",
+                                  "width": 240,
+                                  "fill": "$3:color-bg-container",
+                                  "cornerRadius": "$3:radius",
+                                  "stroke": {
+                                    "thickness": 1,
+                                    "fill": "$3:color-border"
+                                  },
+                                  "layout": "vertical",
+                                  "gap": "$3:space-4",
+                                  "padding": "$3:space-12",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "qEYwr",
+                                      "name": "Manual title",
+                                      "fill": "$3:color-text",
+                                      "content": "手动模式",
+                                      "fontFamily": "Inter",
+                                      "fontSize": "$3:font-size",
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "C10TL",
+                                      "name": "Manual desc",
+                                      "fill": "$3:color-text-secondary",
+                                      "content": "手动对病历进行质控标注",
+                                      "fontFamily": "Inter",
+                                      "fontSize": "$3:font-size-sm",
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
                             }
                           ]
                         },
@@ -4472,6 +4771,501 @@
                             },
                             {
                               "id": "F3hqTR",
+                              "type": "ref",
+                              "ref": "U:NgWdB",
+                              "name": "submit",
+                              "descendants": {
+                                "U:kw5FQ": {
+                                  "content": "创建计划"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "n7zhDY",
+      "x": 0,
+      "y": 3129,
+      "name": "新建计划-上传CSV-手动模式",
+      "width": 1440,
+      "height": 960,
+      "fill": "$3:color-bg-layout",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "a33WNO",
+          "name": "Header",
+          "width": "fill_container",
+          "height": 64,
+          "fill": "$3:color-bg-container",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$3:color-border-secondary"
+          },
+          "padding": [
+            0,
+            "$3:space-24"
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "Ds92I",
+              "name": "logo3",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "deKal",
+                  "name": "logoIcon3",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "file-text",
+                  "iconFontFamily": "lucide",
+                  "fill": "$3:color-primary"
+                },
+                {
+                  "type": "text",
+                  "id": "XbmD8",
+                  "name": "h3logo",
+                  "fill": "$3:color-text",
+                  "content": "病历质控标注系统",
+                  "fontFamily": "Roboto",
+                  "fontSize": "$3:font-size-lg",
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "a1gW0",
+              "name": "h3user",
+              "fill": "$3:color-text-secondary",
+              "content": "管理员 admin",
+              "fontFamily": "Inter",
+              "fontSize": "$3:font-size",
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "V0ymA",
+          "name": "Body",
+          "width": "fill_container",
+          "height": "fill_container",
+          "children": [
+            {
+              "type": "frame",
+              "id": "zTSHM",
+              "name": "Sider",
+              "width": 232,
+              "height": "fill_container",
+              "fill": "$3:color-bg-container",
+              "stroke": {
+                "thickness": {
+                  "right": 1
+                },
+                "fill": "$3:color-border-secondary"
+              },
+              "layout": "vertical",
+              "gap": "$3:space-8",
+              "padding": "$3:space-16",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "pzrF0",
+                  "name": "Nav Active",
+                  "width": "fill_container",
+                  "height": 40,
+                  "fill": "$3:color-primary-bg",
+                  "cornerRadius": "$3:radius",
+                  "gap": 10,
+                  "padding": [
+                    0,
+                    "$3:space-12"
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "r4Enl",
+                      "name": "icoPlan3",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "clipboard-list",
+                      "iconFontFamily": "lucide",
+                      "fill": "$3:color-primary"
+                    },
+                    {
+                      "type": "text",
+                      "id": "sRImR",
+                      "name": "nav31t",
+                      "fill": "$3:color-primary",
+                      "content": "标注计划",
+                      "fontFamily": "Inter",
+                      "fontSize": "$3:font-size",
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "VWmzd",
+                  "name": "Nav",
+                  "width": "fill_container",
+                  "height": 40,
+                  "gap": "$3:space-8",
+                  "padding": [
+                    0,
+                    "$3:space-12"
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "xiAlt",
+                      "name": "icoUser3",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "users",
+                      "iconFontFamily": "lucide",
+                      "fill": "$3:color-text-secondary"
+                    },
+                    {
+                      "type": "text",
+                      "id": "CnQVD",
+                      "name": "nav32t",
+                      "fill": "$3:color-text",
+                      "content": "成员管理",
+                      "fontFamily": "Inter",
+                      "fontSize": "$3:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "E7ZFN",
+                  "name": "Nav",
+                  "width": "fill_container",
+                  "height": 40,
+                  "gap": "$3:space-8",
+                  "padding": [
+                    0,
+                    "$3:space-12"
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "T0GHX",
+                      "name": "icoRule3",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "shield-check",
+                      "iconFontFamily": "lucide",
+                      "fill": "$3:color-text-secondary"
+                    },
+                    {
+                      "type": "text",
+                      "id": "O1JpUZ",
+                      "name": "nav33t",
+                      "fill": "$3:color-text",
+                      "content": "质控规则",
+                      "fontFamily": "Inter",
+                      "fontSize": "$3:font-size",
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "pjc3w",
+              "name": "Content",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "gap": "$3:space-16",
+              "padding": "$3:space-24",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "nOCMZ",
+                  "name": "uCrumb",
+                  "fill": "$3:color-text-secondary",
+                  "content": "标注计划 / 新建计划 ",
+                  "fontFamily": "Inter",
+                  "fontSize": "$3:font-size-sm",
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "t9Jlbt",
+                  "name": "Upload title",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$3:space-4",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "bm4hr",
+                      "name": "uTitle",
+                      "fill": "$3:color-text",
+                      "content": "新建标注计划",
+                      "fontFamily": "Inter",
+                      "fontSize": "$3:font-size-heading-3",
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "uTTt0",
+                  "name": "Upload workflow",
+                  "width": "fill_container",
+                  "height": 540,
+                  "gap": "$3:space-16",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "oesmO",
+                      "name": "Steps",
+                      "width": 260,
+                      "height": "fill_container",
+                      "fill": "$3:color-bg-container",
+                      "cornerRadius": "$3:radius-lg",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$3:color-border-secondary"
+                      },
+                      "layout": "vertical",
+                      "gap": "$3:space-16",
+                      "padding": "$3:space-16",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "mXHBx",
+                          "name": "Done step",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "padding": "$3:space-12",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "IEfFv",
+                              "name": "us1t",
+                              "fill": "$3:color-success",
+                              "content": "1. 基础信息",
+                              "fontFamily": "Inter",
+                              "fontSize": "$3:font-size",
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "dNSoj",
+                          "name": "Current step",
+                          "width": "fill_container",
+                          "fill": "$3:color-primary-bg",
+                          "cornerRadius": "$3:radius",
+                          "layout": "vertical",
+                          "padding": "$3:space-12",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "xxzkw",
+                              "name": "us2t",
+                              "fill": "$3:color-primary",
+                              "content": "2. 上传数据",
+                              "fontFamily": "Inter",
+                              "fontSize": "$3:font-size",
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "l4ZAm4",
+                      "name": "Upload panel",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "fill": "$3:color-bg-container",
+                      "cornerRadius": "$3:radius-lg",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$3:color-border-secondary"
+                      },
+                      "layout": "vertical",
+                      "gap": "$3:space-16",
+                      "padding": "$3:space-24",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "IxxIQ",
+                          "name": "uPanelTitle",
+                          "fill": "$3:color-text",
+                          "content": "上传数据",
+                          "fontFamily": "Inter",
+                          "fontSize": "$3:font-size-lg",
+                          "fontWeight": "600"
+                        },
+                        {
+                          "id": "I9zFN",
+                          "type": "ref",
+                          "ref": "3:5e4ov",
+                          "width": "fill_container",
+                          "name": "uploader",
+                          "descendants": {
+                            "3:qgX7G": {
+                              "padding": 12
+                            },
+                            "3:LtKK9": {
+                              "content": "点击或拖拽 CSV 文件到此区域"
+                            },
+                            "3:lhK79": {
+                              "content": "仅支持单个 .csv 文件，字段需包含住院号、病历内容。"
+                            },
+                            "3:W4F30": {
+                              "enabled": false
+                            }
+                          }
+                        },
+                        {
+                          "type": "frame",
+                          "id": "g538ZX",
+                          "name": "Template note",
+                          "width": "fill_container",
+                          "fill": "$3:color-bg-container",
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "$3:color-border"
+                          },
+                          "gap": 16,
+                          "padding": 12,
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "D0mZf",
+                              "name": "fileIcon2",
+                              "width": 18,
+                              "height": 18,
+                              "iconFontName": "file-down",
+                              "iconFontFamily": "lucide",
+                              "fill": "$3:color-primary"
+                            },
+                            {
+                              "type": "text",
+                              "id": "v9nNH",
+                              "name": "un1",
+                              "fill": "$3:color-text",
+                              "content": "手动模式数据模板",
+                              "fontFamily": "Inter",
+                              "fontSize": "$3:font-size",
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "text",
+                              "id": "pbh8T",
+                              "name": "un2",
+                              "fill": "$3:color-text-secondary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "下载模板，按照模板填写数据后上传",
+                              "fontFamily": "Inter",
+                              "fontSize": "$3:font-size",
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "d0zL3",
+                              "name": "templateBtn2",
+                              "width": 96,
+                              "height": 32,
+                              "fill": "$3:color-bg-container",
+                              "stroke": {
+                                "thickness": 1,
+                                "fill": "$3:color-primary"
+                              },
+                              "gap": 6,
+                              "padding": [
+                                0,
+                                15
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "w9x9xa",
+                                  "name": "templateBtnIcon2",
+                                  "width": 14,
+                                  "height": 14,
+                                  "iconFontName": "download",
+                                  "iconFontFamily": "lucide",
+                                  "fill": "$3:color-primary"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "W7o3ub",
+                                  "name": "templateBtnText2",
+                                  "fill": "$3:color-primary",
+                                  "content": "下载模板",
+                                  "fontFamily": "Inter",
+                                  "fontSize": "$3:font-size",
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "JMMss",
+                          "name": "Upload actions",
+                          "width": "fill_container",
+                          "gap": "$3:space-8",
+                          "justifyContent": "space_between",
+                          "children": [
+                            {
+                              "id": "ZB1xw",
+                              "type": "ref",
+                              "ref": "U:C6cAT",
+                              "name": "back",
+                              "descendants": {
+                                "U:dLI9A": {
+                                  "content": "上一步"
+                                }
+                              }
+                            },
+                            {
+                              "id": "dmtfx",
                               "type": "ref",
                               "ref": "U:NgWdB",
                               "name": "submit",

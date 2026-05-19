@@ -2,11 +2,12 @@ import type { SelectProps } from 'antd'
 import Input from '../../../components/data-entry/input'
 import Select from '../../../components/data-entry/select'
 import Button from '../../../components/feedback/button'
-import type { OperatorOption, PlanStatus } from '../../../types/plan'
+import type { OperatorOption, PlanAnnotationType, PlanStatus } from '../../../types/plan'
 
 export type PlanListFilterValue = {
   keyword: string
   status?: PlanStatus
+  annotationType?: PlanAnnotationType
   ownerUserId?: number
 }
 
@@ -24,10 +25,15 @@ const statusOptions: SelectProps['options'] = [
   { label: '已关闭', value: 'closed' }
 ]
 
+const annotationTypeOptions: SelectProps['options'] = [
+  { label: '对比模式', value: 'comparison' },
+  { label: '手动模式', value: 'manual' }
+]
+
 export default function PlanListFilters({ value, owners, loading, onChange, onSearch, onReset }: PlanListFiltersProps) {
   return (
     <div className="rounded-lg border border-[var(--color-border-secondary)] bg-[var(--color-bg-container)] p-16">
-      <div className="grid grid-cols-1 gap-12 lg:grid-cols-[360px_180px_180px_72px_72px]">
+      <div className="grid grid-cols-1 gap-12 lg:grid-cols-[360px_180px_180px_180px_72px_72px]">
         <Input
           placeholder="按计划名称搜索"
           value={value.keyword}
@@ -40,6 +46,14 @@ export default function PlanListFilters({ value, owners, loading, onChange, onSe
           options={statusOptions}
           className="[&_.ant-select-selection-placeholder]:!text-[var(--color-text-disabled)]"
           onChange={(status) => onChange({ ...value, status: status || undefined })}
+        />
+        <Select<PlanAnnotationType | undefined>
+          allowClear
+          placeholder="全部模式"
+          value={value.annotationType}
+          options={annotationTypeOptions}
+          className="[&_.ant-select-selection-placeholder]:!text-[var(--color-text-disabled)]"
+          onChange={(annotationType) => onChange({ ...value, annotationType: annotationType || undefined })}
         />
         <Select<number | undefined>
           allowClear

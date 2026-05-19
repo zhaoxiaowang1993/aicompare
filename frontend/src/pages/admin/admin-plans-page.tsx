@@ -14,6 +14,7 @@ import type { PlanListFilterValue } from './components/plan-list-filters'
 const defaultFilter: PlanListFilterValue = {
   keyword: '',
   status: undefined,
+  annotationType: undefined,
   ownerUserId: undefined
 }
 
@@ -57,6 +58,7 @@ export default function AdminPlansPage() {
     try {
       const response = await fetchPlans({
         status: nextFilter.status,
+        annotation_type: nextFilter.annotationType,
         owner_user_id: nextFilter.ownerUserId,
         page: nextPage,
         page_size: nextPageSize

@@ -28,7 +28,7 @@ def list_plans(
     return OperatorPlanListResponse(items=items, total=total, page=page, page_size=page_size)
 
 
-@router.get("/{plan_id}/tasks/next", response_model=OperatorTaskPayload | None)
+@router.get("/{plan_id}/tasks/next", response_model=OperatorTaskPayload | None, response_model_exclude_none=True)
 def next_task(plan_id: int, user: User = Depends(require_operator), db: Session = Depends(get_db)) -> OperatorTaskPayload | None:
     return get_next_task(db, plan_id, user.id)
 

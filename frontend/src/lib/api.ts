@@ -112,6 +112,27 @@ api.interceptors.response.use(
 )
 
 export async function login(username: string, password: string) {
+  const mockLoginEnabled = import.meta.env.VITE_ADMIN_API_MODE === 'mock' || import.meta.env.VITE_OPERATOR_API_MODE === 'mock'
+  if (mockLoginEnabled) {
+    const mockUsers: Record<string, { password: string; user: AuthUser }> = {
+      admin: { password: 'admin', user: { id: 1, username: 'admin', role: 'admin', is_active: true } },
+      czy: { password: 'czy', user: { id: 2, username: 'czy', role: 'operator', is_active: true } }
+    }
+    const match = mockUsers[username]
+    if (!match || match.password !== password) {
+      throw new Error('用户名或密码错误')
+    }
+    const payload: LoginResponse = {
+      access_token: `mock-${match.user.role}-token`,
+      token_type: 'bearer',
+      expires_in: 3600,
+      refresh_token: 'mock-refresh-token',
+      refresh_expires_in: 86400,
+      user: match.user
+    }
+    storeSession(payload)
+    return payload
+  }
   const response = await api.post<LoginResponse>('/auth/login', { username, password })
   storeSession(response.data)
   return response.data

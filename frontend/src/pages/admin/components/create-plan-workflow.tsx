@@ -4,7 +4,7 @@ import Input from '../../../components/data-entry/input'
 import Select from '../../../components/data-entry/select'
 import Button from '../../../components/feedback/button'
 import UploadDataStep from './upload-data-step'
-import type { CreatePlanPayload, ImportSummary, OperatorOption } from '../../../types/plan'
+import type { CreatePlanPayload, ImportSummary, OperatorOption, PlanAnnotationType } from '../../../types/plan'
 
 export type CreatePlanStep = 'basic' | 'upload'
 
@@ -39,6 +39,39 @@ function StepItem({ active, done, index, title }: { active?: boolean; done?: boo
       >
         {index}. {title}
       </div>
+    </div>
+  )
+}
+
+function AnnotationTypePicker({ value = 'comparison', onChange }: { value?: PlanAnnotationType; onChange?: (value: PlanAnnotationType) => void }) {
+  const options: Array<{ value: PlanAnnotationType; title: string; description: string }> = [
+    { value: 'comparison', title: '对比模式', description: '对两个 AI 结果进行比较' },
+    { value: 'manual', title: '手动模式', description: '手动对病历进行质控标注' }
+  ]
+
+  return (
+    <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+      {options.map((option) => {
+        const selected = value === option.value
+        return (
+          <button
+            key={option.value}
+            type="button"
+            className={cx(
+              'min-h-[64px] rounded-md border bg-[var(--color-bg-container)] p-12 text-left transition-colors',
+              selected
+                ? 'border-[var(--color-primary)] bg-[var(--color-primary-bg)]'
+                : 'border-[var(--color-border)] hover:border-[var(--color-primary-border)]'
+            )}
+            onClick={() => onChange?.(option.value)}
+          >
+            <div className={cx('text-base font-semibold', selected ? 'text-[var(--color-primary)]' : 'text-[var(--color-text)]')}>
+              {option.title}
+            </div>
+            <div className="mt-4 text-caption font-normal text-[var(--color-text-secondary)]">{option.description}</div>
+          </button>
+        )
+      })}
     </div>
   )
 }
@@ -81,14 +114,21 @@ export default function CreatePlanWorkflow({
               <Form<CreatePlanPayload>
                 itemLayout="vertical"
                 className="max-w-[640px] [&_.ant-form-item]:mb-16"
-                initialValues={basicValues ?? undefined}
                 onFinish={onCreateBasic}
+                initialValues={basicValues ?? { annotation_type: 'comparison' }}
               >
                 <Form renderMode="item" label="计划名称" itemProps={{ name: 'name', rules: [{ required: true, message: '请输入计划名称' }] }}>
                   <Input placeholder="请输入计划名称" />
                 </Form>
                 <Form renderMode="item" label="计划说明" itemProps={{ name: 'description' }}>
                   <Input kind="textarea" placeholder="请输入计划说明" rows={4} />
+                </Form>
+                <Form
+                  renderMode="item"
+                  label="标注模式"
+                  itemProps={{ name: 'annotation_type', rules: [{ required: true, message: '请选择标注模式' }] }}
+                >
+                  <AnnotationTypePicker />
                 </Form>
                 <Form
                   renderMode="item"
@@ -111,12 +151,13 @@ export default function CreatePlanWorkflow({
             </div>
           ) : (
             <UploadDataStep
+              annotationType={basicValues?.annotation_type ?? 'comparison'}
               importSummary={importSummary}
               fileName={fileName}
               uploading={uploading}
               onUploadCsv={async (file) => {
-                  setFileName(file.name)
-                  return onUploadCsv(file)
+                setFileName(file.name)
+                return onUploadCsv(file)
               }}
               onBackToBasic={onBackToBasic}
               onFinish={onFinish}

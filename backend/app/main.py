@@ -23,6 +23,7 @@ app.add_middleware(
 def on_startup() -> None:
     with engine.begin() as connection:
         connection.execute(text("DROP TABLE IF EXISTS rules"))
+    ensure_sqlite_compat_schema()
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
     try:
@@ -30,6 +31,57 @@ def on_startup() -> None:
     finally:
         db.close()
 
+
+def ensure_sqlite_compat_schema() -> None:
+    with engine.begin() as connection:
+        plan_columns = {row[1] for row in connection.execute(text("PRAGMA table_info(plans)")).fetchall()}
+        if plan_columns and "annotation_type" not in plan_columns:
+            connection.execute(text("ALTER TABLE plans ADD COLUMN annotation_type VARCHAR(16) NOT NULL DEFAULT 'comparison'"))
+        case_columns = {row[1]: row for row in connection.execute(text("PRAGMA table_info(case_records)")).fetchall()}
+        nullable_case_fields = ("agent_a_output", "agent_b_output", "display_a_source", "display_b_source")
+        if case_columns and any(case_columns[field][3] for field in nullable_case_fields if field in case_columns):
+            connection.execute(text("PRAGMA foreign_keys=OFF"))
+            connection.execute(text("DROP TABLE IF EXISTS case_records_new"))
+            connection.execute(
+                text(
+                    """
+                    CREATE TABLE case_records_new (
+                        id INTEGER NOT NULL,
+                        plan_id INTEGER NOT NULL,
+                        hospitalization_no VARCHAR(128) NOT NULL,
+                        record_text TEXT NOT NULL,
+                        agent_a_output TEXT,
+                        agent_b_output TEXT,
+                        display_a_source VARCHAR(32),
+                        display_b_source VARCHAR(32),
+                        import_batch_id VARCHAR(64) NOT NULL,
+                        created_at DATETIME NOT NULL,
+                        PRIMARY KEY (id),
+                        CONSTRAINT uq_case_plan_hos_no UNIQUE (plan_id, hospitalization_no),
+                        FOREIGN KEY(plan_id) REFERENCES plans (id)
+                    )
+                    """
+                )
+            )
+            connection.execute(
+                text(
+                    """
+                    INSERT INTO case_records_new (
+                        id, plan_id, hospitalization_no, record_text, agent_a_output, agent_b_output,
+                        display_a_source, display_b_source, import_batch_id, created_at
+                    )
+                    SELECT
+                        id, plan_id, hospitalization_no, record_text, agent_a_output, agent_b_output,
+                        display_a_source, display_b_source, import_batch_id, created_at
+                    FROM case_records
+                    """
+                )
+            )
+            connection.execute(text("DROP INDEX IF EXISTS ix_case_records_plan_id"))
+            connection.execute(text("DROP TABLE case_records"))
+            connection.execute(text("ALTER TABLE case_records_new RENAME TO case_records"))
+            connection.execute(text("CREATE INDEX ix_case_records_plan_id ON case_records (plan_id)"))
+            connection.execute(text("PRAGMA foreign_keys=ON"))
 
 @app.get("/")
 def root() -> dict[str, str]:

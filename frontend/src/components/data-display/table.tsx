@@ -1,6 +1,7 @@
 // Generated from design/components/data-display-new.lib.pen - Table
-import { Empty, Table as AntTable } from 'antd'
+import { Table as AntTable } from 'antd'
 import type { TableProps as AntTableProps } from 'antd'
+import Empty from './empty'
 
 export type TableSize = 'large' | 'middle' | 'small'
 export type TableBorder = 'bordered' | 'borderless'
@@ -57,7 +58,7 @@ export default function Table<RecordType extends object = object>({
         ...locale,
         emptyText:
           emptyVariant === 'empty' ? (
-            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No data" className="my-24" />
+            <Empty imageVariant="blueSimple" description="No data" className="my-24" />
           ) : (
             locale?.emptyText
           )

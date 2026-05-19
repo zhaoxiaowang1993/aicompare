@@ -1,7 +1,8 @@
 // Generated from design/components/feedback-new.lib.pen - Modal & Dialog
-import { Button, Modal as AntModal, Space } from 'antd'
+import { Modal as AntModal, Space } from 'antd'
 import type { ModalProps as AntModalProps } from 'antd'
-import type { ReactNode } from 'react'
+import type { MouseEvent, ReactNode } from 'react'
+import Button from './button'
 
 export type ModalKind = 'modal' | 'dialog'
 export type DialogType = 'confirm' | 'info' | 'warning' | 'error'
@@ -79,8 +80,17 @@ export default function ModalDialog({
       footerSlot
     ) : footerContentType === 'button' || kind === 'dialog' ? (
       <Space>
-        <Button>{cancelText}</Button>
-        <Button type="primary">{okText}</Button>
+        <Button onClick={(event: MouseEvent<HTMLButtonElement>) => modalProps.onCancel?.(event)}>
+          {cancelText}
+        </Button>
+        <Button
+          color={dialogType === 'error' ? 'danger' : 'primary'}
+          variant="solid"
+          loading={modalProps.confirmLoading}
+          onClick={(event: MouseEvent<HTMLButtonElement>) => modalProps.onOk?.(event)}
+        >
+          {okText}
+        </Button>
       </Space>
     ) : (
       modalFooter

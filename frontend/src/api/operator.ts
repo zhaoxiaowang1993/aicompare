@@ -2,6 +2,7 @@ import api from '../lib/api'
 import {
   mockFetchOperatorNextTask,
   mockFetchOperatorPlans,
+  mockSubmitManualAnnotation,
   mockSubmitOperatorAnnotation
 } from '../mocks/operator'
 import type {
@@ -11,6 +12,7 @@ import type {
   OperatorPlanListParams,
   OperatorPlanListItem,
   OperatorPlanListResponse,
+  ManualAnnotationSubmitPayload,
   OperatorQualityRule,
   OperatorTask,
   OperatorTaskResponse
@@ -24,6 +26,7 @@ type BackendOperatorPlan = {
   id: number
   name: string
   description?: string | null
+  annotation_type?: 'comparison' | 'manual'
   status: BackendPlanStatus
   total_cases: number
   annotated_cases: number
@@ -49,11 +52,12 @@ type BackendQualityRule = {
 type BackendTaskPayload = {
   case_id: number
   plan_id: number
+  annotation_type?: 'comparison' | 'manual'
   hospitalization_no: string
   record_text: string
-  output_a: string
-  output_b: string
-  display_mapping: {
+  output_a?: string
+  output_b?: string
+  display_mapping?: {
     A: 'agent_a' | 'agent_b'
     B: 'agent_a' | 'agent_b'
   }
@@ -84,6 +88,7 @@ function mapPlan(plan: BackendOperatorPlan): OperatorPlanListItem {
     id: plan.id,
     name: plan.name,
     description: plan.description,
+    annotation_type: plan.annotation_type ?? 'comparison',
     status: plan.status === 'closed' ? 'closed' : plan.pending_cases === 0 && plan.total_cases > 0 ? 'completed' : plan.annotated_cases === 0 ? 'not_started' : 'active',
     total_cases: plan.total_cases,
     annotated_cases: plan.annotated_cases,
@@ -120,6 +125,7 @@ function mapQualityRules(rules: BackendQualityRule[]) {
 function mapTask(task: BackendTaskPayload, plan: OperatorPlanListItem): OperatorTask {
   return {
     id: task.case_id,
+    annotation_type: task.annotation_type ?? (plan.annotation_type === 'manual' ? 'manual' : 'comparison'),
     sequence_no: Math.min(plan.annotated_cases + 1, plan.total_cases || 1),
     total_tasks: plan.total_cases,
     case_data: {
@@ -140,19 +146,34 @@ function mapTask(task: BackendTaskPayload, plan: OperatorPlanListItem): Operator
         }
       ]
     },
-    outputs: [
+    outputs: plan.annotation_type === 'manual' ? [
       {
         side: 'A',
         name: '结果 A',
-        conclusion: task.output_a,
-        summary: task.display_mapping.A,
+        conclusion: '',
+        summary: '',
         rules: []
       },
       {
         side: 'B',
         name: '结果 B',
-        conclusion: task.output_b,
-        summary: task.display_mapping.B,
+        conclusion: '',
+        summary: '',
+        rules: []
+      }
+    ] : [
+      {
+        side: 'A',
+        name: '结果 A',
+        conclusion: task.output_a ?? '',
+        summary: task.display_mapping?.A ?? 'agent_a',
+        rules: []
+      },
+      {
+        side: 'B',
+        name: '结果 B',
+        conclusion: task.output_b ?? '',
+        summary: task.display_mapping?.B ?? 'agent_b',
         rules: []
       }
     ],
@@ -212,6 +233,19 @@ export async function submitOperatorAnnotation(planId: number, taskId: number, p
     return mockSubmitOperatorAnnotation(planId, taskId, payload)
   }
   await api.post(`/operator/tasks/${taskId}/annotate`, payload)
+  const next = await fetchOperatorNextTask(planId)
+  return {
+    completed: !next.task,
+    next_task: next.task,
+    plan: next.plan
+  } satisfies OperatorAnnotationResult
+}
+
+export async function submitManualAnnotation(planId: number, taskId: number, payload: ManualAnnotationSubmitPayload) {
+  if (useMockOperatorApi) {
+    return mockSubmitManualAnnotation(planId, taskId)
+  }
+  await api.post(`/operator/tasks/${taskId}/manual-annotate`, payload)
   const next = await fetchOperatorNextTask(planId)
   return {
     completed: !next.task,

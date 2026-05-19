@@ -5,22 +5,27 @@ import Table from '../../../components/data-display/table'
 import Empty from '../../../components/data-display/empty'
 import Select from '../../../components/data-entry/select'
 import Button from '../../../components/feedback/button'
-import type { AnnotationDetail, Decision } from '../../../types/report'
+import Tag from '../../../components/data-display/tag'
+import type { PlanAnnotationType } from '../../../types/plan'
+import type { AnnotationDetail, Decision, ManualCaseAnnotationResult, ManualCaseAnnotationSummary } from '../../../types/report'
 
 export type AnnotationFilterValue = {
   operator_user_id?: number
   decision?: Decision
+  result?: ManualCaseAnnotationResult
   range?: [Dayjs, Dayjs]
 }
 
 type AnnotationDetailSectionProps = {
-  annotations: AnnotationDetail[]
+  annotationType: PlanAnnotationType
+  annotations: Array<AnnotationDetail | ManualCaseAnnotationSummary>
   total: number
   page: number
   pageSize: number
   loading: boolean
   onFilter: (value: AnnotationFilterValue) => void
   onPageChange: (page: number, pageSize: number) => void
+  onOpenManualDetail: (record: ManualCaseAnnotationSummary) => void
 }
 
 const decisionText: Record<Decision, string> = {
@@ -37,6 +42,11 @@ const reasonText: Record<string, string> = {
   OTHER: '其他'
 }
 
+const manualResultText: Record<ManualCaseAnnotationResult, string> = {
+  has_issues: '有问题',
+  no_issue: '无问题'
+}
+
 function formatTime(value: string) {
   return new Date(value).toLocaleString('zh-CN', {
     timeZone: 'Asia/Shanghai',
@@ -48,17 +58,24 @@ function reasonLabel(codes: string[]) {
   return codes.map((code) => reasonText[code] ?? code).join('、')
 }
 
+function isManualRecord(record: AnnotationDetail | ManualCaseAnnotationSummary): record is ManualCaseAnnotationSummary {
+  return 'manual_annotation_id' in record
+}
+
 export default function AnnotationDetailSection({
+  annotationType,
   annotations,
   total,
   page,
   pageSize,
   loading,
   onFilter,
-  onPageChange
+  onPageChange,
+  onOpenManualDetail
 }: AnnotationDetailSectionProps) {
   const [filter, setFilter] = useState<AnnotationFilterValue>({})
   const [activeRecord, setActiveRecord] = useState<AnnotationDetail | null>(null)
+  const isManual = annotationType === 'manual'
 
   return (
     <div className="flex flex-col gap-16">
@@ -71,14 +88,25 @@ export default function AnnotationDetailSection({
             className="[&_.ant-select-selection-placeholder]:!text-[var(--color-text-disabled)]"
             onChange={(operator_user_id) => setFilter((current) => ({ ...current, operator_user_id }))}
           />
-          <Select<Decision>
-            allowClear
-            placeholder="全部结论"
-            value={filter.decision}
-            options={Object.entries(decisionText).map(([value, label]) => ({ value, label }))}
-            className="[&_.ant-select-selection-placeholder]:!text-[var(--color-text-disabled)]"
-            onChange={(decision) => setFilter((current) => ({ ...current, decision }))}
-          />
+          {isManual ? (
+            <Select<ManualCaseAnnotationResult>
+              allowClear
+              placeholder="全部状态"
+              value={filter.result}
+              options={Object.entries(manualResultText).map(([value, label]) => ({ value, label }))}
+              className="[&_.ant-select-selection-placeholder]:!text-[var(--color-text-disabled)]"
+              onChange={(result) => setFilter((current) => ({ ...current, result, decision: undefined }))}
+            />
+          ) : (
+            <Select<Decision>
+              allowClear
+              placeholder="全部结论"
+              value={filter.decision}
+              options={Object.entries(decisionText).map(([value, label]) => ({ value, label }))}
+              className="[&_.ant-select-selection-placeholder]:!text-[var(--color-text-disabled)]"
+              onChange={(decision) => setFilter((current) => ({ ...current, decision, result: undefined }))}
+            />
+          )}
           <DatePicker.RangePicker
             placeholder={['开始日期', '结束日期']}
             value={filter.range}
@@ -97,8 +125,8 @@ export default function AnnotationDetailSection({
           </Button>
         </div>
       </div>
-      <Table<AnnotationDetail>
-        rowKey="id"
+      <Table<AnnotationDetail | ManualCaseAnnotationSummary>
+        rowKey={(record) => (isManualRecord(record) ? record.manual_annotation_id : record.id)}
         size="middle"
         border="borderless"
         loading={loading}
@@ -113,23 +141,53 @@ export default function AnnotationDetailSection({
           onChange: onPageChange
         }}
         className="overflow-hidden border border-[var(--color-border-secondary)] [&_.ant-pagination-item-active_a]:font-normal [&_.ant-pagination-item-link]:font-normal [&_.ant-pagination-item_a]:font-normal [&_.ant-pagination-total-text]:font-normal [&_.ant-pagination]:text-base [&_.ant-table-cell]:text-base [&_.ant-table-cell]:font-normal [&_.ant-table-thead>tr>th]:h-[48px] [&_.ant-table-thead>tr>th]:bg-[var(--color-bg-container)] [&_.ant-table-thead>tr>th]:text-caption [&_.ant-table-thead>tr>th]:font-normal"
-        columns={[
-          { title: '住院号', dataIndex: 'hospitalization_no', width: 160 },
-          { title: '操作员', dataIndex: 'operator_username', width: 112, render: (value: string | null) => value ?? '-' },
-          { title: '标注结论', dataIndex: 'decision', width: 120, render: (value: Decision) => decisionText[value] },
-          { title: '标注原因', dataIndex: 'reason_codes', width: 240, render: (codes: string[]) => reasonLabel(codes) },
-          { title: '备注', dataIndex: 'notes', ellipsis: true, render: (value: string | null) => value ?? '-' },
-          { title: '标注时间', dataIndex: 'created_at', width: 184, render: formatTime },
-          {
-            title: '操作',
-            width: 104,
-            render: (_, record) => (
-              <Button variant="link" color="primary" onClick={() => setActiveRecord(record)}>
-                查看详情
-              </Button>
-            )
-          }
-        ]}
+        columns={
+          isManual
+            ? [
+                { title: '住院号', dataIndex: 'hospitalization_no', width: 180 },
+                { title: '操作员', dataIndex: 'operator_username', width: 128, render: (value: string | null) => value ?? '-' },
+                {
+                  title: '完成状态',
+                  dataIndex: 'result',
+                  width: 128,
+                  render: (value: ManualCaseAnnotationResult) => (
+                    <Tag appearance="outlined" color={value === 'has_issues' ? 'red' : 'green'} className="m-0">
+                      {manualResultText[value]}
+                    </Tag>
+                  )
+                },
+                { title: '问题数', dataIndex: 'problem_count', width: 120 },
+                { title: '提交时间', dataIndex: 'submitted_at', width: 200, render: formatTime },
+                {
+                  title: '操作',
+                  width: 120,
+                  render: (_, record) =>
+                    isManualRecord(record) ? (
+                      <Button variant="link" color="primary" onClick={() => onOpenManualDetail(record)}>
+                        查看详情
+                      </Button>
+                    ) : null
+                }
+              ]
+            : [
+                { title: '住院号', dataIndex: 'hospitalization_no', width: 160 },
+                { title: '操作员', dataIndex: 'operator_username', width: 112, render: (value: string | null) => value ?? '-' },
+                { title: '标注结论', dataIndex: 'decision', width: 120, render: (value: Decision) => decisionText[value] },
+                { title: '标注原因', dataIndex: 'reason_codes', width: 240, render: (codes: string[]) => reasonLabel(codes) },
+                { title: '备注', dataIndex: 'notes', ellipsis: true, render: (value: string | null) => value ?? '-' },
+                { title: '标注时间', dataIndex: 'created_at', width: 184, render: formatTime },
+                {
+                  title: '操作',
+                  width: 104,
+                  render: (_, record) =>
+                    !isManualRecord(record) ? (
+                      <Button variant="link" color="primary" onClick={() => setActiveRecord(record)}>
+                        查看详情
+                      </Button>
+                    ) : null
+                }
+              ]
+        }
       />
       <Modal title="标注详情" open={Boolean(activeRecord)} onCancel={() => setActiveRecord(null)} footer={null} width={840}>
         {activeRecord ? (

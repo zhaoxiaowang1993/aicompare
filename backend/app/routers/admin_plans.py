@@ -26,6 +26,7 @@ def serialize_plan(db: Session, plan: Plan) -> PlanDetail:
         id=plan.id,
         name=plan.name,
         description=plan.description,
+        annotation_type=plan.annotation_type,
         owner_user_id=plan.owner_user_id,
         owner_username=owner.username if owner else None,
         status=plan.status,
@@ -46,6 +47,7 @@ def create_plan(_: PlanCreateRequest, __: User = Depends(require_admin)) -> Plan
 @router.get("", response_model=PlanListResponse)
 def list_plans(
     status: str | None = None,
+    annotation_type: str | None = None,
     owner_user_id: int | None = None,
     page: int = 1,
     page_size: int = 20,
@@ -54,7 +56,7 @@ def list_plans(
 ) -> PlanListResponse:
     page = max(page, 1)
     page_size = min(max(page_size, 1), 100)
-    plans, total = query_plans(db, status, owner_user_id, page, page_size)
+    plans, total = query_plans(db, status, owner_user_id, annotation_type, page, page_size)
     items = []
     for plan in plans:
         total_cases, annotated_cases = get_plan_progress(db, plan.id)
@@ -64,6 +66,7 @@ def list_plans(
                 id=plan.id,
                 name=plan.name,
                 description=plan.description,
+                annotation_type=plan.annotation_type,
                 status=plan.status,
                 owner_user_id=plan.owner_user_id,
                 owner_username=owner.username if owner else None,
@@ -96,6 +99,8 @@ def patch_plan(plan_id: int, payload: PlanPatchRequest, _: User = Depends(requir
     patch_keys = payload.model_fields_set
     if plan.status == "closed" and patch_keys - {"name", "description", "status"}:
         raise HTTPException(status_code=409, detail="PLAN_STATUS_CONFLICT")
+    if "annotation_type" in patch_keys:
+        raise HTTPException(status_code=400, detail="VALIDATION_ERROR")
 
     if payload.name is not None:
         plan.name = payload.name

@@ -17,6 +17,11 @@ class PlanStatus(str, Enum):
     CLOSED = "closed"
 
 
+class PlanAnnotationType(str, Enum):
+    COMPARISON = "comparison"
+    MANUAL = "manual"
+
+
 class Decision(str, Enum):
     A_BETTER = "A_BETTER"
     B_BETTER = "B_BETTER"
@@ -30,6 +35,11 @@ class RuleCategory(str, Enum):
     SUPERIOR_PHYSICIAN_ROUND = "superior_physician_round"
     DAILY_COURSE_RECORD = "daily_course_record"
     DISCHARGE_RECORD = "discharge_record"
+
+
+class ManualAnnotationResult(str, Enum):
+    HAS_ISSUES = "has_issues"
+    NO_ISSUE = "no_issue"
 
 
 class User(Base):
@@ -51,6 +61,7 @@ class Plan(Base):
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
     owner_user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
+    annotation_type: Mapped[str] = mapped_column(String(16), default=PlanAnnotationType.COMPARISON.value, nullable=False)
     status: Mapped[str] = mapped_column(String(16), default=PlanStatus.ACTIVE.value, nullable=False)
     created_by: Mapped[int | None] = mapped_column(ForeignKey("users.id"), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
@@ -68,10 +79,10 @@ class CaseRecord(Base):
     plan_id: Mapped[int] = mapped_column(ForeignKey("plans.id"), nullable=False)
     hospitalization_no: Mapped[str] = mapped_column(String(128), nullable=False)
     record_text: Mapped[str] = mapped_column(Text, nullable=False)
-    agent_a_output: Mapped[str] = mapped_column(Text, nullable=False)
-    agent_b_output: Mapped[str] = mapped_column(Text, nullable=False)
-    display_a_source: Mapped[str] = mapped_column(String(32), nullable=False)
-    display_b_source: Mapped[str] = mapped_column(String(32), nullable=False)
+    agent_a_output: Mapped[str | None] = mapped_column(Text, nullable=True)
+    agent_b_output: Mapped[str | None] = mapped_column(Text, nullable=True)
+    display_a_source: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    display_b_source: Mapped[str | None] = mapped_column(String(32), nullable=True)
     import_batch_id: Mapped[str] = mapped_column(String(64), nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
 
@@ -94,6 +105,49 @@ class Annotation(Base):
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+
+
+class ManualCaseAnnotation(Base):
+    __tablename__ = "manual_case_annotations"
+    __table_args__ = (
+        UniqueConstraint("case_id", "operator_user_id", name="uq_manual_annotation_case_operator"),
+        Index("ix_manual_annotations_plan_created", "plan_id", "created_at"),
+        Index("ix_manual_annotations_operator_result", "operator_user_id", "result"),
+    )
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    plan_id: Mapped[int] = mapped_column(ForeignKey("plans.id"), nullable=False)
+    case_id: Mapped[int] = mapped_column(ForeignKey("case_records.id"), nullable=False)
+    operator_user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
+    result: Mapped[str] = mapped_column(String(16), nullable=False)
+    submitted_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+
+
+class ManualAnnotationEntry(Base):
+    __tablename__ = "manual_annotation_entries"
+    __table_args__ = (
+        Index("ix_manual_entries_annotation", "manual_annotation_id"),
+        Index("ix_manual_entries_plan_case", "plan_id", "case_id"),
+        Index("ix_manual_entries_operator_created", "operator_user_id", "created_at"),
+    )
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    manual_annotation_id: Mapped[int] = mapped_column(ForeignKey("manual_case_annotations.id"), nullable=False)
+    plan_id: Mapped[int] = mapped_column(ForeignKey("plans.id"), nullable=False)
+    case_id: Mapped[int] = mapped_column(ForeignKey("case_records.id"), nullable=False)
+    operator_user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
+    source_text: Mapped[str] = mapped_column(Text, nullable=False)
+    start_offset: Mapped[int] = mapped_column(Integer, nullable=False)
+    end_offset: Mapped[int] = mapped_column(Integer, nullable=False)
+    quality_rule_id: Mapped[int] = mapped_column(ForeignKey("quality_rules.id"), nullable=False)
+    quality_rule_category_snapshot: Mapped[str] = mapped_column(String(32), nullable=False)
+    quality_rule_content_snapshot: Mapped[str] = mapped_column(Text, nullable=False)
+    quality_rule_score_snapshot: Mapped[str] = mapped_column(String(64), nullable=False)
+    suggestion: Mapped[str] = mapped_column(Text, nullable=False)
+    notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
 
 
 class QualityRule(Base):

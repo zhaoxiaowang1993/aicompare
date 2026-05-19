@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { message } from 'antd'
 import AdminShell from './components/admin-shell'
 import AnnotationDetailSection, { type AnnotationFilterValue } from './components/annotation-detail-section'
@@ -10,15 +10,16 @@ import PlanOverviewSection from './components/plan-overview-section'
 import PlanSettingsSection from './components/plan-settings-section'
 import { fetchPlan, fetchPlanAnnotations, fetchPlanStats, updatePlan } from '../../api/admin-plans'
 import type { PlanDetail, PlanStatus, UpdatePlanPayload } from '../../types/plan'
-import type { AnnotationDetail, AnnotationListParams, PlanStats } from '../../types/report'
+import type { AnnotationDetail, AnnotationListParams, ManualCaseAnnotationSummary, PlanStats } from '../../types/report'
 
 export default function AdminPlanDetailPage() {
   const { id } = useParams()
+  const navigate = useNavigate()
   const planId = Number(id)
   const [activeTab, setActiveTab] = useState<PlanDetailTabKey>('overview')
   const [plan, setPlan] = useState<PlanDetail | null>(null)
   const [stats, setStats] = useState<PlanStats | null>(null)
-  const [annotations, setAnnotations] = useState<AnnotationDetail[]>([])
+  const [annotations, setAnnotations] = useState<Array<AnnotationDetail | ManualCaseAnnotationSummary>>([])
   const [annotationTotal, setAnnotationTotal] = useState(0)
   const [annotationParams, setAnnotationParams] = useState<AnnotationListParams>({})
   const [page, setPage] = useState(1)
@@ -48,7 +49,8 @@ export default function AdminPlanDetailPage() {
     setLoading(true)
     setError(null)
     try {
-      await Promise.all([loadPlan(), loadOverview(), loadAnnotations(1, pageSize)])
+      await loadPlan()
+      await Promise.all([loadOverview(), loadAnnotations(1, pageSize)])
     } catch {
       setError('计划详情加载失败，请确认计划存在后重试。')
     } finally {
@@ -64,6 +66,7 @@ export default function AdminPlanDetailPage() {
     const nextParams: AnnotationListParams = {
       operator_user_id: value.operator_user_id,
       decision: value.decision,
+      result: value.result,
       start_date: value.range?.[0]?.format('YYYY-MM-DD'),
       end_date: value.range?.[1]?.format('YYYY-MM-DD')
     }
@@ -113,6 +116,7 @@ export default function AdminPlanDetailPage() {
         {activeTab === 'overview' ? <PlanOverviewSection stats={stats} loading={loading} /> : null}
         {activeTab === 'annotations' ? (
           <AnnotationDetailSection
+            annotationType={plan?.annotation_type ?? 'comparison'}
             annotations={annotations}
             total={annotationTotal}
             page={page}
@@ -120,6 +124,7 @@ export default function AdminPlanDetailPage() {
             loading={loading}
             onFilter={handleFilter}
             onPageChange={handlePageChange}
+            onOpenManualDetail={(record) => navigate(`/admin/plans/${planId}/annotations/${record.manual_annotation_id}`)}
           />
         ) : null}
         {activeTab === 'settings' && plan ? (

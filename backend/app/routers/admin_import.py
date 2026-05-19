@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.db.session import get_db
 from app.deps import require_admin
-from app.models.entities import Plan, User
+from app.models.entities import Plan, PlanAnnotationType, User
 from app.repositories.imports import add_case_record, find_case_by_hospitalization_no
 from app.repositories.plans import get_active_operator, get_plan, get_plan_progress
 from app.schemas.imports import ImportErrorItem, ImportSummary, PlanCreateWithImportResponse
@@ -21,6 +21,7 @@ def serialize_plan(db: Session, plan: Plan) -> PlanDetail:
         id=plan.id,
         name=plan.name,
         description=plan.description,
+        annotation_type=plan.annotation_type,
         owner_user_id=plan.owner_user_id,
         owner_username=owner.username if owner else None,
         status=plan.status,
@@ -33,7 +34,7 @@ def serialize_plan(db: Session, plan: Plan) -> PlanDetail:
     )
 
 
-def build_import_summary(db: Session, plan_id: int, rows, parse_errors) -> ImportSummary:
+def build_import_summary(db: Session, plan: Plan, rows, parse_errors) -> ImportSummary:
     import_batch_id = new_import_batch_id()
     errors = [
         ImportErrorItem(row_number=item.row_number, hospitalization_no=item.hospitalization_no, reason=item.reason)
@@ -44,17 +45,21 @@ def build_import_summary(db: Session, plan_id: int, rows, parse_errors) -> Impor
     seen_in_upload: set[str] = set()
 
     for row in rows:
-        if row.hospitalization_no in seen_in_upload or find_case_by_hospitalization_no(db, plan_id, row.hospitalization_no):
+        if row.hospitalization_no in seen_in_upload or find_case_by_hospitalization_no(db, plan.id, row.hospitalization_no):
             skipped_rows += 1
             errors.append(
                 ImportErrorItem(row_number=row.row_number, hospitalization_no=row.hospitalization_no, reason="同计划住院号重复，已跳过")
             )
             continue
         seen_in_upload.add(row.hospitalization_no)
-        display_a_source, display_b_source = stable_display_mapping(row.hospitalization_no)
+        display_a_source, display_b_source = (
+            stable_display_mapping(row.hospitalization_no)
+            if plan.annotation_type == PlanAnnotationType.COMPARISON.value
+            else (None, None)
+        )
         add_case_record(
             db,
-            plan_id=plan_id,
+            plan_id=plan.id,
             hospitalization_no=row.hospitalization_no,
             record_text=row.record_text,
             agent_a_output=row.agent_a_output,
@@ -67,7 +72,7 @@ def build_import_summary(db: Session, plan_id: int, rows, parse_errors) -> Impor
 
     total_rows = len(rows) + len(parse_errors)
     return ImportSummary(
-        plan_id=plan_id,
+        plan_id=plan.id,
         import_batch_id=import_batch_id,
         total_rows=total_rows,
         success_rows=success_rows,
@@ -81,6 +86,7 @@ def build_import_summary(db: Session, plan_id: int, rows, parse_errors) -> Impor
 def create_plan_with_import(
     name: str = Form(...),
     owner_user_id: int = Form(...),
+    annotation_type: str = Form(PlanAnnotationType.COMPARISON.value),
     description: str | None = Form(None),
     file: UploadFile = File(...),
     user: User = Depends(require_admin),
@@ -92,18 +98,22 @@ def create_plan_with_import(
     if not file.filename or not file.filename.lower().endswith(".csv"):
         raise HTTPException(status_code=400, detail="CSV_INVALID_TEMPLATE")
 
-    rows, parse_errors = parse_csv(file.file.read())
+    if annotation_type not in {PlanAnnotationType.COMPARISON.value, PlanAnnotationType.MANUAL.value}:
+        raise HTTPException(status_code=400, detail="VALIDATION_ERROR")
+
+    rows, parse_errors = parse_csv(file.file.read(), annotation_type)
     plan = Plan(
         name=name,
         description=description,
         owner_user_id=owner_user_id,
+        annotation_type=annotation_type,
         status="active",
         created_by=user.id,
     )
     db.add(plan)
     db.flush()
 
-    import_summary = build_import_summary(db, plan.id, rows, parse_errors)
+    import_summary = build_import_summary(db, plan, rows, parse_errors)
     if import_summary.success_rows == 0:
         db.rollback()
         raise HTTPException(status_code=400, detail="CSV_NO_VALID_ROWS")
@@ -123,7 +133,7 @@ def import_csv(plan_id: int, file: UploadFile, _: User = Depends(require_admin),
     if not file.filename or not file.filename.lower().endswith(".csv"):
         raise HTTPException(status_code=400, detail="CSV_INVALID_TEMPLATE")
 
-    rows, parse_errors = parse_csv(file.file.read())
-    summary = build_import_summary(db, plan_id, rows, parse_errors)
+    rows, parse_errors = parse_csv(file.file.read(), plan.annotation_type)
+    summary = build_import_summary(db, plan, rows, parse_errors)
     commit_import(db)
     return summary
