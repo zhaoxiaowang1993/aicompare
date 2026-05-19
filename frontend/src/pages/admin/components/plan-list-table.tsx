@@ -4,6 +4,7 @@ import Table from '../../../components/data-display/table'
 import Button from '../../../components/feedback/button'
 import Empty from '../../../components/data-display/empty'
 import PlanStatusTag, { planDisplayStatus } from './plan-status-tag'
+import PlanTypeTag from './plan-type-tag'
 import type { PlanItem } from '../../../types/plan'
 
 type PlanListTableProps = {
@@ -39,6 +40,7 @@ export default function PlanListTable({ items, loading, pagination, onActivate, 
             </Link>
           )
         },
+        { title: '标注模式', dataIndex: 'annotation_type', width: 128, render: (_, record) => <PlanTypeTag type={record.annotation_type} /> },
         { title: '负责人', dataIndex: 'owner_username', width: 160, render: (value: string | null) => value ?? '-' },
         { title: '标注进度', key: 'progress', width: 200, render: (_, record) => progressText(record) },
         { title: '状态', key: 'status', width: 120, render: (_, record) => <PlanStatusTag status={planDisplayStatus(record)} /> },

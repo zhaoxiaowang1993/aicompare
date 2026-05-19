@@ -81,11 +81,18 @@ def csv_file(text: str) -> dict:
     return {"file": ("cases.csv", text.encode("utf-8"), "text/csv")}
 
 
-def create_plan_with_csv(client: TestClient, admin_token: str, owner_user_id: int, csv_text: str, name: str = "操作员测试计划") -> dict:
+def create_plan_with_csv(
+    client: TestClient,
+    admin_token: str,
+    owner_user_id: int,
+    csv_text: str,
+    name: str = "操作员测试计划",
+    annotation_type: str = "comparison",
+) -> dict:
     response = client.post(
         "/api/admin/plans/import-csv",
         headers=auth_headers(admin_token),
-        data={"name": name, "owner_user_id": str(owner_user_id), "description": "operator api test"},
+        data={"name": name, "owner_user_id": str(owner_user_id), "description": "operator api test", "annotation_type": annotation_type},
         files=csv_file(csv_text),
     )
     assert response.status_code == 201, response.text
@@ -229,3 +236,154 @@ def test_operator_annotation_submit_validation_duplicate_and_progress(api_contex
     assert plan["annotated_cases"] == 2
     assert plan["pending_cases"] == 0
     assert plan["completion_rate"] == 1
+
+
+def test_manual_operator_task_submit_no_issue_and_offset_validation(api_context: ApiContext) -> None:
+    client = api_context.client
+    admin_token = login(client, "admin", "admin")["access_token"]
+    owner_user_id = operator_id(client, admin_token)
+    csv_text = (
+        "住院号,病历内容\n"
+        'M001,"主诉：胸痛\n现病史：患者入院后未及时完善入院记录"\n'
+        'M002,"主诉：胸闷\n未见心电图完成时间记录"\n'
+    )
+    payload = create_plan_with_csv(client, admin_token, owner_user_id, csv_text, name="手动操作员测试计划", annotation_type="manual")
+    plan_id = payload["plan"]["id"]
+    assert payload["plan"]["annotation_type"] == "manual"
+
+    with api_context.session_factory() as db:
+        seed_quality_rules(db)
+        cases = db.query(CaseRecord).filter(CaseRecord.plan_id == plan_id).order_by(CaseRecord.id.asc()).all()
+        rule = db.query(QualityRule).filter(QualityRule.deleted_at.is_(None)).first()
+    first_case = cases[0]
+    second_case = cases[1]
+    assert first_case.agent_a_output is None
+    assert first_case.display_a_source is None
+
+    operator_token = login(client, "czy", "czy")["access_token"]
+    headers = auth_headers(operator_token)
+
+    plans = client.get("/api/operator/plans", headers=headers)
+    assert plans.status_code == 200
+    plan_item = next(item for item in plans.json()["items"] if item["id"] == plan_id)
+    assert plan_item["annotation_type"] == "manual"
+    assert plan_item["annotated_cases"] == 0
+
+    task_response = client.get(f"/api/operator/plans/{plan_id}/tasks/next", headers=headers)
+    assert task_response.status_code == 200
+    task = task_response.json()
+    assert task["annotation_type"] == "manual"
+    assert task["case_id"] == first_case.id
+    assert "output_a" not in task
+    assert "display_mapping" not in task
+
+    snippet = "患者入院后未及时完善入院记录"
+    start = first_case.record_text.index(snippet)
+    created = client.post(
+        f"/api/operator/tasks/{first_case.id}/manual-annotate",
+        headers=headers,
+        json={
+            "result": "has_issues",
+            "entries": [
+                {
+                    "source_text": snippet,
+                    "start_offset": start,
+                    "end_offset": start + len(snippet),
+                    "quality_rule_id": rule.id,
+                    "suggestion": "补充入院记录完成时间。",
+                    "notes": "需核对实际入院时间",
+                }
+            ],
+        },
+    )
+    assert created.status_code == 201, created.text
+    assert created.json()["result"] == "has_issues"
+    assert created.json()["entry_count"] == 1
+
+    duplicate = client.post(
+        f"/api/operator/tasks/{first_case.id}/manual-annotate",
+        headers=headers,
+        json={"result": "no_issue", "entries": []},
+    )
+    assert duplicate.status_code == 409
+    assert duplicate.json()["detail"] == "ANNOTATION_ALREADY_EXISTS"
+
+    invalid_offset = client.post(
+        f"/api/operator/tasks/{second_case.id}/manual-annotate",
+        headers=headers,
+        json={
+            "result": "has_issues",
+            "entries": [
+                {
+                    "source_text": "不匹配文本",
+                    "start_offset": 0,
+                    "end_offset": 4,
+                    "quality_rule_id": rule.id,
+                    "suggestion": "补充检查时间。",
+                }
+            ],
+        },
+    )
+    assert invalid_offset.status_code == 400
+    assert invalid_offset.json()["detail"] == "VALIDATION_ERROR"
+
+    no_issue = client.post(
+        f"/api/operator/tasks/{second_case.id}/manual-annotate",
+        headers=headers,
+        json={"result": "no_issue", "entries": []},
+    )
+    assert no_issue.status_code == 201
+    assert no_issue.json()["result"] == "no_issue"
+    assert no_issue.json()["entry_count"] == 0
+
+    next_task = client.get(f"/api/operator/plans/{plan_id}/tasks/next", headers=headers)
+    assert next_task.status_code == 200
+    assert next_task.json() is None
+
+    plans_after = client.get("/api/operator/plans", headers=headers)
+    plan_after = next(item for item in plans_after.json()["items"] if item["id"] == plan_id)
+    assert plan_after["annotated_cases"] == 2
+
+
+def test_manual_operator_offset_validation_accepts_display_text_inside_markup(api_context: ApiContext) -> None:
+    client = api_context.client
+    admin_token = login(client, "admin", "admin")["access_token"]
+    owner_user_id = operator_id(client, admin_token)
+    csv_text = (
+        "住院号,病历内容\n"
+        'MHTML001,"<font size=""3""><strong>入院记录</strong></font><br/>体格检查：<strong>血压偏高</strong>。"\n'
+    )
+    payload = create_plan_with_csv(client, admin_token, owner_user_id, csv_text, name="手动富文本测试计划", annotation_type="manual")
+    plan_id = payload["plan"]["id"]
+
+    with api_context.session_factory() as db:
+        seed_quality_rules(db)
+        case = db.query(CaseRecord).filter(CaseRecord.plan_id == plan_id).first()
+        rule = db.query(QualityRule).filter(QualityRule.deleted_at.is_(None)).first()
+
+    operator_token = login(client, "czy", "czy")["access_token"]
+    headers = auth_headers(operator_token)
+    raw_fragment = "<strong>血压偏高</strong>"
+    start = case.record_text.index(raw_fragment)
+    response = client.post(
+        f"/api/operator/tasks/{case.id}/manual-annotate",
+        headers=headers,
+        json={
+            "result": "has_issues",
+            "entries": [
+                {
+                    "source_text": "血压偏高",
+                    "start_offset": start,
+                    "end_offset": start + len(raw_fragment),
+                    "quality_rule_id": rule.id,
+                    "suggestion": "补充血压异常处理建议。",
+                }
+            ],
+        },
+    )
+    assert response.status_code == 201, response.text
+    assert response.json()["entry_count"] == 1
+
+    plans_after = client.get("/api/operator/plans", headers=headers)
+    plan_after = next(item for item in plans_after.json()["items"] if item["id"] == plan_id)
+    assert plan_after["pending_cases"] == 0

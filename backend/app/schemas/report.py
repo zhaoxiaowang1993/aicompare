@@ -2,6 +2,8 @@ from datetime import datetime
 
 from pydantic import BaseModel
 
+from app.models.entities import ManualAnnotationResult, PlanAnnotationType
+
 
 class DistributionItem(BaseModel):
     key: str
@@ -10,12 +12,15 @@ class DistributionItem(BaseModel):
 
 class PlanStatsResponse(BaseModel):
     plan_id: int
+    annotation_type: PlanAnnotationType = PlanAnnotationType.COMPARISON
     total_cases: int
     annotated_cases: int
     pending_cases: int
     completion_rate: float
-    decision_distribution: dict[str, int]
-    reason_distribution: list[DistributionItem]
+    decision_distribution: dict[str, int] | None = None
+    reason_distribution: list[DistributionItem] | None = None
+    has_issues_cases: int | None = None
+    no_issue_cases: int | None = None
 
 
 class AnnotationDetailItem(BaseModel):
@@ -41,3 +46,43 @@ class AnnotationListResponse(BaseModel):
     total: int
     page: int
     page_size: int
+
+
+class ManualAnnotationSummaryItem(BaseModel):
+    manual_annotation_id: int
+    case_id: int
+    hospitalization_no: str
+    operator_user_id: int
+    operator_username: str | None = None
+    result: ManualAnnotationResult
+    problem_count: int
+    submitted_at: datetime
+
+
+class ManualAnnotationListResponse(BaseModel):
+    items: list[ManualAnnotationSummaryItem]
+    total: int
+    page: int
+    page_size: int
+
+
+class ManualAnnotationEntryDetail(BaseModel):
+    entry_id: int
+    source_text: str
+    start_offset: int
+    end_offset: int
+    quality_rule: dict[str, int | str]
+    suggestion: str
+    notes: str | None = None
+    created_at: datetime
+
+
+class ManualAnnotationDetailResponse(BaseModel):
+    manual_annotation_id: int
+    case_id: int
+    hospitalization_no: str
+    operator: str
+    result: ManualAnnotationResult
+    record_text: str
+    submitted_at: datetime
+    entries: list[ManualAnnotationEntryDetail]

@@ -6,10 +6,19 @@ from sqlalchemy.orm import Session
 
 from app.db.session import get_db
 from app.deps import require_admin
-from app.models.entities import Annotation, Decision, User
+from app.models.entities import Annotation, Decision, ManualAnnotationEntry, ManualCaseAnnotation, PlanAnnotationType, User
 from app.repositories.plans import get_plan_progress
-from app.repositories.reports import annotation_query, get_case, get_plan, get_user, plan_total_cases
-from app.schemas.report import AnnotationDetailItem, AnnotationListResponse, DistributionItem, PlanStatsResponse
+from app.repositories.reports import annotation_query, get_case, get_plan, get_user, local_date_to_utc_naive, plan_total_cases
+from app.schemas.report import (
+    AnnotationDetailItem,
+    AnnotationListResponse,
+    DistributionItem,
+    ManualAnnotationDetailResponse,
+    ManualAnnotationEntryDetail,
+    ManualAnnotationListResponse,
+    ManualAnnotationSummaryItem,
+    PlanStatsResponse,
+)
 
 router = APIRouter(prefix="/admin/plans", tags=["admin-reports"])
 
@@ -42,6 +51,35 @@ def parse_reason_codes(raw: str) -> list[str]:
     return [item.strip() for item in raw.split(",") if item.strip()]
 
 
+def manual_completion_query(
+    db: Session,
+    *,
+    plan_id: int,
+    operator_user_id: int | None = None,
+    result: str | None = None,
+    start_date: date | None = None,
+    end_date: date | None = None,
+):
+    query = db.query(ManualCaseAnnotation).filter(ManualCaseAnnotation.plan_id == plan_id)
+    if operator_user_id:
+        query = query.filter(ManualCaseAnnotation.operator_user_id == operator_user_id)
+    if result:
+        query = query.filter(ManualCaseAnnotation.result == result)
+    if start_date:
+        query = query.filter(ManualCaseAnnotation.submitted_at >= local_date_to_utc_naive(start_date))
+    if end_date:
+        query = query.filter(ManualCaseAnnotation.submitted_at <= local_date_to_utc_naive(end_date, end_of_day=True))
+    return query
+
+
+def manual_entry_count(db: Session, manual_annotation_id: int) -> int:
+    return int(
+        db.query(ManualAnnotationEntry)
+        .filter(ManualAnnotationEntry.manual_annotation_id == manual_annotation_id)
+        .count()
+    )
+
+
 @router.get("/{plan_id}/stats", response_model=PlanStatsResponse)
 def plan_stats(
     plan_id: int,
@@ -52,8 +90,33 @@ def plan_stats(
     _: User = Depends(require_admin),
     db: Session = Depends(get_db),
 ) -> PlanStatsResponse:
-    if not get_plan(db, plan_id):
+    plan = get_plan(db, plan_id)
+    if not plan:
         raise HTTPException(status_code=404, detail="PLAN_NOT_FOUND")
+
+    if plan.annotation_type == PlanAnnotationType.MANUAL.value:
+        total_cases = plan_total_cases(db, plan_id)
+        completions = manual_completion_query(
+            db,
+            plan_id=plan_id,
+            operator_user_id=operator_user_id,
+            start_date=start_date,
+            end_date=end_date,
+        ).all()
+        annotated_cases = len({item.case_id for item in completions})
+        pending_cases = max(total_cases - annotated_cases, 0)
+        has_issues_cases = sum(1 for item in completions if item.result == "has_issues")
+        no_issue_cases = sum(1 for item in completions if item.result == "no_issue")
+        return PlanStatsResponse(
+            plan_id=plan_id,
+            annotation_type=PlanAnnotationType.MANUAL,
+            total_cases=total_cases,
+            annotated_cases=annotated_cases,
+            pending_cases=pending_cases,
+            completion_rate=round(annotated_cases / total_cases, 4) if total_cases else 0,
+            has_issues_cases=has_issues_cases,
+            no_issue_cases=no_issue_cases,
+        )
 
     scoped_query = annotation_query(
         db,
@@ -88,6 +151,7 @@ def plan_stats(
 
     return PlanStatsResponse(
         plan_id=plan_id,
+        annotation_type=PlanAnnotationType.COMPARISON,
         total_cases=total_cases,
         annotated_cases=annotated_cases,
         pending_cases=pending_cases,
@@ -97,23 +161,117 @@ def plan_stats(
     )
 
 
-@router.get("/{plan_id}/annotations", response_model=AnnotationListResponse)
+@router.get("/{plan_id}/annotations/{manual_annotation_id}", response_model=ManualAnnotationDetailResponse)
+def manual_annotation_detail(
+    plan_id: int,
+    manual_annotation_id: int,
+    _: User = Depends(require_admin),
+    db: Session = Depends(get_db),
+) -> ManualAnnotationDetailResponse:
+    plan = get_plan(db, plan_id)
+    if not plan:
+        raise HTTPException(status_code=404, detail="PLAN_NOT_FOUND")
+    if plan.annotation_type != PlanAnnotationType.MANUAL.value:
+        raise HTTPException(status_code=404, detail="MANUAL_ANNOTATION_NOT_FOUND")
+
+    annotation = (
+        db.query(ManualCaseAnnotation)
+        .filter(ManualCaseAnnotation.id == manual_annotation_id, ManualCaseAnnotation.plan_id == plan_id)
+        .first()
+    )
+    if not annotation:
+        raise HTTPException(status_code=404, detail="MANUAL_ANNOTATION_NOT_FOUND")
+    case = get_case(db, annotation.case_id)
+    operator = get_user(db, annotation.operator_user_id)
+    if not case:
+        raise HTTPException(status_code=404, detail="CASE_NOT_FOUND")
+
+    entries = (
+        db.query(ManualAnnotationEntry)
+        .filter(ManualAnnotationEntry.manual_annotation_id == annotation.id)
+        .order_by(ManualAnnotationEntry.start_offset.asc(), ManualAnnotationEntry.id.asc())
+        .all()
+    )
+    return ManualAnnotationDetailResponse(
+        manual_annotation_id=annotation.id,
+        case_id=annotation.case_id,
+        hospitalization_no=case.hospitalization_no,
+        operator=operator.username if operator else "-",
+        result=annotation.result,
+        record_text=case.record_text,
+        submitted_at=annotation.submitted_at,
+        entries=[
+            ManualAnnotationEntryDetail(
+                entry_id=entry.id,
+                source_text=entry.source_text,
+                start_offset=entry.start_offset,
+                end_offset=entry.end_offset,
+                quality_rule={
+                    "id": entry.quality_rule_id,
+                    "category": entry.quality_rule_category_snapshot,
+                    "content": entry.quality_rule_content_snapshot,
+                    "score": entry.quality_rule_score_snapshot,
+                },
+                suggestion=entry.suggestion,
+                notes=entry.notes,
+                created_at=entry.created_at,
+            )
+            for entry in entries
+        ],
+    )
+
+
+@router.get("/{plan_id}/annotations", response_model=AnnotationListResponse | ManualAnnotationListResponse)
 def plan_annotations(
     plan_id: int,
     operator_user_id: int | None = None,
     decision: str | None = None,
     start_date: date | None = None,
     end_date: date | None = None,
+    result: str | None = None,
     page: int = 1,
     page_size: int = 20,
     _: User = Depends(require_admin),
     db: Session = Depends(get_db),
-) -> AnnotationListResponse:
-    if not get_plan(db, plan_id):
+) -> AnnotationListResponse | ManualAnnotationListResponse:
+    plan = get_plan(db, plan_id)
+    if not plan:
         raise HTTPException(status_code=404, detail="PLAN_NOT_FOUND")
 
     page = max(page, 1)
     page_size = min(max(page_size, 1), 100)
+
+    if plan.annotation_type == PlanAnnotationType.MANUAL.value:
+        query = manual_completion_query(
+            db,
+            plan_id=plan_id,
+            operator_user_id=operator_user_id,
+            result=result,
+            start_date=start_date,
+            end_date=end_date,
+        )
+        total = query.count()
+        completions = query.order_by(ManualCaseAnnotation.submitted_at.desc()).offset((page - 1) * page_size).limit(page_size).all()
+        items: list[ManualAnnotationSummaryItem] = []
+        for completion in completions:
+            case = get_case(db, completion.case_id)
+            operator = get_user(db, completion.operator_user_id)
+            if not case:
+                continue
+            items.append(
+                ManualAnnotationSummaryItem(
+                    manual_annotation_id=completion.id,
+                    case_id=completion.case_id,
+                    hospitalization_no=case.hospitalization_no,
+                    operator_user_id=completion.operator_user_id,
+                    operator_username=operator.username if operator else None,
+                    result=completion.result,
+                    problem_count=manual_entry_count(db, completion.id),
+                    submitted_at=completion.submitted_at,
+                )
+            )
+        return ManualAnnotationListResponse(items=items, total=total, page=page, page_size=page_size)
+
     query = annotation_query(
         db,
         plan_id=plan_id,

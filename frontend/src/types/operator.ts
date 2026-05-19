@@ -1,4 +1,5 @@
 export type OperatorPlanStatus = 'not_started' | 'active' | 'completed' | 'closed'
+export type OperatorPlanAnnotationType = 'comparison' | 'manual'
 
 export type OperatorPlanListParams = {
   page?: number
@@ -9,6 +10,7 @@ export type OperatorPlanListItem = {
   id: number
   name: string
   description?: string | null
+  annotation_type: OperatorPlanAnnotationType
   status: OperatorPlanStatus
   total_cases: number
   annotated_cases: number
@@ -78,6 +80,7 @@ export type OperatorQualityRule = {
 
 export type OperatorTask = {
   id: number
+  annotation_type: OperatorPlanAnnotationType
   sequence_no: number
   total_tasks: number
   case_data: OperatorCaseData
@@ -104,4 +107,27 @@ export type OperatorAnnotationResult = {
   completed: boolean
   next_task: OperatorTask | null
   plan: OperatorPlanListItem
+}
+
+export type ManualAnnotationResult = 'has_issues' | 'no_issue'
+
+export type ManualAnnotationEntry = {
+  id: string
+  source_text: string
+  start_offset: number
+  end_offset: number
+  quality_rule_id: string
+  quality_rule_title: string
+  quality_rule_content: string
+  quality_rule_score: string
+  suggestion: string
+  notes?: string | null
+  created_at: string
+}
+
+export type ManualAnnotationDraftEntry = Omit<ManualAnnotationEntry, 'id' | 'created_at'>
+
+export type ManualAnnotationSubmitPayload = {
+  result: ManualAnnotationResult
+  entries: ManualAnnotationDraftEntry[]
 }

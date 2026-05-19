@@ -12,7 +12,7 @@ from sqlalchemy.orm import Session, sessionmaker
 from app.db.base import Base
 from app.db.session import get_db
 from app.main import app
-from app.models.entities import Annotation, CaseRecord
+from app.models.entities import Annotation, CaseRecord, ManualAnnotationEntry, ManualCaseAnnotation, QualityRule
 from app.services.bootstrap import seed_default_users
 
 
@@ -72,11 +72,18 @@ def csv_file(text: str, filename: str = "cases.csv") -> dict:
     return {"file": (filename, text.encode("utf-8"), "text/csv")}
 
 
-def create_plan_with_csv(client: TestClient, admin_token: str, owner_user_id: int, csv_text: str, name: str = "联调测试计划") -> dict:
+def create_plan_with_csv(
+    client: TestClient,
+    admin_token: str,
+    owner_user_id: int,
+    csv_text: str,
+    name: str = "联调测试计划",
+    annotation_type: str = "comparison",
+) -> dict:
     response = client.post(
         "/api/admin/plans/import-csv",
         headers=auth_headers(admin_token),
-        data={"name": name, "owner_user_id": str(owner_user_id), "description": "测试导入计划"},
+        data={"name": name, "owner_user_id": str(owner_user_id), "description": "测试导入计划", "annotation_type": annotation_type},
         files=csv_file(csv_text),
     )
     assert response.status_code == 201, response.text
@@ -229,6 +236,50 @@ def test_plan_import_status_conflicts_and_error_contracts(api_context: ApiContex
     restart_response = client.patch(f"/api/admin/plans/{plan['id']}", headers=auth_headers(admin_token), json={"status": "active"})
     assert restart_response.status_code == 200
     assert restart_response.json()["status"] == "active"
+
+
+def test_manual_plan_import_template_and_annotation_type_contracts(api_context: ApiContext) -> None:
+    client = api_context.client
+    admin_token = login(client, "admin", "admin")["access_token"]
+    owner_user_id = operator_id(client, admin_token)
+
+    invalid_type = client.post(
+        "/api/admin/plans/import-csv",
+        headers=auth_headers(admin_token),
+        data={"name": "非法类型", "owner_user_id": str(owner_user_id), "annotation_type": "invalid"},
+        files=csv_file("住院号,病历内容\nM001,病历\n"),
+    )
+    assert invalid_type.status_code == 400
+    assert invalid_type.json()["detail"] == "VALIDATION_ERROR"
+
+    wrong_template = client.post(
+        "/api/admin/plans/import-csv",
+        headers=auth_headers(admin_token),
+        data={"name": "模板不匹配", "owner_user_id": str(owner_user_id), "annotation_type": "manual"},
+        files=csv_file("住院号,病历内容,智能体A输出,智能体B输出\nM001,病历,A,B\n"),
+    )
+    assert wrong_template.status_code == 400
+    assert wrong_template.json()["detail"] == "CSV_INVALID_TEMPLATE"
+
+    manual_csv = "住院号,病历内容\nM001,病历一\nM002,病历二\n"
+    payload = create_plan_with_csv(client, admin_token, owner_user_id, manual_csv, name="手动导入测试", annotation_type="manual")
+    plan = payload["plan"]
+    assert plan["annotation_type"] == "manual"
+    assert plan["total_cases"] == 2
+    assert payload["import_summary"]["success_rows"] == 2
+
+    with api_context.session_factory() as db:
+        cases = db.query(CaseRecord).filter(CaseRecord.plan_id == plan["id"]).order_by(CaseRecord.id.asc()).all()
+        assert cases[0].agent_a_output is None
+        assert cases[0].display_a_source is None
+
+    immutable_type = client.patch(
+        f"/api/admin/plans/{plan['id']}",
+        headers=auth_headers(admin_token),
+        json={"annotation_type": "comparison"},
+    )
+    assert immutable_type.status_code == 400
+    assert immutable_type.json()["detail"] == "VALIDATION_ERROR"
 
 
 def test_plan_import_preserves_multiline_case_and_agent_outputs(api_context: ApiContext) -> None:
@@ -417,3 +468,104 @@ def test_admin_reports_normalize_decisions_to_original_agent_sources(api_context
     )
     assert filtered_response.status_code == 200
     assert filtered_response.json()["total"] == 0
+
+
+def test_manual_admin_stats_summary_and_detail_views(api_context: ApiContext) -> None:
+    client = api_context.client
+    admin_token = login(client, "admin", "admin")["access_token"]
+    owner_user_id = operator_id(client, admin_token)
+    manual_csv = (
+        "住院号,病历内容\n"
+        'R001,"主诉：胸痛\n患者入院后未及时完善入院记录\n未见心电图完成时间记录"\n'
+        "R002,主诉：胸闷，病历记录完整\n"
+    )
+    payload = create_plan_with_csv(client, admin_token, owner_user_id, manual_csv, name="手动报表测试", annotation_type="manual")
+    plan_id = payload["plan"]["id"]
+
+    with api_context.session_factory() as db:
+        rule = QualityRule(category="admission_record", content="入院记录需及时完成", score="2", created_by=1)
+        db.add(rule)
+        db.flush()
+        cases = db.query(CaseRecord).filter(CaseRecord.plan_id == plan_id).order_by(CaseRecord.id.asc()).all()
+        first = ManualCaseAnnotation(plan_id=plan_id, case_id=cases[0].id, operator_user_id=owner_user_id, result="has_issues", created_at=datetime(2026, 5, 6, 16, 0, 0), submitted_at=datetime(2026, 5, 6, 16, 0, 0))
+        second = ManualCaseAnnotation(plan_id=plan_id, case_id=cases[1].id, operator_user_id=owner_user_id, result="no_issue", created_at=datetime(2026, 5, 7, 16, 0, 0), submitted_at=datetime(2026, 5, 7, 16, 0, 0))
+        db.add_all([first, second])
+        db.flush()
+        first_snippet = "患者入院后未及时完善入院记录"
+        second_snippet = "未见心电图完成时间记录"
+        first_start = cases[0].record_text.index(first_snippet)
+        second_start = cases[0].record_text.index(second_snippet)
+        db.add_all(
+            [
+                ManualAnnotationEntry(
+                    manual_annotation_id=first.id,
+                    plan_id=plan_id,
+                    case_id=cases[0].id,
+                    operator_user_id=owner_user_id,
+                    source_text=first_snippet,
+                    start_offset=first_start,
+                    end_offset=first_start + len(first_snippet),
+                    quality_rule_id=rule.id,
+                    quality_rule_category_snapshot=rule.category,
+                    quality_rule_content_snapshot=rule.content,
+                    quality_rule_score_snapshot=rule.score,
+                    suggestion="补充入院记录完成时间。",
+                    created_at=datetime(2026, 5, 6, 16, 1, 0),
+                ),
+                ManualAnnotationEntry(
+                    manual_annotation_id=first.id,
+                    plan_id=plan_id,
+                    case_id=cases[0].id,
+                    operator_user_id=owner_user_id,
+                    source_text=second_snippet,
+                    start_offset=second_start,
+                    end_offset=second_start + len(second_snippet),
+                    quality_rule_id=rule.id,
+                    quality_rule_category_snapshot=rule.category,
+                    quality_rule_content_snapshot=rule.content,
+                    quality_rule_score_snapshot=rule.score,
+                    suggestion="补充心电图完成时间。",
+                    created_at=datetime(2026, 5, 6, 16, 2, 0),
+                ),
+            ]
+        )
+        manual_annotation_id = first.id
+        db.commit()
+
+    stats_response = client.get(f"/api/admin/plans/{plan_id}/stats", headers=auth_headers(admin_token))
+    assert stats_response.status_code == 200
+    stats = stats_response.json()
+    assert stats["annotation_type"] == "manual"
+    assert stats["total_cases"] == 2
+    assert stats["annotated_cases"] == 2
+    assert stats["has_issues_cases"] == 1
+    assert stats["no_issue_cases"] == 1
+    assert stats["decision_distribution"] is None
+
+    detail_response = client.get(
+        f"/api/admin/plans/{plan_id}/annotations",
+        headers=auth_headers(admin_token),
+        params={"operator_user_id": owner_user_id, "start_date": "2026-05-08", "end_date": "2026-05-08"},
+    )
+    assert detail_response.status_code == 200
+    summary = detail_response.json()
+    assert summary["total"] == 1
+    assert summary["items"][0]["result"] == "no_issue"
+    assert summary["items"][0]["problem_count"] == 0
+    assert "source_text" not in summary["items"][0]
+    assert "start_offset" not in summary["items"][0]
+
+    all_details = client.get(f"/api/admin/plans/{plan_id}/annotations", headers=auth_headers(admin_token))
+    assert all_details.status_code == 200
+    rows = all_details.json()["items"]
+    has_issue_row = next(item for item in rows if item["manual_annotation_id"] == manual_annotation_id)
+    assert has_issue_row["problem_count"] == 2
+
+    single_response = client.get(f"/api/admin/plans/{plan_id}/annotations/{manual_annotation_id}", headers=auth_headers(admin_token))
+    assert single_response.status_code == 200
+    single = single_response.json()
+    assert single["manual_annotation_id"] == manual_annotation_id
+    assert single["result"] == "has_issues"
+    assert len(single["entries"]) == 2
+    assert single["entries"][0]["quality_rule"]["content"] == "入院记录需及时完成"
+    assert single["entries"][0]["start_offset"] >= 0

@@ -2,11 +2,14 @@ from datetime import datetime
 
 from pydantic import BaseModel, Field
 
+from app.models.entities import PlanAnnotationType
+
 
 class PlanCreateRequest(BaseModel):
     name: str = Field(min_length=1)
     description: str | None = None
     owner_user_id: int
+    annotation_type: PlanAnnotationType = PlanAnnotationType.COMPARISON
 
 
 class PlanPatchRequest(BaseModel):
@@ -14,12 +17,14 @@ class PlanPatchRequest(BaseModel):
     description: str | None = None
     owner_user_id: int | None = None
     status: str | None = None
+    annotation_type: PlanAnnotationType | None = None
 
 
 class PlanItem(BaseModel):
     id: int
     name: str
     description: str | None = None
+    annotation_type: PlanAnnotationType = PlanAnnotationType.COMPARISON
     status: str
     owner_user_id: int
     owner_username: str | None = None
@@ -38,6 +43,7 @@ class PlanDetail(BaseModel):
     id: int
     name: str
     description: str | None = None
+    annotation_type: PlanAnnotationType = PlanAnnotationType.COMPARISON
     owner_user_id: int
     owner_username: str | None = None
     status: str

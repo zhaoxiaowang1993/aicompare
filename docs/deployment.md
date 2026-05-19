@@ -35,6 +35,12 @@
 
 首期使用 SQLAlchemy `Base.metadata.create_all()` 在应用启动时创建缺失表和索引，SQLite 文件存放在 Docker named volume `aicompare_sqlite-data` 中，应用镜像升级不会删除数据。
 
+手动标注模式上线时会在启动兼容逻辑中处理以下本地 SQLite 结构差异：
+
+- 为既有 `plans` 表补充 `annotation_type` 字段，旧计划默认填充为 `comparison`。
+- 将既有 `case_records` 中 A/B 输出和展示映射字段调整为可空，以支持 `manual` 计划只导入住院号与病历内容。
+- 创建 `manual_case_annotations` 和 `manual_annotation_entries` 表，用于病例级完成记录和手动问题条目。
+
 回滚策略：
 
 1. 应用回滚：在服务器部署目录执行 `docker compose -f docker/docker-compose.prod.yml --env-file .env up -d --build`，切回上一个已验证提交对应的代码。
@@ -49,6 +55,14 @@
 curl -fsS http://47.93.150.173/api/health
 ```
 
+手动模式冒烟检查：
+
+1. 使用 `admin / admin` 登录，创建手动模式计划并上传两列 CSV：`住院号,病历内容`。
+2. 使用 `czy / czy` 登录，进入对应计划，确认工作台仅展示病历原文与手动标注条目栏。
+3. 划选一段原文，选择质控规则，填写修改建议并提交 `has_issues`。
+4. 对下一条病例不新增条目，二次确认后提交 `no_issue`。
+5. 回到管理员计划详情，确认完成概览、病例级聚合明细和单病例详情均可查看；聚合明细列表不展示 offset、原文片段、规则或修改建议。
+
 关键页面：
 
 - `http://47.93.150.173/login`
@@ -57,5 +71,6 @@ curl -fsS http://47.93.150.173/api/health
 
 已知限制：
 
-- 首期成员管理和质控规则管理仅作为入口占位，不包含 3.6、3.7 的新增业务页面。
+- 手动模式首期不支持提交后的再次编辑或重提。
+- 手动模式首期不提供复杂统计口径、导出 CSV/Excel 或打印功能。
 - 前端自动化仍以静态流程契约、build、lint 为主，尚未加入浏览器 E2E 与视觉回归基线。

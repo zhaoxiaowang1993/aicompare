@@ -1,8 +1,10 @@
 export type PlanStatus = 'active' | 'closed'
 export type PlanDisplayStatus = PlanStatus | 'completed'
+export type PlanAnnotationType = 'comparison' | 'manual'
 
 export type PlanListParams = {
   status?: PlanStatus
+  annotation_type?: PlanAnnotationType
   owner_user_id?: number
   page: number
   page_size: number
@@ -12,6 +14,7 @@ export type PlanItem = {
   id: number
   name: string
   description?: string | null
+  annotation_type: PlanAnnotationType
   status: PlanStatus
   owner_user_id: number
   owner_username?: string | null
@@ -42,6 +45,7 @@ export type CreatePlanPayload = {
   name: string
   description?: string | null
   owner_user_id: number
+  annotation_type: PlanAnnotationType
 }
 
 export type UpdatePlanPayload = Partial<CreatePlanPayload> & {

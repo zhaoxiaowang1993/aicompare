@@ -1,9 +1,10 @@
 import { CloudUploadOutlined, DownloadOutlined, FileTextOutlined, InboxOutlined } from '@ant-design/icons'
 import Upload from '../../../components/data-entry/upload'
 import Button from '../../../components/feedback/button'
-import type { ImportErrorItem, ImportSummary } from '../../../types/plan'
+import type { ImportErrorItem, ImportSummary, PlanAnnotationType } from '../../../types/plan'
 
 type UploadDataStepProps = {
+  annotationType: PlanAnnotationType
   importSummary: ImportSummary | null
   fileName?: string
   uploading?: boolean
@@ -19,14 +20,28 @@ function cx(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(' ')
 }
 
-function downloadCsvTemplate() {
-  const headers = ['住院号', '病历内容', '智能体A输出', '智能体B输出']
+function templateHeaders(annotationType: PlanAnnotationType) {
+  return annotationType === 'manual' ? ['住院号', '病历内容'] : ['住院号', '病历内容', '智能体A输出', '智能体B输出']
+}
+
+function templateTitle(annotationType: PlanAnnotationType) {
+  return annotationType === 'manual' ? '手动模式数据模板' : '对比模式数据模板'
+}
+
+function templateHint(annotationType: PlanAnnotationType) {
+  return annotationType === 'manual'
+    ? '仅支持单个 .csv 文件，字段需包含住院号、病历内容。'
+    : '仅支持单个 .csv 文件，字段需包含住院号、病历内容、智能体A输出、智能体B输出。'
+}
+
+function downloadCsvTemplate(annotationType: PlanAnnotationType) {
+  const headers = templateHeaders(annotationType)
   const csv = `\uFEFF${headers.join(',')}\n`
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
   const url = URL.createObjectURL(blob)
   const link = document.createElement('a')
   link.href = url
-  link.download = '标注计划数据模板.csv'
+  link.download = `${templateTitle(annotationType)}.csv`
   document.body.appendChild(link)
   link.click()
   link.remove()
@@ -114,7 +129,7 @@ function ErrorSummary({ errors }: { errors: ImportErrorItem[] }) {
   )
 }
 
-function UploadDropzone({ uploading, onUploadCsv }: Pick<UploadDataStepProps, 'uploading' | 'onUploadCsv'>) {
+function UploadDropzone({ annotationType, uploading, onUploadCsv }: Pick<UploadDataStepProps, 'annotationType' | 'uploading' | 'onUploadCsv'>) {
   return (
     <Upload
       type="dragAndDrop"
@@ -132,25 +147,25 @@ function UploadDropzone({ uploading, onUploadCsv }: Pick<UploadDataStepProps, 'u
         <InboxOutlined className="text-[48px] text-[var(--color-primary)]" />
       </p>
       <p className="ant-upload-text text-body-lg font-normal text-[var(--color-text)]">点击或拖拽 CSV 文件到此区域</p>
-      <p className="ant-upload-hint text-base font-normal text-[var(--color-text-secondary)]">
-        仅支持单个 .csv 文件，字段需包含住院号、病历内容、智能体A输出、智能体B输出。
-      </p>
+      <p className="ant-upload-hint text-base font-normal text-[var(--color-text-secondary)]">{templateHint(annotationType)}</p>
     </Upload>
   )
 }
 
 function FileNote({
   uploaded,
+  annotationType,
   fileName,
   uploading,
   onUploadCsv
 }: {
   uploaded: boolean
+  annotationType: PlanAnnotationType
   fileName?: string
   uploading?: boolean
   onUploadCsv: (file: File) => Promise<ImportSummary | null>
 }) {
-  const title = uploaded ? (fileName ?? 'samples.csv') : '数据模板'
+  const title = uploaded ? (fileName ?? 'samples.csv') : templateTitle(annotationType)
   const description = uploaded ? 'CSV 文件上传成功，字段校验通过' : '下载模板，按照模板填写数据后上传'
 
   return (
@@ -178,7 +193,7 @@ function FileNote({
           </Button>
         </Upload>
       ) : (
-        <Button icon={<DownloadOutlined />} onClick={downloadCsvTemplate}>
+        <Button icon={<DownloadOutlined />} onClick={() => downloadCsvTemplate(annotationType)}>
           下载模板
         </Button>
       )}
@@ -186,15 +201,15 @@ function FileNote({
   )
 }
 
-export default function UploadDataStep({ importSummary, fileName, uploading, onUploadCsv, onBackToBasic, onFinish }: UploadDataStepProps) {
+export default function UploadDataStep({ annotationType, importSummary, fileName, uploading, onUploadCsv, onBackToBasic, onFinish }: UploadDataStepProps) {
   const uploaded = Boolean(importSummary)
   const hasError = (importSummary?.failed_rows ?? 0) > 0
 
   return (
     <div className="flex h-full flex-col gap-16">
       <div className="text-lg font-semibold text-[var(--color-text)]">上传数据</div>
-      {!uploaded ? <UploadDropzone uploading={uploading} onUploadCsv={onUploadCsv} /> : null}
-      <FileNote uploaded={uploaded} fileName={fileName} uploading={uploading} onUploadCsv={onUploadCsv} />
+      {!uploaded ? <UploadDropzone annotationType={annotationType} uploading={uploading} onUploadCsv={onUploadCsv} /> : null}
+      <FileNote uploaded={uploaded} annotationType={annotationType} fileName={fileName} uploading={uploading} onUploadCsv={onUploadCsv} />
       {importSummary ? <ImportResult summary={importSummary} /> : null}
       {hasError && importSummary ? <ErrorSummary errors={importSummary.errors} /> : null}
       <div className="mt-auto flex items-center justify-between gap-8">

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import PlanDetailTabs, { type PlanDetailTabKey } from './plan-detail-tabs'
 import PlanStatusTag, { planDisplayStatus } from './plan-status-tag'
+import PlanTypeTag from './plan-type-tag'
 import type { PlanDetail } from '../../../types/plan'
 
 type PlanDetailHeaderProps = {
@@ -28,6 +29,7 @@ export default function PlanDetailHeader({ plan, activeTab, onTabChange }: PlanD
         <div>
           <div className="flex items-center gap-12">
             <h1 className="m-0 text-heading-3 font-semibold leading-heading-3">{plan?.name ?? '计划详情'}</h1>
+            {plan ? <PlanTypeTag type={plan.annotation_type} /> : null}
             {plan ? <PlanStatusTag status={planDisplayStatus(plan)} /> : null}
           </div>
           <div className="mt-4 text-base text-[var(--color-text-secondary)]">{progress(plan)}</div>

@@ -17,10 +17,10 @@ def add_case_record(
     plan_id: int,
     hospitalization_no: str,
     record_text: str,
-    agent_a_output: str,
-    agent_b_output: str,
-    display_a_source: str,
-    display_b_source: str,
+    agent_a_output: str | None,
+    agent_b_output: str | None,
+    display_a_source: str | None,
+    display_b_source: str | None,
     import_batch_id: str,
 ) -> CaseRecord:
     item = CaseRecord(

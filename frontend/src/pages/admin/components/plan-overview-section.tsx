@@ -83,17 +83,18 @@ function OverviewChart({ title, segments, total, loading }: { title: string; seg
 }
 
 export default function PlanOverviewSection({ stats, loading }: PlanOverviewSectionProps) {
-  const decisionTotal = stats ? Object.values(stats.decision_distribution).reduce((sum, count) => sum + count, 0) : 0
+  const decisionDistribution = stats?.decision_distribution
+  const decisionTotal = decisionDistribution ? Object.values(decisionDistribution).reduce((sum, count) => sum + count, 0) : 0
   const progressTotal = stats?.total_cases ?? 0
   const progressSegments: ChartSegment[] = [
     { key: 'done', label: '已完成', count: stats?.annotated_cases ?? 0, color: 'var(--color-success)' },
     { key: 'todo', label: '未完成', count: stats?.pending_cases ?? 0, color: 'var(--color-fill-secondary)' }
   ]
   const decisionSegments: ChartSegment[] = [
-    { key: 'A_BETTER', label: decisionText.A_BETTER, count: stats?.decision_distribution.A_BETTER ?? 0, color: 'var(--color-primary)' },
-    { key: 'B_BETTER', label: decisionText.B_BETTER, count: stats?.decision_distribution.B_BETTER ?? 0, color: 'var(--color-success)' },
-    { key: 'BOTH_BAD', label: decisionText.BOTH_BAD, count: stats?.decision_distribution.BOTH_BAD ?? 0, color: 'var(--color-error)' },
-    { key: 'BOTH_GOOD', label: decisionText.BOTH_GOOD, count: stats?.decision_distribution.BOTH_GOOD ?? 0, color: 'var(--color-warning)' }
+    { key: 'A_BETTER', label: decisionText.A_BETTER, count: decisionDistribution?.A_BETTER ?? 0, color: 'var(--color-primary)' },
+    { key: 'B_BETTER', label: decisionText.B_BETTER, count: decisionDistribution?.B_BETTER ?? 0, color: 'var(--color-success)' },
+    { key: 'BOTH_BAD', label: decisionText.BOTH_BAD, count: decisionDistribution?.BOTH_BAD ?? 0, color: 'var(--color-error)' },
+    { key: 'BOTH_GOOD', label: decisionText.BOTH_GOOD, count: decisionDistribution?.BOTH_GOOD ?? 0, color: 'var(--color-warning)' }
   ]
 
   if (!stats && !loading) {
@@ -105,9 +106,9 @@ export default function PlanOverviewSection({ stats, loading }: PlanOverviewSect
   }
 
   return (
-    <div className="grid grid-cols-1 gap-16 lg:grid-cols-2">
+    <div className={stats?.annotation_type === 'manual' ? 'grid grid-cols-1 gap-16 lg:grid-cols-2' : 'grid grid-cols-1 gap-16 lg:grid-cols-2'}>
       <OverviewChart title="完成情况" segments={progressSegments} total={progressTotal} loading={loading} />
-      <OverviewChart title="结论分布" segments={decisionSegments} total={decisionTotal} loading={loading} />
+      {stats?.annotation_type === 'manual' ? null : <OverviewChart title="结论分布" segments={decisionSegments} total={decisionTotal} loading={loading} />}
     </div>
   )
 }

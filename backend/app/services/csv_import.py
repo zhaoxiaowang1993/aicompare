@@ -7,7 +7,8 @@ from uuid import uuid4
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-REQUIRED_COLUMNS = ["住院号", "病历内容", "智能体A输出", "智能体B输出"]
+COMPARISON_REQUIRED_COLUMNS = ["住院号", "病历内容", "智能体A输出", "智能体B输出"]
+MANUAL_REQUIRED_COLUMNS = ["住院号", "病历内容"]
 
 
 @dataclass
@@ -22,8 +23,8 @@ class CleanRow:
     row_number: int
     hospitalization_no: str
     record_text: str
-    agent_a_output: str
-    agent_b_output: str
+    agent_a_output: str | None = None
+    agent_b_output: str | None = None
 
 
 def clean_text(value: str | None) -> str:
@@ -34,7 +35,7 @@ def clean_multiline_text(value: str | None) -> str:
     return (value or "").replace("\ufeff", "").replace("\r\n", "\n").replace("\r", "\n").strip()
 
 
-def parse_csv(content: bytes) -> tuple[list[CleanRow], list[RowImportError]]:
+def parse_csv(content: bytes, annotation_type: str = "comparison") -> tuple[list[CleanRow], list[RowImportError]]:
     if not content:
         raise HTTPException(status_code=400, detail="CSV_PARSE_ERROR")
 
@@ -48,7 +49,8 @@ def parse_csv(content: bytes) -> tuple[list[CleanRow], list[RowImportError]]:
     except csv.Error as exc:
         raise HTTPException(status_code=400, detail="CSV_PARSE_ERROR") from exc
 
-    if reader.fieldnames != REQUIRED_COLUMNS:
+    required_columns = MANUAL_REQUIRED_COLUMNS if annotation_type == "manual" else COMPARISON_REQUIRED_COLUMNS
+    if reader.fieldnames != required_columns:
         raise HTTPException(status_code=400, detail="CSV_INVALID_TEMPLATE")
 
     rows: list[CleanRow] = []
@@ -56,18 +58,12 @@ def parse_csv(content: bytes) -> tuple[list[CleanRow], list[RowImportError]]:
     for row_number, row in enumerate(reader, start=2):
         hospitalization_no = clean_text(row.get("住院号"))
         record_text = clean_multiline_text(row.get("病历内容"))
-        agent_a_output = clean_multiline_text(row.get("智能体A输出"))
-        agent_b_output = clean_multiline_text(row.get("智能体B输出"))
-        missing = [
-            label
-            for label, value in (
-                ("住院号", hospitalization_no),
-                ("病历内容", record_text),
-                ("智能体A输出", agent_a_output),
-                ("智能体B输出", agent_b_output),
-            )
-            if not value
-        ]
+        agent_a_output = clean_multiline_text(row.get("智能体A输出")) if annotation_type == "comparison" else None
+        agent_b_output = clean_multiline_text(row.get("智能体B输出")) if annotation_type == "comparison" else None
+        required_values = [("住院号", hospitalization_no), ("病历内容", record_text)]
+        if annotation_type == "comparison":
+            required_values.extend([("智能体A输出", agent_a_output), ("智能体B输出", agent_b_output)])
+        missing = [label for label, value in required_values if not value]
         if missing:
             errors.append(RowImportError(row_number=row_number, hospitalization_no=hospitalization_no or None, reason=f"缺少字段: {','.join(missing)}"))
             continue

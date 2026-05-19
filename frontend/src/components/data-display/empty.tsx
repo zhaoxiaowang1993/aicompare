@@ -35,7 +35,7 @@ function BlueSimpleEmptyImage() {
 
 export default function Empty({
   size = 'default',
-  imageVariant = 'none',
+  imageVariant = 'blueSimple',
   state = 'default',
   customImage,
   className,
@@ -48,7 +48,7 @@ export default function Empty({
     imageVariant === 'none'
       ? null
       : imageVariant === 'simple'
-        ? AntEmpty.PRESENTED_IMAGE_SIMPLE
+        ? <BlueSimpleEmptyImage />
         : imageVariant === 'blueSimple'
           ? <BlueSimpleEmptyImage />
           : imageVariant === 'custom'

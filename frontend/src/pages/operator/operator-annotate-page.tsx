@@ -6,6 +6,7 @@ import type { OperatorAnnotationPayload, OperatorPlanListItem, OperatorTask } fr
 import OperatorShell from './components/operator-shell'
 import AnnotationWorkbench from './components/annotation-workbench'
 import AnnotationModal, { type AnnotationModalMode } from './components/annotation-modal'
+import ManualAnnotationWorkbench from './components/manual-annotation-workbench'
 import { WorkbenchLoadingPanel, WorkbenchResultPanel } from './components/state-panels'
 
 type WorkbenchState = 'loading' | 'ready' | 'complete' | 'error' | 'forbidden' | 'closed'
@@ -117,7 +118,27 @@ export default function OperatorAnnotatePage() {
       {state === 'forbidden' ? <WorkbenchResultPanel kind="forbidden" onBack={backToPlans} /> : null}
       {state === 'closed' ? <WorkbenchResultPanel kind="closed" onBack={backToPlans} /> : null}
       {state === 'complete' ? <WorkbenchResultPanel kind="complete" onBack={backToPlans} /> : null}
-      {state === 'ready' && plan && task ? (
+      {state === 'ready' && plan && task && task.annotation_type === 'manual' ? (
+        <ManualAnnotationWorkbench
+          plan={plan}
+          task={task}
+          previewState={previewState}
+          submitting={submitting}
+          onBack={backToPlans}
+          onSubmittingChange={setSubmitting}
+          onSubmitted={(nextTask, nextPlan, completed) => {
+            setPlan(nextPlan)
+            if (completed || !nextTask) {
+              setTask(null)
+              setState('complete')
+              return
+            }
+            setTask(nextTask)
+            setState('ready')
+          }}
+        />
+      ) : null}
+      {state === 'ready' && plan && task && task.annotation_type === 'comparison' ? (
         <>
           <AnnotationWorkbench
             plan={plan}

@@ -1,5 +1,6 @@
-export type Decision = 'A_BETTER' | 'B_BETTER' | 'BOTH_BAD' | 'BOTH_GOOD'
+import type { PlanAnnotationType } from './plan'
 
+export type Decision = 'A_BETTER' | 'B_BETTER' | 'BOTH_BAD' | 'BOTH_GOOD'
 export type DistributionItem = {
   key: string
   count: number
@@ -8,6 +9,7 @@ export type DistributionItem = {
 export type AnnotationListParams = {
   operator_user_id?: number
   decision?: Decision
+  result?: ManualCaseAnnotationResult
   start_date?: string
   end_date?: string
   page?: number
@@ -16,12 +18,15 @@ export type AnnotationListParams = {
 
 export type PlanStats = {
   plan_id: number
+  annotation_type?: PlanAnnotationType
   total_cases: number
   annotated_cases: number
   pending_cases: number
   completion_rate: number
-  decision_distribution: Record<Decision, number>
-  reason_distribution: DistributionItem[]
+  decision_distribution?: Record<Decision, number>
+  reason_distribution?: DistributionItem[]
+  has_issues_cases?: number
+  no_issue_cases?: number
 }
 
 export type AnnotationDetail = {
@@ -44,6 +49,53 @@ export type AnnotationDetail = {
 
 export type AnnotationListResponse = {
   items: AnnotationDetail[]
+  total: number
+  page: number
+  page_size: number
+}
+
+export type ManualCaseAnnotationResult = 'has_issues' | 'no_issue'
+
+export type ManualCaseAnnotationSummary = {
+  manual_annotation_id: number
+  case_id: number
+  hospitalization_no: string
+  operator_user_id: number
+  operator_username?: string | null
+  result: ManualCaseAnnotationResult
+  problem_count: number
+  submitted_at: string
+}
+
+export type ManualAnnotationEntryDetail = {
+  entry_id: number
+  source_text: string
+  start_offset: number
+  end_offset: number
+  quality_rule: {
+    id: number
+    category: string
+    content: string
+    score: string
+  }
+  suggestion: string
+  notes?: string | null
+  created_at: string
+}
+
+export type ManualAnnotationDetail = {
+  manual_annotation_id: number
+  case_id: number
+  hospitalization_no: string
+  operator: string
+  result: ManualCaseAnnotationResult
+  record_text: string
+  submitted_at: string
+  entries: ManualAnnotationEntryDetail[]
+}
+
+export type ManualAnnotationListResponse = {
+  items: ManualCaseAnnotationSummary[]
   total: number
   page: number
   page_size: number
