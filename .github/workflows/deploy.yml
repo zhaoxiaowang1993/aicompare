@@ -62,6 +62,7 @@ jobs:
           test -n "$DEPLOY_USER"
           test -n "$DEPLOY_SSH_KEY"
           test -n "$DEPLOY_PATH"
+          test -n "$DEPLOY_SSH_PORT"
           test -n "$PROD_SECRET_KEY"
 
       - name: Configure SSH
@@ -69,7 +70,17 @@ jobs:
           mkdir -p ~/.ssh
           printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/aicompare_deploy_key
           chmod 600 ~/.ssh/aicompare_deploy_key
-          ssh-keyscan -p "$DEPLOY_SSH_PORT" "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+          ssh-keygen -y -f ~/.ssh/aicompare_deploy_key >/dev/null
+          echo "Configuring SSH known_hosts for $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_SSH_PORT"
+          for attempt in 1 2 3; do
+            if ssh-keyscan -T 15 -p "$DEPLOY_SSH_PORT" -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts; then
+              exit 0
+            fi
+            echo "ssh-keyscan attempt $attempt failed for $DEPLOY_HOST:$DEPLOY_SSH_PORT"
+            sleep 5
+          done
+          echo "::error::Unable to scan SSH host key for $DEPLOY_HOST:$DEPLOY_SSH_PORT. Check DEPLOY_HOST, DEPLOY_SSH_PORT, firewall/security-group access from GitHub Actions, and that sshd is listening."
+          exit 1
 
       - name: Prepare remote directory
         run: |
