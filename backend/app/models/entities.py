@@ -30,7 +30,9 @@ class Decision(str, Enum):
 
 
 class RuleCategory(str, Enum):
-    ADMISSION_RECORD = "admission_record"
+    ADMISSION_RECORD_CHILD = "admission_record_child"
+    ADMISSION_RECORD_FEMALE = "admission_record_female"
+    ADMISSION_RECORD_MALE = "admission_record_male"
     FIRST_COURSE_RECORD = "first_course_record"
     SUPERIOR_PHYSICIAN_ROUND = "superior_physician_round"
     DAILY_COURSE_RECORD = "daily_course_record"

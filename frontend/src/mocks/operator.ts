@@ -61,30 +61,55 @@ const mockPlans: OperatorPlanListItem[] = [
 ]
 
 const qualityRules: OperatorTask['quality_rules'] = {
-  admission: [
+  admission_record_child: [
     {
-      id: 'admission-1',
-      code: 'A-01',
-      title: '主诉与现病史一致性',
-      description: '入院记录需描述主诉、现病史演变及主要阳性体征，且前后表达一致。',
+      id: 'admission-child-1',
+      code: 'AC-01',
+      title: '儿童监护人陈述完整',
+      description: '儿童入院病历需记录监护人陈述、病史可靠性和儿童生长发育相关信息。',
       score: '10'
     },
     {
-      id: 'admission-2',
-      code: 'A-02',
-      title: '入院诊断依据完整',
-      description: '诊断依据需覆盖症状、体征、辅助检查及鉴别诊断要点。',
+      id: 'admission-child-2',
+      code: 'AC-02',
+      title: '儿童既往免疫史规范',
+      description: '儿童既往史需补充预防接种史、过敏史和既往重要疾病史。',
+      score: '8'
+    }
+  ],
+  admission_record_female: [
+    {
+      id: 'admission-female-1',
+      code: 'AF-01',
+      title: '女性月经婚育史完整',
+      description: '女性入院病历需记录月经史、婚育史及相关妇科手术史。',
+      score: '10'
+    },
+    {
+      id: 'admission-female-2',
+      code: 'AF-02',
+      title: '女性专科相关病史完整',
+      description: '女性患者需结合主诉补充乳腺、妇科或妊娠相关病史。',
+      score: '8'
+    }
+  ],
+  admission_record_male: [
+    {
+      id: 'admission-male-1',
+      code: 'AM-01',
+      title: '男性个人史完整',
+      description: '男性入院病历需完整记录吸烟、饮酒、职业暴露及相关个人史。',
       score: '8'
     },
     {
-      id: 'admission-3',
-      code: 'A-03',
-      title: '既往史记录规范',
-      description: '既往史、药敏史、手术史、输血史等项目应完整记录。',
+      id: 'admission-male-2',
+      code: 'AM-02',
+      title: '男性专科病史规范',
+      description: '男性患者需结合病情补充泌尿生殖系统相关病史。',
       score: '6'
     }
   ],
-  first_course: [
+  first_course_record: [
     {
       id: 'first-course-1',
       code: 'F-01',
@@ -100,9 +125,9 @@ const qualityRules: OperatorTask['quality_rules'] = {
       score: '8'
     }
   ],
-  superior_round: [],
-  daily_course: [],
-  discharge: [
+  superior_physician_round: [],
+  daily_course_record: [],
+  discharge_record: [
     {
       id: 'discharge-1',
       code: 'D-01',
@@ -246,7 +271,7 @@ const taskTemplates: OperatorTask[] = [
       documents: [
         {
           id: 'acceptance-medical-record',
-          type: 'admission',
+          type: 'admission_record_female',
           title: 'Markdown 验收病历',
           content: markdownAcceptanceMedicalRecord
         }
@@ -287,21 +312,21 @@ const taskTemplates: OperatorTask[] = [
       documents: [
         {
           id: 'doc-admission',
-          type: 'admission',
+          type: 'admission_record_female',
           title: '入院记录',
           content:
             '主诉：反复咳嗽、咳痰 10 年，加重伴气促 3 天。\n\n现病史：患者 10 年前开始反复咳嗽咳痰，冬春季明显。3 天前受凉后症状加重，出现活动后气促，无胸痛、咯血。\n\n既往史：高血压病史 8 年，规律服用氨氯地平。否认药物过敏史。\n\n入院诊断：慢性阻塞性肺疾病急性加重；高血压病 2 级。'
         },
         {
           id: 'doc-first-course',
-          type: 'first_course',
+          type: 'first_course_record',
           title: '首次病程记录',
           content:
             '初步诊断：慢性阻塞性肺疾病急性加重。\n\n诊断依据：长期咳嗽咳痰史，本次受凉后加重，查体双肺可闻及散在哮鸣音，血气提示轻度低氧血症。\n\n诊疗计划：完善血常规、CRP、胸部 CT、肺功能评估；予吸氧、支气管扩张剂、抗感染及祛痰治疗。'
         },
         {
           id: 'doc-discharge',
-          type: 'discharge',
+          type: 'discharge_record',
           title: '出院记录',
           content:
             '出院情况：咳嗽咳痰较前明显缓解，活动耐量改善。\n\n出院诊断：慢性阻塞性肺疾病急性加重；高血压病。\n\n出院医嘱：继续吸入治疗，规律监测血压，2 周后呼吸专科门诊复诊，如出现发热、气促加重及时就诊。'
@@ -399,7 +424,7 @@ const manualTaskTemplates: OperatorTask[] = [
       documents: [
         {
           id: 'manual-record-1',
-          type: 'admission',
+          type: 'admission_record_child',
           title: '病历原文',
           content: manualRecord
         }
@@ -428,7 +453,7 @@ const manualTaskTemplates: OperatorTask[] = [
       documents: [
         {
           id: 'manual-record-2',
-          type: 'admission',
+          type: 'admission_record_male',
           title: '病历原文',
           content: '主诉：胸闷 2 天。\n\n现病史：患者胸闷间断发作，休息后缓解。既往无冠心病史。\n\n查体：生命体征平稳。\n\n初步诊断：胸闷待查。'
         }
@@ -480,11 +505,13 @@ function nextTaskForPlan(planId: number): OperatorTask | null {
 
 export function documentTypeLabel(type: OperatorDocumentType) {
   const labels: Record<OperatorDocumentType, string> = {
-    admission: '入院病历',
-    first_course: '首次病程',
-    superior_round: '上级查房',
-    daily_course: '日常病程',
-    discharge: '出院记录'
+    admission_record_child: '入院病历-儿童',
+    admission_record_female: '入院病历-女性',
+    admission_record_male: '入院病历-男性',
+    first_course_record: '首次病程记录',
+    superior_physician_round: '上级医师查房记录',
+    daily_course_record: '日常病程',
+    discharge_record: '出院记录'
   }
   return labels[type]
 }

@@ -4,6 +4,8 @@ from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 
 @pytest.fixture()
@@ -42,12 +44,12 @@ def test_admin_rules_crud_search_filter_and_soft_delete(client):
 
     first = test_client.post(
         "/api/admin/rules",
-        json={"category": "admission_record", "content": "入院记录必须完整", "score": "5分"},
+        json={"category": "admission_record_child", "content": "入院记录必须完整", "score": "5分"},
         headers=headers,
     )
     assert first.status_code == 201
     first_payload = first.json()
-    assert first_payload["category"] == "admission_record"
+    assert first_payload["category"] == "admission_record_child"
     assert "is_active" not in first_payload
     assert "code" not in first_payload
 
@@ -70,6 +72,13 @@ def test_admin_rules_crud_search_filter_and_soft_delete(client):
     by_category = test_client.get("/api/admin/rules", params={"category": "daily_course_record"}, headers=headers)
     assert by_category.status_code == 200
     assert by_category.json()["total"] == 1
+
+    by_split_category = test_client.get("/api/admin/rules", params={"category": "admission_record_child"}, headers=headers)
+    assert by_split_category.status_code == 200
+    assert by_split_category.json()["total"] == 1
+
+    legacy_filter = test_client.get("/api/admin/rules", params={"category": "admission_record"}, headers=headers)
+    assert legacy_filter.status_code == 422
 
     patched = test_client.patch(
         f"/api/admin/rules/{first_payload['id']}",
@@ -104,9 +113,19 @@ def test_admin_rules_validation_template_import_and_permissions(client):
     )
     assert invalid_payload.status_code == 422
 
+    legacy_payload = test_client.post(
+        "/api/admin/rules",
+        json={"category": "admission_record", "content": "旧入院类型", "score": "1"},
+        headers=admin_headers,
+    )
+    assert legacy_payload.status_code == 422
+
     template = test_client.get("/api/admin/rules/template.csv", headers=admin_headers)
     assert template.status_code == 200
-    assert "规则分类,规则内容,分值" in template.content.decode("utf-8-sig")
+    template_text = template.content.decode("utf-8-sig")
+    assert "规则分类,规则内容,分值" in template_text
+    assert "入院病历-儿童" in template_text
+    assert "入院病历," not in template_text
 
     duplicate_csv = "category,content,score\ndaily_course_record,重复规则,2\ndaily_course_record,重复规则,2\n"
     duplicate_import = test_client.post(
@@ -119,7 +138,7 @@ def test_admin_rules_validation_template_import_and_permissions(client):
     assert duplicate_import.json()["success_rows"] == 2
     assert duplicate_import.json()["failed_rows"] == 0
 
-    chinese_csv = "规则分类,规则内容,分值\n入院病历,中文模板导入规则,2\n首次病程记录,中文分类导入规则,单项否决\n"
+    chinese_csv = "规则分类,规则内容,分值\n入院病历-女性,中文模板导入规则,2\n首次病程记录,中文分类导入规则,单项否决\n"
     chinese_validate = test_client.post(
         "/api/admin/rules/validate-csv",
         files={"file": ("rules.csv", chinese_csv.encode("utf-8"), "text/csv")},
@@ -139,7 +158,18 @@ def test_admin_rules_validation_template_import_and_permissions(client):
     assert chinese_import.json()["success_rows"] == 2
     imported = test_client.get("/api/admin/rules", params={"keyword": "中文模板"}, headers=admin_headers)
     assert imported.status_code == 200
-    assert imported.json()["items"][0]["category"] == "admission_record"
+    assert imported.json()["items"][0]["category"] == "admission_record_female"
+
+    legacy_csv = "规则分类,规则内容,分值\n入院病历,旧分类导入规则,2\n"
+    legacy_validate = test_client.post(
+        "/api/admin/rules/validate-csv",
+        files={"file": ("rules.csv", legacy_csv.encode("utf-8"), "text/csv")},
+        headers=admin_headers,
+    )
+    assert legacy_validate.status_code == 200
+    assert legacy_validate.json()["success_rows"] == 0
+    assert legacy_validate.json()["failed_rows"] == 1
+    assert legacy_validate.json()["errors"][0]["field"] == "category"
 
     invalid_csv = (
         "category,content,score\n"
@@ -160,3 +190,84 @@ def test_admin_rules_validation_template_import_and_permissions(client):
     assert payload["failed_rows"] == 4
     assert {item["field"] for item in payload["errors"]} == {"category", "content", "score"}
     assert test_client.get("/api/admin/rules", params={"keyword": "非法分类"}, headers=admin_headers).json()["total"] == 0
+
+
+def test_admission_record_rule_type_migration_preserves_content_and_cleans_snapshots(tmp_path: Path):
+    from app.db.base import Base
+    from app.models.entities import ManualAnnotationEntry, QualityRule
+    from app.services.rule_type_migration import migrate_admission_record_rule_types
+
+    engine = create_engine(f"sqlite:///{tmp_path / 'migration.db'}", connect_args={"check_same_thread": False})
+    Base.metadata.create_all(bind=engine)
+    SessionLocal = sessionmaker(bind=engine)
+    db = SessionLocal()
+    try:
+        for rule_id in range(1, 141):
+            db.add(QualityRule(id=rule_id, category="admission_record", content=f"规则 {rule_id}", score=f"{rule_id}分"))
+        db.add(QualityRule(id=141, category="admission_record", content="范围外 legacy", score="1"))
+        db.add(
+            ManualAnnotationEntry(
+                manual_annotation_id=1,
+                plan_id=1,
+                case_id=1,
+                operator_user_id=1,
+                source_text="原文",
+                start_offset=0,
+                end_offset=2,
+                quality_rule_id=1,
+                quality_rule_category_snapshot="admission_record",
+                quality_rule_content_snapshot="规则 1",
+                quality_rule_score_snapshot="1分",
+                suggestion="建议",
+            )
+        )
+        db.add(
+            ManualAnnotationEntry(
+                manual_annotation_id=1,
+                plan_id=1,
+                case_id=1,
+                operator_user_id=1,
+                source_text="原文",
+                start_offset=0,
+                end_offset=2,
+                quality_rule_id=50,
+                quality_rule_category_snapshot="admission_record",
+                quality_rule_content_snapshot="规则 50",
+                quality_rule_score_snapshot="50分",
+                suggestion="建议",
+            )
+        )
+        db.add(
+            ManualAnnotationEntry(
+                manual_annotation_id=1,
+                plan_id=1,
+                case_id=1,
+                operator_user_id=1,
+                source_text="原文",
+                start_offset=0,
+                end_offset=2,
+                quality_rule_id=100,
+                quality_rule_category_snapshot="admission_record",
+                quality_rule_content_snapshot="规则 100",
+                quality_rule_score_snapshot="100分",
+                suggestion="建议",
+            )
+        )
+        db.commit()
+
+        result = migrate_admission_record_rule_types(db)
+
+        assert result.child_rules == 42
+        assert result.female_rules == 53
+        assert result.male_rules == 45
+        assert result.legacy_in_known_range == 0
+        assert result.legacy_outside_known_range == 1
+        assert result.manual_child_snapshots == 1
+        assert result.manual_female_snapshots == 1
+        assert result.manual_male_snapshots == 1
+        assert db.get(QualityRule, 1).content == "规则 1"
+        assert db.get(QualityRule, 43).category == "admission_record_female"
+        assert db.get(QualityRule, 96).category == "admission_record_male"
+        assert db.get(QualityRule, 141).category == "admission_record"
+    finally:
+        db.close()

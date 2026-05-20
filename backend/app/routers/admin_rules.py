@@ -62,7 +62,7 @@ def create_rule(payload: RuleCreateRequest, user: User = Depends(require_admin),
 
 @router.get("/template.csv")
 def download_template(_: User = Depends(require_admin)) -> Response:
-    content = "规则分类,规则内容,分值\n入院病历,入院记录示例规则,2\n"
+    content = "规则分类,规则内容,分值\n入院病历-儿童,儿童入院记录示例规则,2\n"
     return Response(
         content=content.encode("utf-8-sig"),
         media_type="text/csv; charset=utf-8",

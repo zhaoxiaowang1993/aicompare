@@ -1,16 +1,18 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
+import { Tooltip } from 'antd'
 import type { MouseEvent, ReactNode } from 'react'
 import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import Card from '../../components/data-display/card'
 import Empty from '../../components/data-display/empty'
+import Cascader from '../../components/data-entry/cascader'
 import Form from '../../components/data-entry/form'
 import Input from '../../components/data-entry/input'
-import Select from '../../components/data-entry/select'
 import Button from '../../components/feedback/button'
 
 export type ManualQualityRuleOption = {
   id: string
   category: string
+  categoryLabel: string
   title: string
   content: string
   score: string
@@ -58,6 +60,7 @@ type ManualAnnotationLayoutProps = {
   readonly?: boolean
   formState?: ManualLayoutFormState | null
   forceValidationPreview?: boolean
+  recordHeaderAction?: ReactNode
   rightTitle?: ReactNode
   onSelectText?: (value: ManualLayoutFormValue) => void
   onEdit?: (entry: ManualLayoutEntry) => void
@@ -66,11 +69,16 @@ type ManualAnnotationLayoutProps = {
   onSaveForm?: (values: ManualLayoutFormValue) => void
 }
 
-type ManualRuleSelectOption = {
-  value?: string
-  label?: string
+type EntryFormValue = ManualLayoutFormValue & {
+  qualityRulePath?: string[]
+}
+
+type ManualRuleCascaderOption = {
+  value: string
+  label: ReactNode
+  text: string
   searchText?: string
-  options?: ManualRuleSelectOption[]
+  children?: ManualRuleCascaderOption[]
 }
 
 type NormalizedRecordText = {
@@ -335,6 +343,58 @@ function EntryCard({
   )
 }
 
+function qualityRulePathFor(rules: ManualQualityRuleOption[], ruleId?: string) {
+  if (!ruleId) return undefined
+  const rule = rules.find((item) => item.id === ruleId)
+  return rule ? [rule.category, rule.id] : undefined
+}
+
+function RuleOptionLabel({ rule }: { rule: ManualQualityRuleOption }) {
+  const textRef = useRef<HTMLSpanElement>(null)
+  const [isOverflowing, setIsOverflowing] = useState(false)
+
+  useLayoutEffect(() => {
+    const node = textRef.current
+    if (!node) return
+
+    function measure() {
+      if (!node) return
+      setIsOverflowing(node.scrollHeight > node.clientHeight + 1 || node.scrollWidth > node.clientWidth + 1)
+    }
+
+    measure()
+    const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(measure)
+    observer?.observe(node)
+    return () => observer?.disconnect()
+  }, [rule.content])
+
+  return (
+    <Tooltip
+      title={isOverflowing ? rule.content : undefined}
+      placement="right"
+      overlayClassName="[&_.ant-tooltip-inner]:max-w-[480px] [&_.ant-tooltip-inner]:whitespace-pre-wrap"
+    >
+      <div className="max-w-[min(56vw,480px)] min-w-[320px] py-4">
+        <span ref={textRef} className="line-clamp-2 whitespace-normal break-words text-base font-normal leading-normal text-[var(--color-text)]">
+          {rule.content}
+        </span>
+      </div>
+    </Tooltip>
+  )
+}
+
+function SelectedRuleLabel({ text }: { text: string }) {
+  return (
+    <Tooltip
+      title={text}
+      placement="topLeft"
+      overlayClassName="[&_.ant-tooltip-inner]:max-w-[480px] [&_.ant-tooltip-inner]:whitespace-pre-wrap"
+    >
+      <span className="block max-w-full truncate text-base font-normal text-[var(--color-text)]">{text}</span>
+    </Tooltip>
+  )
+}
+
 function EntryForm({
   formState,
   rules,
@@ -352,19 +412,30 @@ function EntryForm({
     () =>
       Object.entries(
         rules.reduce<Record<string, ManualQualityRuleOption[]>>((groups, rule) => {
-          const category = rule.category || '未分类'
+          const category = rule.category || 'unknown'
           groups[category] = [...(groups[category] ?? []), rule]
           return groups
         }, {})
-      ).map(([category, categoryRules]) => ({
-        label: category,
-        options: categoryRules.map((rule) => ({
+      ).map(([category, categoryRules]): ManualRuleCascaderOption => ({
+        value: category,
+        label: categoryRules[0]?.categoryLabel ?? category,
+        text: categoryRules[0]?.categoryLabel ?? category,
+        searchText: `${category} ${categoryRules[0]?.categoryLabel ?? ''}`,
+        children: categoryRules.map((rule) => ({
           value: rule.id,
-          label: rule.content,
-          searchText: `${category} ${rule.title} ${rule.content}`
+          label: <RuleOptionLabel rule={rule} />,
+          text: rule.content,
+          searchText: `${rule.categoryLabel} ${rule.title} ${rule.content}`
         }))
       })),
     [rules]
+  )
+  const initialValues = useMemo<EntryFormValue>(
+    () => ({
+      ...formState.values,
+      qualityRulePath: qualityRulePathFor(rules, formState.values.qualityRuleId)
+    }),
+    [formState.values, rules]
   )
 
   return (
@@ -376,11 +447,14 @@ function EntryForm({
       <div className="mb-12 text-base font-semibold text-[var(--color-text)]">
         {formState.mode === 'edit' ? '编辑标注条目' : '新建标注条目'}
       </div>
-      <Form<ManualLayoutFormValue>
+      <Form<EntryFormValue>
         itemLayout="vertical"
         className="[&_.ant-form-item]:mb-12"
-        initialValues={formState.values}
-        onFinish={(values) => onSave?.({ ...formState.values, ...values })}
+        initialValues={initialValues}
+        onFinish={(values) => {
+          const qualityRuleId = values.qualityRulePath?.[1]
+          onSave?.({ ...formState.values, ...values, qualityRuleId })
+        }}
       >
         <Form renderMode="item" label="原文片段" itemProps={{ name: 'sourceText' }}>
           <Input kind="textarea" disabled rows={3} />
@@ -388,20 +462,36 @@ function EntryForm({
         <Form
           renderMode="item"
           label="质控规则"
+          requiredMarkContent="*"
           itemProps={{
-            name: 'qualityRuleId',
-            rules: [{ required: true, message: '请选择质控规则' }],
-            help: forceValidationPreview && !formState.values.qualityRuleId ? '请选择质控规则' : undefined
+            name: 'qualityRulePath',
+            rules: [
+              {
+                validator: async (_, value) => {
+                  if (Array.isArray(value) && value.length === 2) return
+                  throw new Error('请选择具体质控规则')
+                }
+              }
+            ],
+            help: forceValidationPreview && !formState.values.qualityRuleId ? '请选择具体质控规则' : undefined
           }}
           validateStatus={forceValidationPreview && !formState.values.qualityRuleId ? 'error' : undefined}
         >
-          <Select<string, ManualRuleSelectOption>
+          <Cascader<ManualRuleCascaderOption>
             placeholder="先选择规则类型，再选择具体质控规则"
             searchable
-            optionFilterProp="searchText"
-            filterOption={(input, option) => String(option?.searchText ?? option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
+            searchConfig={{
+              filter: (input, path) =>
+                path.some((option) => String(option.searchText ?? option.label).toLowerCase().includes(input.toLowerCase()))
+            }}
             options={ruleOptions}
-            className="w-full [&_.ant-select-selection-placeholder]:!text-[var(--color-text-disabled)]"
+            displayRender={(_, selectedOptions) => {
+              const selectedOption = selectedOptions?.[selectedOptions.length - 1] as ManualRuleCascaderOption | undefined
+              const text = selectedOption?.text ?? ''
+              return text ? <SelectedRuleLabel text={text} /> : null
+            }}
+            popupClassName="[&_.ant-cascader-menu]:min-w-[144px] [&_.ant-cascader-menu:first-child]:max-w-[168px] [&_.ant-cascader-menu:not(:first-child)]:min-w-[360px] [&_.ant-cascader-menu:not(:first-child)]:max-w-[520px] [&_.ant-cascader-menu-item]:h-auto [&_.ant-cascader-menu-item]:items-start [&_.ant-cascader-menu-item-content]:min-w-0 [&_.ant-cascader-menu-item-content]:whitespace-normal"
+            className="w-full [&_.ant-select-selection-item]:min-w-0 [&_.ant-select-selection-placeholder]:text-[var(--color-text-disabled)]"
           />
         </Form>
         <Form
@@ -438,6 +528,7 @@ export default function ManualAnnotationLayout({
   readonly,
   formState,
   forceValidationPreview,
+  recordHeaderAction,
   rightTitle,
   onSelectText,
   onEdit,
@@ -651,11 +742,11 @@ export default function ManualAnnotationLayout({
   }
 
   return (
-    <div className="grid min-h-0 flex-1 grid-cols-[minmax(520px,760px)_minmax(420px,1fr)] gap-16">
+    <div className="grid min-h-0 flex-1 grid-cols-[minmax(520px,760px)_minmax(420px,1fr)] gap-16 p-20">
       <section className="flex min-h-0 flex-col rounded-lg border border-[var(--color-border-secondary)] bg-[var(--color-bg-container)] p-16">
         <div className="mb-12 flex items-center justify-between gap-12">
-          <h2 className="m-0 text-lg font-semibold text-[var(--color-text)]">病历原文</h2>
-          <div className="text-base font-normal text-[var(--color-text-secondary)]">住院号：{hospitalizationNo}</div>
+          <h2 className="m-0 truncate text-lg font-semibold text-[var(--color-text)]">住院号：{hospitalizationNo}</h2>
+          {recordHeaderAction}
         </div>
         <div
           ref={textRef}
@@ -689,15 +780,22 @@ export default function ManualAnnotationLayout({
         className="relative min-h-0 overflow-hidden rounded-lg border border-[var(--color-border-secondary)] bg-[var(--color-bg-container)] p-16"
         onClick={clearTransientState}
       >
-        <div className="mb-12 flex items-center justify-between gap-12">
-          <h2 className="m-0 text-lg font-semibold text-[var(--color-text)]">{rightTitle ?? `标注条目 ${entries.length}`}</h2>
-        </div>
+        {rightTitle ? (
+          <div className="mb-12 flex items-center justify-between gap-12">
+            <h2 className="m-0 text-lg font-semibold text-[var(--color-text)]">{rightTitle}</h2>
+          </div>
+        ) : null}
         {entries.length === 0 && !formState ? (
-          <div className="flex h-[calc(100%-44px)] items-center justify-center rounded-md border border-[var(--color-border-secondary)] bg-[var(--color-fill-quaternary)]">
+          <div
+            className={cx(
+              'flex items-center justify-center rounded-md border border-[var(--color-border-secondary)] bg-[var(--color-fill-quaternary)]',
+              rightTitle ? 'h-[calc(100%-44px)]' : 'h-full'
+            )}
+          >
             <Empty imageVariant="blueSimple" description={readonly ? '暂无质控问题条目' : '划选左侧病历原文后点击“标注”创建条目'} />
           </div>
         ) : null}
-        <div ref={rightScrollRef} className="absolute inset-x-0 bottom-0 top-[56px] overflow-auto" onScroll={() => syncScroll('right')}>
+        <div ref={rightScrollRef} className={cx('absolute inset-x-0 bottom-0 overflow-auto', rightTitle ? 'top-[56px]' : 'top-16')} onScroll={() => syncScroll('right')}>
           <div className="relative" style={{ minHeight: canvasHeight }}>
             {layout.visibleEntries.map((entry) => (
               <div

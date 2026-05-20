@@ -7,6 +7,7 @@ from app.db.base import Base
 from app.db.session import SessionLocal, engine
 from app.routers import admin_import, admin_plans, admin_reports, admin_rules, admin_users, auth, operator_plans, operator_tasks
 from app.services.bootstrap import seed_default_users
+from app.services.rule_type_migration import migrate_admission_record_rule_types
 
 app = FastAPI(title=settings.app_name)
 
@@ -27,6 +28,7 @@ def on_startup() -> None:
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
     try:
+        migrate_admission_record_rule_types(db)
         seed_default_users(db)
     finally:
         db.close()

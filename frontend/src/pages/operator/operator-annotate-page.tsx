@@ -112,7 +112,7 @@ export default function OperatorAnnotatePage() {
   }
 
   return (
-    <OperatorShell mainClassName="p-16 md:p-24">
+    <OperatorShell mainClassName={state === 'ready' ? 'p-0' : undefined}>
       {state === 'loading' ? <WorkbenchLoadingPanel /> : null}
       {state === 'error' ? <WorkbenchResultPanel kind="error" onRetry={() => void loadTask()} onBack={backToPlans} /> : null}
       {state === 'forbidden' ? <WorkbenchResultPanel kind="forbidden" onBack={backToPlans} /> : null}

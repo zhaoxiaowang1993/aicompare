@@ -27,11 +27,13 @@ export type OperatorPlanListResponse = {
 }
 
 export type OperatorDocumentType =
-  | 'admission'
-  | 'first_course'
-  | 'superior_round'
-  | 'daily_course'
-  | 'discharge'
+  | 'admission_record_child'
+  | 'admission_record_female'
+  | 'admission_record_male'
+  | 'first_course_record'
+  | 'superior_physician_round'
+  | 'daily_course_record'
+  | 'discharge_record'
 
 export type OperatorDocument = {
   id: string

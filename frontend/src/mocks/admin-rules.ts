@@ -14,8 +14,8 @@ import { ruleCategories, ruleCategoryOptions } from '../types/rules'
 const initialRules: QualityRule[] = [
   {
     id: 1,
-    category: 'admission_record',
-    content: '入院记录应在患者入院后24小时内完成，主诉、现病史、既往史需完整记录。',
+    category: 'admission_record_child',
+    content: '儿童入院记录应在患者入院后24小时内完成，主诉、现病史、既往史和监护人陈述需完整记录。',
     score: '5分',
     created_by: 1,
     created_at: '2026-05-08T09:12:00Z',
@@ -64,8 +64,8 @@ const initialRules: QualityRule[] = [
   },
   {
     id: 6,
-    category: 'admission_record',
-    content: '入院记录应在患者入院后24小时内完成，主诉、现病史、既往史需完整记录。',
+    category: 'admission_record_female',
+    content: '女性入院记录应完整记录月经史、婚育史及相关专科病史。',
     score: '5分',
     created_by: 1,
     created_at: '2026-04-27T09:00:00Z',
@@ -74,6 +74,16 @@ const initialRules: QualityRule[] = [
   },
   {
     id: 7,
+    category: 'admission_record_male',
+    content: '男性入院记录应完整记录既往史、个人史及泌尿生殖相关病史。',
+    score: '4分',
+    created_by: 1,
+    created_at: '2026-04-26T16:22:00Z',
+    updated_at: '2026-04-26T16:22:00Z',
+    deleted_at: null
+  },
+  {
+    id: 8,
     category: 'daily_course_record',
     content: '疑难或危重患者日常病程需及时记录病情变化、会诊意见和处理结果，文字较长时表格仍需保持完整展示。',
     score: '扣2分',
@@ -83,7 +93,7 @@ const initialRules: QualityRule[] = [
     deleted_at: null
   },
   {
-    id: 8,
+    id: 9,
     category: 'discharge_record',
     content: '已软删除的出院记录规则不应出现在管理员列表中。',
     score: '3分',
@@ -95,7 +105,7 @@ const initialRules: QualityRule[] = [
 ]
 
 let rules = [...initialRules]
-let nextId = 9
+let nextId = 10
 let latestImportedAt: string | null = '2026-05-08'
 
 function delay<T>(value: T, ms = 260): Promise<T> {
@@ -200,7 +210,7 @@ export async function mockDeleteRule(ruleId: number): Promise<void> {
 }
 
 export async function mockDownloadRuleTemplate(): Promise<Blob> {
-  const csv = '\uFEFF规则分类,规则内容,分值\n入院病历,入院记录应在患者入院后24小时内完成,5分\n'
+  const csv = '\uFEFF规则分类,规则内容,分值\n入院病历-儿童,儿童入院记录应在患者入院后24小时内完成,5分\n'
   return delay(new Blob([csv], { type: 'text/csv;charset=utf-8' }), 120)
 }
 

@@ -47,7 +47,7 @@ export default function OperatorShell({ children, mainClassName }: OperatorShell
           </button>
         </Dropdown>
       </header>
-      <main className={cx('min-h-[calc(100vh-64px)] p-16 md:p-24', mainClassName)}>{children}</main>
+      <main className={cx('min-h-[calc(100vh-64px)]', mainClassName ?? 'p-16 md:p-24')}>{children}</main>
     </div>
   )
 }

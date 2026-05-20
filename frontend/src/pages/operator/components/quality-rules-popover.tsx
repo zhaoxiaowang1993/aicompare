@@ -1,5 +1,6 @@
 import { Popover } from 'antd'
 import type { ReactNode } from 'react'
+import Empty from '../../../components/data-display/empty'
 import Button from '../../../components/feedback/button'
 import Tabs from '../../../components/navigation/tabs'
 import type { OperatorDocumentType, OperatorQualityRule } from '../../../types/operator'
@@ -10,18 +11,38 @@ type QualityRulesPopoverProps = {
   children?: ReactNode
 }
 
-const documentTypes: OperatorDocumentType[] = ['admission', 'first_course', 'superior_round', 'daily_course', 'discharge']
+const documentTypes: OperatorDocumentType[] = [
+  'admission_record_child',
+  'admission_record_female',
+  'admission_record_male',
+  'first_course_record',
+  'superior_physician_round',
+  'daily_course_record',
+  'discharge_record'
+]
 
 function RulesContent({ rules }: Pick<QualityRulesPopoverProps, 'rules'>) {
+  const availableTypes = documentTypes.filter((type) => (rules[type] ?? []).length > 0)
+
+  if (availableTypes.length === 0) {
+    return (
+      <div className="flex h-[220px] w-[456px] items-center justify-center">
+        <Empty imageVariant="blueSimple" description="暂无质控规则" />
+      </div>
+    )
+  }
+
   return (
-    <div className="w-[456px]">
+    <div className="w-[640px] max-w-[calc(100vw-96px)]">
       <Tabs
+        placement="left"
         size="small"
-        items={documentTypes.map((type) => ({
+        className="[&_.ant-tabs-content-holder]:min-w-0 [&_.ant-tabs-nav]:max-h-[420px] [&_.ant-tabs-nav-list]:max-h-[420px] [&_.ant-tabs-nav-list]:overflow-y-auto [&_.ant-tabs-tab]:whitespace-nowrap [&_.ant-tabs-tabpane]:pl-12"
+        items={availableTypes.map((type) => ({
           key: type,
           label: documentTypeLabel[type],
           children: (
-            <div className="mt-8 max-h-[420px] space-y-12 overflow-y-auto pr-4">
+            <div className="max-h-[420px] space-y-12 overflow-y-auto pr-4">
               {(rules[type] ?? []).map((rule) => (
                 <article key={rule.id} className="rounded-lg border border-border-secondary bg-bg-container p-12">
                   <div className="flex items-start justify-between gap-16">

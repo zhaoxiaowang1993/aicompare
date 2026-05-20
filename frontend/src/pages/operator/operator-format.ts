@@ -1,11 +1,13 @@
 import type { OperatorAnnotationDecision, OperatorAnnotationReason, OperatorDocumentType, OperatorPlanStatus } from '../../types/operator'
 
 export const documentTypeLabel: Record<OperatorDocumentType, string> = {
-  admission: '入院病历',
-  first_course: '首次病程',
-  superior_round: '上级查房',
-  daily_course: '日常病程',
-  discharge: '出院记录'
+  admission_record_child: '入院病历-儿童',
+  admission_record_female: '入院病历-女性',
+  admission_record_male: '入院病历-男性',
+  first_course_record: '首次病程记录',
+  superior_physician_round: '上级医师查房记录',
+  daily_course_record: '日常病程',
+  discharge_record: '出院记录'
 }
 
 export const decisionLabel: Record<OperatorAnnotationDecision, string> = {

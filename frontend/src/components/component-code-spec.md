@@ -16,7 +16,7 @@
 
 ## 一、当前组件代码现状
 
-当前共有 `24` 个组件文件，按组件族分布如下。
+当前共有 `25` 个组件文件，按组件族分布如下。
 
 ### 1. Data Display
 
@@ -32,6 +32,7 @@
 
 | 文件 | 组件 | 用途 |
 |---|---|---|
+| `data-entry/cascader.tsx` | `Cascader` | 级联选择器，支持单选、多选、搜索、展开、尺寸、状态和 popup 样式配置。 |
 | `data-entry/checkbox.tsx` | `Checkbox` | 复选框和复选框组。 |
 | `data-entry/form.tsx` | `Form` | 表单和表单项封装。 |
 | `data-entry/input.tsx` | `Input` | 输入框、密码框、文本域、搜索框、带 addon 输入框。 |
@@ -128,8 +129,9 @@
 6. 页面级布局可使用 `Layout` 组件；App Shell 类尺寸优先遵守 `layout-shell-*` 的后续治理方向。
 7. 表单、按钮、输入、选择、表格、提示、导航等常见 UI，应优先从对应组件族中选择。
 8. 使用 `Select` 时不要在业务页面覆盖选中值字重；单选回填、多选标签和下拉已选项默认都必须保持 `font-normal`。如需强调，应新增明确业务组件，而不是改 Select 基础组件。
-9. 使用 toast/message 时不要在业务页面覆盖字号或字重；全局消息默认继承 `--font-size`、`--line-height`、`--font-weight-regular`，错误、成功、警告等状态只通过图标和颜色表达。
-10. 使用 `Input` 时不要在业务页面直接覆盖 error 边框；错误态统一通过 `status="error"` 或 Form 校验上下文触发，由组件封装覆盖普通输入框和密码输入框的 AntD 状态类。
+9. 使用 `Cascader` 处理层级选项选择时，业务页面必须引用 `data-entry/cascader.tsx` 的本地封装，不直接引入 raw Ant Design Cascader；规则类型到具体质控规则这类两级选择应通过本地 Cascader 表达。
+10. 使用 toast/message 时不要在业务页面覆盖字号或字重；全局消息默认继承 `--font-size`、`--line-height`、`--font-weight-regular`，错误、成功、警告等状态只通过图标和颜色表达。
+11. 使用 `Input` 时不要在业务页面直接覆盖 error 边框；错误态统一通过 `status="error"` 或 Form 校验上下文触发，由组件封装覆盖普通输入框和密码输入框的 AntD 状态类。
 
 示例：
 

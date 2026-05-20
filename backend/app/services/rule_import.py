@@ -15,7 +15,9 @@ COLUMN_ALIASES = {
     "分值": "score",
 }
 CATEGORY_ALIASES = {
-    "入院病历": RuleCategory.ADMISSION_RECORD,
+    "入院病历-儿童": RuleCategory.ADMISSION_RECORD_CHILD,
+    "入院病历-女性": RuleCategory.ADMISSION_RECORD_FEMALE,
+    "入院病历-男性": RuleCategory.ADMISSION_RECORD_MALE,
     "首次病程记录": RuleCategory.FIRST_COURSE_RECORD,
     "上级医师查房记录": RuleCategory.SUPERIOR_PHYSICIAN_ROUND,
     "日常病程": RuleCategory.DAILY_COURSE_RECORD,
