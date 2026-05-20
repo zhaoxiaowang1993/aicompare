@@ -150,6 +150,8 @@ export default function ManualAnnotationWorkbench({
   const [formState, setFormState] = useState<ManualLayoutFormState | null>(() => previewFormState(previewState, recordText, presetEntryList))
   const [deleteTarget, setDeleteTarget] = useState<ManualLayoutEntry | null>(() => (previewState === 'delete' ? presetEntryList[0] ?? null : null))
   const [submitConfirmOpen, setSubmitConfirmOpen] = useState(previewState === 'confirm-has' || previewState === 'confirm-none')
+  const [leaveConfirmOpen, setLeaveConfirmOpen] = useState(false)
+  const hasUnsubmittedEntries = entries.length > 0 && !submitting
   const submitConfirmTitle =
     entries.length > 0 ? `当前病历已标记${entries.length}条质控问题，是否确认提交？` : '当前病历未标记质控问题，是否确认提交？'
 
@@ -158,7 +160,29 @@ export default function ManualAnnotationWorkbench({
     setFormState(previewFormState(previewState, recordText, presetEntryList))
     setDeleteTarget(previewState === 'delete' ? presetEntryList[0] ?? null : null)
     setSubmitConfirmOpen(previewState === 'confirm-has' || previewState === 'confirm-none')
+    setLeaveConfirmOpen(false)
   }, [task.id, previewState, recordText, presetEntryList, initialEntries])
+
+  useEffect(() => {
+    if (!hasUnsubmittedEntries) return
+
+    function handleBeforeUnload(event: BeforeUnloadEvent) {
+      event.preventDefault()
+      event.returnValue = '有未保存的修改，关闭浏览器将不会保存已标注的条目。'
+      return event.returnValue
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+  }, [hasUnsubmittedEntries])
+
+  function handleBack() {
+    if (hasUnsubmittedEntries) {
+      setLeaveConfirmOpen(true)
+      return
+    }
+    onBack()
+  }
 
   function saveEntry(values: ManualLayoutFormValue) {
     const rule = rules.find((item) => item.id === values.qualityRuleId)
@@ -234,7 +258,7 @@ export default function ManualAnnotationWorkbench({
     <div className="flex h-[calc(100vh-64px)] min-h-[760px] flex-col">
       <div className="flex h-[64px] shrink-0 items-center justify-between gap-16 border-b border-[var(--color-border-secondary)] bg-[var(--color-bg-container)] px-24">
         <div className="flex min-w-0 items-center gap-16">
-          <Button variant="link" color="primary" icon={<ArrowLeftOutlined />} className="px-0" onClick={onBack}>
+          <Button variant="link" color="primary" icon={<ArrowLeftOutlined />} className="px-0" onClick={handleBack}>
             返回列表
           </Button>
           <h1 className="m-0 truncate text-lg font-semibold text-[var(--color-text)]">{plan.name}</h1>
@@ -323,6 +347,31 @@ export default function ManualAnnotationWorkbench({
         }
       >
         <ConfirmationContent tone="warning" title={submitConfirmTitle} description="提交后将不能新增/修改质控建议。" />
+      </ModalDialog>
+      <ModalDialog
+        kind="dialog"
+        open={leaveConfirmOpen}
+        centered
+        title={null}
+        footerContentType="slot"
+        onCancel={() => setLeaveConfirmOpen(false)}
+        footerSlot={
+          <div className="flex justify-end gap-8">
+            <Button onClick={() => setLeaveConfirmOpen(false)}>取消</Button>
+            <Button
+              color="primary"
+              variant="solid"
+              onClick={() => {
+                setLeaveConfirmOpen(false)
+                onBack()
+              }}
+            >
+              仍要返回
+            </Button>
+          </div>
+        }
+      >
+        <ConfirmationContent tone="warning" title="未提交此病历质控，返回列表将不会保存已标注的条目" description="返回后当前病历中尚未提交的标注条目将被丢弃。" />
       </ModalDialog>
     </div>
   )

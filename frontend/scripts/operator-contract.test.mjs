@@ -51,7 +51,8 @@ test('operator list prevents completed and closed plans from entering workbench'
   assert.match(list, /return '已完成'/)
   assert.match(list, /return '开始标注'/)
   assert.match(list, /formatUpdatedAt/)
-  assert.match(list, /replace\('T', ' '\)/)
+  assert.match(list, /Intl\.DateTimeFormat/)
+  assert.match(list, /timeZone: 'Asia\/Shanghai'/)
 })
 
 test('operator workbench keeps the three-column review layout', () => {

@@ -10,7 +10,7 @@ class ImportErrorItem(BaseModel):
 
 
 class ImportSummary(BaseModel):
-    plan_id: int
+    plan_id: int | None = None
     import_batch_id: str
     total_rows: int
     success_rows: int

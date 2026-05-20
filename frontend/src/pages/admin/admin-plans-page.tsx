@@ -7,8 +7,8 @@ import PageError from './components/page-error'
 import PlanListFilters from './components/plan-list-filters'
 import PlanListTable from './components/plan-list-table'
 import Button from '../../components/feedback/button'
-import { createPlanWithImport, fetchOwners, fetchPlans, importPlanCsv, updatePlan } from '../../api/admin-plans'
-import type { CreatePlanPayload, ImportSummary, OperatorOption, PlanDetail, PlanItem, PlanStatus, PlanSummary } from '../../types/plan'
+import { createPlanWithImport, fetchOwners, fetchPlans, updatePlan, validatePlanImportCsv } from '../../api/admin-plans'
+import type { CreatePlanPayload, ImportSummary, OperatorOption, PlanItem, PlanStatus, PlanSummary } from '../../types/plan'
 import type { PlanListFilterValue } from './components/plan-list-filters'
 
 const defaultFilter: PlanListFilterValue = {
@@ -48,7 +48,7 @@ export default function AdminPlansPage() {
   const [mode, setMode] = useState<'list' | 'create'>('list')
   const [createStep, setCreateStep] = useState<CreatePlanStep>('basic')
   const [basicValues, setBasicValues] = useState<CreatePlanPayload | null>(null)
-  const [createdPlan, setCreatedPlan] = useState<PlanDetail | null>(null)
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [importSummary, setImportSummary] = useState<ImportSummary | null>(null)
   const [error, setError] = useState<string | null>(null)
 
@@ -112,7 +112,7 @@ export default function AdminPlansPage() {
     setMode('create')
     setCreateStep('basic')
     setBasicValues(null)
-    setCreatedPlan(null)
+    setSelectedFile(null)
     setImportSummary(null)
   }
 
@@ -120,7 +120,7 @@ export default function AdminPlansPage() {
     setMode('list')
     setCreateStep('basic')
     setBasicValues(null)
-    setCreatedPlan(null)
+    setSelectedFile(null)
     setImportSummary(null)
   }
 
@@ -128,6 +128,8 @@ export default function AdminPlansPage() {
     setCreating(true)
     try {
       setBasicValues(values)
+      setSelectedFile(null)
+      setImportSummary(null)
       setCreateStep('upload')
       message.success('基础信息已保存')
     } catch {
@@ -138,23 +140,25 @@ export default function AdminPlansPage() {
   }
 
   async function handleUploadCsv(file: File) {
-    if (!basicValues && !createdPlan) return null
+    if (!basicValues) return null
     setUploading(true)
     try {
-      const response = createdPlan ? await importPlanCsv(createdPlan.id, file) : await createPlanWithImport(basicValues as CreatePlanPayload, file)
-      const summary = 'import_summary' in response.data ? response.data.import_summary : response.data
-      if ('plan' in response.data) {
-        setCreatedPlan(response.data.plan)
-      }
+      const response = await validatePlanImportCsv(basicValues, file)
+      const summary = response.data
+      setSelectedFile(file)
       setImportSummary(summary)
       if (summary.failed_rows > 0) {
-        message.warning('CSV 已上传，存在失败行。')
+        message.warning('CSV 校验完成，存在错误行，请修正后重新上传。')
+      } else if (summary.success_rows === 0) {
+        message.warning('CSV 校验完成，但没有可导入数据。')
       } else {
-        message.success('CSV 导入成功')
+        message.success('CSV 校验通过')
       }
       return summary
     } catch {
       message.error('CSV 上传失败，请检查文件格式。')
+      setSelectedFile(null)
+      setImportSummary(null)
       return null
     } finally {
       setUploading(false)
@@ -162,9 +166,19 @@ export default function AdminPlansPage() {
   }
 
   async function finishCreateFlow() {
-    leaveCreateFlow()
-    setPage(1)
-    await loadPlans(1, pageSize, appliedFilter)
+    if (!basicValues || !selectedFile || !importSummary || importSummary.failed_rows > 0 || importSummary.success_rows === 0) return
+    setUploading(true)
+    try {
+      await createPlanWithImport(basicValues, selectedFile)
+      message.success('计划创建成功')
+      leaveCreateFlow()
+      setPage(1)
+      await loadPlans(1, pageSize, appliedFilter)
+    } catch {
+      message.error('计划创建失败，请重新上传校验后再试。')
+    } finally {
+      setUploading(false)
+    }
   }
 
   async function changeStatus(plan: PlanItem, status: PlanStatus) {

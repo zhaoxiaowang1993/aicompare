@@ -299,6 +299,21 @@ export async function mockCreatePlanWithImport(payload: CreatePlanPayload): Prom
   }
 }
 
+export async function mockValidatePlanImportCsv(payload: CreatePlanPayload, file: File): Promise<ImportSummary> {
+  await wait()
+  const rows = payload.annotation_type === 'manual' ? 80 : 120
+  const hasErrors = file.name.toLowerCase().includes('invalid') || file.name.includes('错误')
+  return {
+    plan_id: null,
+    import_batch_id: `mock_validation_${Date.now()}`,
+    total_rows: rows,
+    success_rows: hasErrors ? Math.max(rows - 1, 0) : rows,
+    skipped_rows: 0,
+    failed_rows: hasErrors ? 1 : 0,
+    errors: hasErrors ? [{ row_number: 2, hospitalization_no: null, reason: '缺少字段: 病历内容' }] : []
+  }
+}
+
 export async function mockImportPlanCsv(planId: number): Promise<ImportSummary> {
   await wait()
   const plan = plans.find((item) => item.id === planId)

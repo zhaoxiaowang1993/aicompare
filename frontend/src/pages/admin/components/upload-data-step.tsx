@@ -10,7 +10,7 @@ type UploadDataStepProps = {
   uploading?: boolean
   onUploadCsv: (file: File) => Promise<ImportSummary | null>
   onBackToBasic: () => void
-  onFinish: () => void
+  onFinish: () => void | Promise<void>
 }
 
 type SummaryTone = 'default' | 'success' | 'warning' | 'error' | 'muted'
@@ -166,7 +166,7 @@ function FileNote({
   onUploadCsv: (file: File) => Promise<ImportSummary | null>
 }) {
   const title = uploaded ? (fileName ?? 'samples.csv') : templateTitle(annotationType)
-  const description = uploaded ? 'CSV 文件上传成功，字段校验通过' : '下载模板，按照模板填写数据后上传'
+  const description = uploaded ? 'CSV 文件已上传，系统已完成字段校验' : '下载模板，按照模板填写数据后上传'
 
   return (
     <div className="flex min-h-[58px] items-center justify-between gap-16 border border-[var(--color-border)] bg-[var(--color-bg-container)] p-12">
@@ -204,6 +204,7 @@ function FileNote({
 export default function UploadDataStep({ annotationType, importSummary, fileName, uploading, onUploadCsv, onBackToBasic, onFinish }: UploadDataStepProps) {
   const uploaded = Boolean(importSummary)
   const hasError = (importSummary?.failed_rows ?? 0) > 0
+  const canCreate = Boolean(importSummary && importSummary.failed_rows === 0 && importSummary.success_rows > 0)
 
   return (
     <div className="flex h-full flex-col gap-16">
@@ -214,7 +215,7 @@ export default function UploadDataStep({ annotationType, importSummary, fileName
       {hasError && importSummary ? <ErrorSummary errors={importSummary.errors} /> : null}
       <div className="mt-auto flex items-center justify-between gap-8">
         <Button onClick={onBackToBasic}>上一步</Button>
-        <Button color="primary" variant="solid" loading={uploading} disabled={!importSummary || uploading} onClick={onFinish}>
+        <Button color="primary" variant="solid" loading={uploading} disabled={!canCreate || uploading} onClick={onFinish}>
           创建计划
         </Button>
       </div>

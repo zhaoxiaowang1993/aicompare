@@ -8,7 +8,8 @@ import {
   mockFetchPlans,
   mockFetchPlanStats,
   mockImportPlanCsv,
-  mockUpdatePlan
+  mockUpdatePlan,
+  mockValidatePlanImportCsv
 } from '../mocks/admin-plans'
 import type {
   CreatePlanPayload,
@@ -57,6 +58,21 @@ export async function createPlanWithImport(payload: CreatePlanPayload, file: Fil
   }
   formData.append('file', file)
   return api.post<CreatePlanWithImportResponse>('/admin/plans/import-csv', formData)
+}
+
+export async function validatePlanImportCsv(payload: CreatePlanPayload, file: File) {
+  if (useMockAdminApi) {
+    return mockResponse<ImportSummary>(await mockValidatePlanImportCsv(payload, file))
+  }
+  const formData = new FormData()
+  formData.append('name', payload.name)
+  formData.append('owner_user_id', String(payload.owner_user_id))
+  formData.append('annotation_type', payload.annotation_type)
+  if (payload.description) {
+    formData.append('description', payload.description)
+  }
+  formData.append('file', file)
+  return api.post<ImportSummary>('/admin/plans/import-csv/validate', formData)
 }
 
 export async function updatePlan(planId: number, payload: UpdatePlanPayload) {
