@@ -1,5 +1,7 @@
 export const ruleCategories = [
-  'admission_record',
+  'admission_record_child',
+  'admission_record_female',
+  'admission_record_male',
   'first_course_record',
   'superior_physician_round',
   'daily_course_record',
@@ -14,7 +16,9 @@ export type RuleCategoryOption = {
 }
 
 export const ruleCategoryOptions: RuleCategoryOption[] = [
-  { value: 'admission_record', label: '入院病历' },
+  { value: 'admission_record_child', label: '入院病历-儿童' },
+  { value: 'admission_record_female', label: '入院病历-女性' },
+  { value: 'admission_record_male', label: '入院病历-男性' },
   { value: 'first_course_record', label: '首次病程记录' },
   { value: 'superior_physician_round', label: '上级医师查房记录' },
   { value: 'daily_course_record', label: '日常病程' },

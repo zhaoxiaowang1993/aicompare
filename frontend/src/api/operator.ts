@@ -64,14 +64,24 @@ type BackendTaskPayload = {
   quality_rules?: BackendQualityRule[]
 }
 
-const documentTypes: OperatorDocumentType[] = ['admission', 'first_course', 'superior_round', 'daily_course', 'discharge']
+const documentTypes: OperatorDocumentType[] = [
+  'admission_record_child',
+  'admission_record_female',
+  'admission_record_male',
+  'first_course_record',
+  'superior_physician_round',
+  'daily_course_record',
+  'discharge_record'
+]
 
 const ruleCategoryMap: Record<string, OperatorDocumentType> = {
-  admission_record: 'admission',
-  first_course_record: 'first_course',
-  superior_physician_round: 'superior_round',
-  daily_course_record: 'daily_course',
-  discharge_record: 'discharge'
+  admission_record_child: 'admission_record_child',
+  admission_record_female: 'admission_record_female',
+  admission_record_male: 'admission_record_male',
+  first_course_record: 'first_course_record',
+  superior_physician_round: 'superior_physician_round',
+  daily_course_record: 'daily_course_record',
+  discharge_record: 'discharge_record'
 }
 
 function toPercent(value: number) {
@@ -110,7 +120,7 @@ function emptyQualityRules(): Record<OperatorDocumentType, OperatorQualityRule[]
 
 function mapQualityRules(rules: BackendQualityRule[] = []) {
   return rules.reduce((grouped, rule) => {
-    const type = ruleCategoryMap[rule.category] ?? 'admission'
+    const type = ruleCategoryMap[rule.category] ?? 'admission_record_child'
     grouped[type].push({
       id: String(rule.id),
       code: rule.category,
@@ -140,7 +150,7 @@ function mapTask(task: BackendTaskPayload, plan: OperatorPlanListItem): Operator
       documents: [
         {
           id: `case-${task.case_id}-record`,
-          type: 'admission',
+          type: 'admission_record_child',
           title: '病历原文',
           content: task.record_text
         }

@@ -15,7 +15,9 @@ interface AdminRulesTableProps {
 }
 
 const categoryColor: Record<RuleCategory, TagColor> = {
-  admission_record: 'blue',
+  admission_record_child: 'blue',
+  admission_record_female: 'magenta',
+  admission_record_male: 'geekblue',
   first_course_record: 'green',
   superior_physician_round: 'purple',
   daily_course_record: 'cyan',

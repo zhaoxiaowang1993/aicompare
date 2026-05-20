@@ -12,8 +12,10 @@ import ManualAnnotationLayout, {
   type ManualLayoutFormValue,
   type ManualQualityRuleOption
 } from '../../shared/manual-annotation-layout'
-import OperatorStatusTag from './operator-status-tag'
 import OperatorPlanTypeTag from './operator-plan-type-tag'
+import { documentTypeLabel } from '../operator-format'
+import QualityRulesPopover from './quality-rules-popover'
+import { operatorPlanStatusText } from './operator-status-tag'
 
 type ManualAnnotationWorkbenchProps = {
   plan: OperatorPlanListItem
@@ -29,19 +31,12 @@ function firstDocumentText(task: OperatorTask) {
   return task.case_data.documents[0]?.content ?? ''
 }
 
-const documentTypeLabels: Record<OperatorDocumentType, string> = {
-  admission: '入院记录',
-  first_course: '首次病程',
-  superior_round: '上级查房',
-  daily_course: '日常病程',
-  discharge: '出院记录'
-}
-
 function flattenRules(task: OperatorTask): ManualQualityRuleOption[] {
   return Object.entries(task.quality_rules).flatMap(([category, rules]) =>
     rules.map((rule) => ({
       id: rule.id,
-      category: documentTypeLabels[category as OperatorDocumentType] ?? category,
+      category: category as OperatorDocumentType,
+      categoryLabel: documentTypeLabel[category as OperatorDocumentType] ?? category,
       title: rule.title,
       content: rule.description || rule.title,
       score: rule.score
@@ -236,22 +231,17 @@ export default function ManualAnnotationWorkbench({
   }
 
   return (
-    <div className="flex h-[calc(100vh-112px)] min-h-[760px] flex-col gap-16">
-      <div className="flex min-h-[64px] items-center justify-between gap-16 rounded-lg border border-[var(--color-border-secondary)] bg-[var(--color-bg-container)] px-20 py-12">
+    <div className="flex h-[calc(100vh-64px)] min-h-[760px] flex-col">
+      <div className="flex h-[64px] shrink-0 items-center justify-between gap-16 border-b border-[var(--color-border-secondary)] bg-[var(--color-bg-container)] px-24">
         <div className="flex min-w-0 items-center gap-16">
-          <Button icon={<ArrowLeftOutlined />} onClick={onBack}>
+          <Button variant="link" color="primary" icon={<ArrowLeftOutlined />} className="px-0" onClick={onBack}>
             返回列表
           </Button>
-          <div className="min-w-0">
-            <div className="flex min-w-0 items-center gap-12">
-              <h1 className="m-0 truncate text-lg font-medium text-[var(--color-text)]">{plan.name}</h1>
-              <OperatorPlanTypeTag type={plan.annotation_type} />
-              <OperatorStatusTag status={plan.status} />
-            </div>
-            <p className="m-0 mt-4 text-sm text-[var(--color-text-secondary)]">
-              当前任务 {task.sequence_no}/{task.total_tasks} · 进度 {plan.annotated_cases}/{plan.total_cases}
-            </p>
-          </div>
+          <h1 className="m-0 truncate text-lg font-semibold text-[var(--color-text)]">{plan.name}</h1>
+          <OperatorPlanTypeTag type={plan.annotation_type} />
+          <span className="shrink-0 rounded-full bg-[var(--color-primary-bg)] px-8 py-2 text-xs font-normal text-[var(--color-primary)]">
+            {operatorPlanStatusText[plan.status]} {task.sequence_no}/{task.total_tasks}
+          </span>
         </div>
         <Button color="primary" variant="solid" onClick={() => setSubmitConfirmOpen(true)}>
           提交
@@ -264,6 +254,13 @@ export default function ManualAnnotationWorkbench({
         rules={rules}
         formState={formState}
         forceValidationPreview={previewState === 'validation'}
+        recordHeaderAction={
+          <QualityRulesPopover rules={task.quality_rules}>
+            <Button variant="link" color="primary" className="shrink-0 px-0">
+              查看质控规则
+            </Button>
+          </QualityRulesPopover>
+        }
         onSelectText={(values) => setFormState({ mode: 'create', values })}
         onEdit={(entry) =>
           setFormState({
