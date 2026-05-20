@@ -19,7 +19,7 @@ type CreatePlanWorkflowProps = {
   onUploadCsv: (file: File) => Promise<ImportSummary | null>
   onBackToBasic: () => void
   onCancel: () => void
-  onFinish: () => void
+  onFinish: () => void | Promise<void>
 }
 
 function cx(...classes: Array<string | false | null | undefined>) {

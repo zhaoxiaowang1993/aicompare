@@ -1,6 +1,6 @@
 import { DatePicker, Modal } from 'antd'
 import type { Dayjs } from 'dayjs'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Table from '../../../components/data-display/table'
 import Empty from '../../../components/data-display/empty'
 import Select from '../../../components/data-entry/select'
@@ -23,6 +23,7 @@ type AnnotationDetailSectionProps = {
   page: number
   pageSize: number
   loading: boolean
+  value?: AnnotationFilterValue
   onFilter: (value: AnnotationFilterValue) => void
   onPageChange: (page: number, pageSize: number) => void
   onOpenManualDetail: (record: ManualCaseAnnotationSummary) => void
@@ -69,6 +70,7 @@ export default function AnnotationDetailSection({
   page,
   pageSize,
   loading,
+  value,
   onFilter,
   onPageChange,
   onOpenManualDetail
@@ -76,6 +78,10 @@ export default function AnnotationDetailSection({
   const [filter, setFilter] = useState<AnnotationFilterValue>({})
   const [activeRecord, setActiveRecord] = useState<AnnotationDetail | null>(null)
   const isManual = annotationType === 'manual'
+
+  useEffect(() => {
+    setFilter(value ?? {})
+  }, [value])
 
   return (
     <div className="flex flex-col gap-16">

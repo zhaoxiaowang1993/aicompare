@@ -35,6 +35,10 @@ def clean_multiline_text(value: str | None) -> str:
     return (value or "").replace("\ufeff", "").replace("\r\n", "\n").replace("\r", "\n").strip()
 
 
+def row_is_empty(row: dict[str, str | None], required_columns: list[str]) -> bool:
+    return all(not clean_multiline_text(row.get(column)) for column in required_columns)
+
+
 def parse_csv(content: bytes, annotation_type: str = "comparison") -> tuple[list[CleanRow], list[RowImportError]]:
     if not content:
         raise HTTPException(status_code=400, detail="CSV_PARSE_ERROR")
@@ -53,9 +57,13 @@ def parse_csv(content: bytes, annotation_type: str = "comparison") -> tuple[list
     if reader.fieldnames != required_columns:
         raise HTTPException(status_code=400, detail="CSV_INVALID_TEMPLATE")
 
+    raw_rows = list(reader)
+    while raw_rows and row_is_empty(raw_rows[-1], required_columns):
+        raw_rows.pop()
+
     rows: list[CleanRow] = []
     errors: list[RowImportError] = []
-    for row_number, row in enumerate(reader, start=2):
+    for row_number, row in enumerate(raw_rows, start=2):
         hospitalization_no = clean_text(row.get("住院号"))
         record_text = clean_multiline_text(row.get("病历内容"))
         agent_a_output = clean_multiline_text(row.get("智能体A输出")) if annotation_type == "comparison" else None

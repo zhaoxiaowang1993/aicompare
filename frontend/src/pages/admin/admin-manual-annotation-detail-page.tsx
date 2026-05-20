@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import AdminShell from './components/admin-shell'
 import PageError from './components/page-error'
 import Tag from '../../components/data-display/tag'
@@ -38,8 +38,12 @@ function resultTag(detail: ManualAnnotationDetail) {
 export default function AdminManualAnnotationDetailPage() {
   const { id, manualAnnotationId } = useParams()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const planId = Number(id)
   const annotationId = Number(manualAnnotationId)
+  const rawReturnTo = searchParams.get('returnTo')
+  const fallbackReturnTo = `/admin/plans/${planId}?tab=annotations`
+  const returnTo = rawReturnTo?.startsWith(`/admin/plans/${planId}`) ? rawReturnTo : fallbackReturnTo
   const [state, setState] = useState<DetailState>('loading')
   const [detail, setDetail] = useState<ManualAnnotationDetail | null>(null)
   const [viewMode, setViewMode] = useState<ViewMode>('workbench')
@@ -90,7 +94,7 @@ export default function AdminManualAnnotationDetailPage() {
               标注计划
             </Link>
             <span className="mx-8">/</span>
-            <Link to={`/admin/plans/${planId}`} className="font-normal text-[var(--color-primary)]">
+            <Link to={returnTo} className="font-normal text-[var(--color-primary)]">
               计划详情
             </Link>
             <span className="mx-8">/</span>
@@ -98,7 +102,7 @@ export default function AdminManualAnnotationDetailPage() {
           </div>
           <div className="flex items-center justify-between gap-16">
             <div className="flex min-w-0 items-center gap-12">
-              <Button variant="link" color="primary" className="p-0" onClick={() => navigate(`/admin/plans/${planId}`)}>
+              <Button variant="link" color="primary" className="p-0" onClick={() => navigate(returnTo)}>
                 返回明细
               </Button>
               <h1 className="m-0 truncate text-heading-3 font-semibold leading-heading-3">

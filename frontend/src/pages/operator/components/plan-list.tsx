@@ -19,8 +19,21 @@ function actionText(plan: OperatorPlanListItem) {
 
 function formatUpdatedAt(value: string | null | undefined) {
   if (!value) return '-'
-  const normalized = value.replace('T', ' ').replace(/\.\d+/, '')
-  return normalized.length === 16 ? `${normalized}:00` : normalized.slice(0, 19)
+  const utcValue = /(?:Z|[+-]\d{2}:?\d{2})$/.test(value) ? value : `${value.replace(' ', 'T')}Z`
+  const date = new Date(utcValue)
+  if (Number.isNaN(date.getTime())) return '-'
+  const parts = new Intl.DateTimeFormat('zh-CN', {
+    timeZone: 'Asia/Shanghai',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  }).formatToParts(date)
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]))
+  return `${values.year}-${values.month}-${values.day} ${values.hour}:${values.minute}:${values.second}`
 }
 
 export default function PlanList({ items, onStart }: PlanListProps) {

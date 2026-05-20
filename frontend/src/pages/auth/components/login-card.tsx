@@ -27,8 +27,18 @@ export default function LoginCard({ loading, error, onSubmit }: LoginCardProps) 
         {mode === 'default' ? (
           <p className="m-0 mb-16 text-base font-normal text-[var(--color-text-secondary)]">请输入系统预置或管理员创建的账号密码。</p>
         ) : null}
-        {mode === 'error' ? <Alert type="error" showIcon message={error} className="mb-16" /> : null}
-        {mode === 'loading' ? <Alert type="info" showIcon message="正在验证账号并签发访问令牌..." className="mb-16" /> : null}
+        {mode === 'error' ? (
+          <Alert type="error" showIcon messageType="slot" messageSlot={<span className="font-normal">{error}</span>} className="mb-16" />
+        ) : null}
+        {mode === 'loading' ? (
+          <Alert
+            type="info"
+            showIcon
+            messageType="slot"
+            messageSlot={<span className="font-normal">正在验证账号并签发访问令牌...</span>}
+            className="mb-16"
+          />
+        ) : null}
         <Form<LoginFormValues> itemLayout="vertical" onFinish={onSubmit} disabled={loading} className="[&_.ant-form-item]:mb-16">
           <Form renderMode="item" label="用户名" itemProps={{ name: 'username', rules: [{ required: true, message: '请输入用户名' }] }}>
             <Input placeholder="请输入用户名" autoComplete="username" />

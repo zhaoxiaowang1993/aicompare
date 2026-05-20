@@ -1,8 +1,8 @@
-## 目的
+## Purpose
 
-定义操作员如何发现本人负责的标注计划，并进入标注工作流。
+Define how operators discover assigned annotation plans, inspect plan status and progress, see plan timestamps, and enter the correct annotation workflow.
 
-## ADDED Requirements
+## Requirements
 
 ### Requirement: 操作员负责计划入口
 系统 MUST 提供仅操作员可访问的计划入口页，并 SHALL 只列出分配给当前登录操作员的计划。系统 SHALL 在每个计划中展示标注类型，使操作员在进入工作流前可以区分对比计划和手动计划。
@@ -53,3 +53,17 @@
 - **GIVEN** 已登录用户是管理员
 - **WHEN** 管理员打开 `/operator/plans`
 - **THEN** 客户端阻止访问并跳转离开操作员路由
+
+### Requirement: Operator Plan Updated Time Uses Beijing Time
+The operator plan entry page SHALL render each plan's latest update time in local Beijing time (`Asia/Shanghai`) so operators see the same calendar time used by the product workflow.
+
+#### Scenario: Display updated time in Beijing timezone
+- **GIVEN** the operator plan list API returns a plan `updated_at` timestamp with UTC or ISO timezone semantics
+- **WHEN** the operator views `/operator/plans`
+- **THEN** the plan card displays `更新于` using `Asia/Shanghai` timezone
+- **AND** the displayed value is not the raw UTC clock time
+
+#### Scenario: Missing updated time
+- **GIVEN** the operator plan list API returns a plan without `updated_at`
+- **WHEN** the operator views `/operator/plans`
+- **THEN** the plan card displays `更新于 -`

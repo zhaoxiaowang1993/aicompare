@@ -59,7 +59,7 @@ export type ImportErrorItem = {
 }
 
 export type ImportSummary = {
-  plan_id: number
+  plan_id?: number | null
   import_batch_id: string
   total_rows: number
   success_rows: number

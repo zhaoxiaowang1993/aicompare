@@ -12,7 +12,7 @@ from sqlalchemy.orm import Session, sessionmaker
 from app.db.base import Base
 from app.db.session import get_db
 from app.main import app
-from app.models.entities import Annotation, CaseRecord, ManualAnnotationEntry, ManualCaseAnnotation, QualityRule
+from app.models.entities import Annotation, CaseRecord, ManualAnnotationEntry, ManualCaseAnnotation, Plan, QualityRule
 from app.services.bootstrap import seed_default_users
 
 
@@ -164,23 +164,60 @@ def test_plan_import_status_conflicts_and_error_contracts(api_context: ApiContex
     assert invalid_file_type.status_code == 400
     assert invalid_file_type.json()["detail"] == "CSV_INVALID_TEMPLATE"
 
-    csv_text = (
+    invalid_csv_text = (
         "住院号,病历内容,智能体A输出,智能体B输出\n"
         "H001,  病例 一  , A 输出 , B 输出\n"
         "H001,重复病例,A2,B2\n"
         "H002,病例二,A2,B2\n"
         "H003,缺少 A,,B3\n"
     )
+    invalid_validation = client.post(
+        "/api/admin/plans/import-csv/validate",
+        headers=auth_headers(admin_token),
+        data={"name": "预检失败", "owner_user_id": str(owner_user_id), "annotation_type": "comparison"},
+        files=csv_file(invalid_csv_text),
+    )
+    assert invalid_validation.status_code == 200
+    invalid_summary = invalid_validation.json()
+    assert invalid_summary["plan_id"] is None
+    assert invalid_summary["success_rows"] == 2
+    assert invalid_summary["skipped_rows"] == 1
+    assert invalid_summary["failed_rows"] == 1
+    with api_context.session_factory() as db:
+        assert db.query(Plan).count() == 0
+        assert db.query(CaseRecord).count() == 0
+
+    invalid_create = client.post(
+        "/api/admin/plans/import-csv",
+        headers=auth_headers(admin_token),
+        data={"name": "不应创建错误 CSV", "owner_user_id": str(owner_user_id), "annotation_type": "comparison"},
+        files=csv_file(invalid_csv_text),
+    )
+    assert invalid_create.status_code == 400
+    assert invalid_create.json()["detail"]["code"] == "CSV_ROW_ERRORS"
+    assert invalid_create.json()["detail"]["import_summary"]["failed_rows"] == 1
+    with api_context.session_factory() as db:
+        assert db.query(Plan).count() == 0
+        assert db.query(CaseRecord).count() == 0
+
+    csv_text = (
+        "住院号,病历内容,智能体A输出,智能体B输出\n"
+        "H001,  病例 一  , A 输出 , B 输出\n"
+        "H001,重复病例,A2,B2\n"
+        "H002,病例二,A2,B2\n"
+        "\n"
+        ",,,\n"
+    )
     payload = create_plan_with_csv(client, admin_token, owner_user_id, csv_text)
     plan = payload["plan"]
     summary = payload["import_summary"]
     assert plan["status"] == "active"
     assert plan["total_cases"] == 2
-    assert summary["total_rows"] == 4
+    assert summary["total_rows"] == 3
     assert summary["success_rows"] == 2
     assert summary["skipped_rows"] == 1
-    assert summary["failed_rows"] == 1
-    assert len(summary["errors"]) == 2
+    assert summary["failed_rows"] == 0
+    assert len(summary["errors"]) == 1
 
     list_response = client.get("/api/admin/plans", headers=auth_headers(admin_token), params={"status": "active"})
     assert list_response.status_code == 200
@@ -261,11 +298,23 @@ def test_manual_plan_import_template_and_annotation_type_contracts(api_context: 
     assert wrong_template.status_code == 400
     assert wrong_template.json()["detail"] == "CSV_INVALID_TEMPLATE"
 
-    manual_csv = "住院号,病历内容\nM001,病历一\nM002,病历二\n"
+    manual_invalid_csv = "住院号,病历内容\nM001,病历一\nM002,\n\n,\n"
+    manual_invalid = client.post(
+        "/api/admin/plans/import-csv/validate",
+        headers=auth_headers(admin_token),
+        data={"name": "手动预检失败", "owner_user_id": str(owner_user_id), "annotation_type": "manual"},
+        files=csv_file(manual_invalid_csv),
+    )
+    assert manual_invalid.status_code == 200
+    assert manual_invalid.json()["total_rows"] == 2
+    assert manual_invalid.json()["failed_rows"] == 1
+
+    manual_csv = "住院号,病历内容\nM001,病历一\nM002,病历二\n\n,\n"
     payload = create_plan_with_csv(client, admin_token, owner_user_id, manual_csv, name="手动导入测试", annotation_type="manual")
     plan = payload["plan"]
     assert plan["annotation_type"] == "manual"
     assert plan["total_cases"] == 2
+    assert payload["import_summary"]["total_rows"] == 2
     assert payload["import_summary"]["success_rows"] == 2
 
     with api_context.session_factory() as db:
